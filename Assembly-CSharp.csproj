@@ -59,6 +59,8 @@
     <Compile Include="Assets/Scripts/Scroller.cs" />
     <Compile Include="Assets/Scripts/UIManager.cs" />
     <Compile Include="Assets/Scripts/HowToPlayController.cs" />
+    <Compile Include="Assets/Scripts/UILineIllustrator.cs" />
+    <Compile Include="Assets/Scripts/LineTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

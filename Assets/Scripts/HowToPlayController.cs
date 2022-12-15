@@ -9,7 +9,6 @@ public class HowToPlayController : MonoBehaviour
     [SerializeField] Transform paginationUI;
     [SerializeField] Transform pageParent;
     [SerializeField] Button pageController;
-    [SerializeField]  LineRenderer lr;
     CanvasGroup currentCG;
     int index = 0;
     List<Transform> dots;
@@ -18,7 +17,6 @@ public class HowToPlayController : MonoBehaviour
     {
         pageController.onClick.RemoveAllListeners();
         pageController.onClick.AddListener(Next);
-        lr = GetComponent<LineRenderer>();
         
     }
     private void OnEnable()
@@ -75,10 +73,10 @@ public class HowToPlayController : MonoBehaviour
     }
     void DrawLine()
     {
-        lr.positionCount = index + 1;
-        for(int i =0; i< lr.positionCount; i++)
+        LineTest.Instance.lr.positionCount = index + 1;
+        for(int i =0; i< LineTest.Instance.lr.positionCount; i++)
         {
-            lr.SetPosition(i, paginationUI.GetChild(i).GetChild(0).position);
+            LineTest.Instance.lr.SetPosition(i, paginationUI.GetChild(i).GetChild(0).position);
         }
     }
 
