@@ -13,6 +13,10 @@ public class SwitchToggle : MonoBehaviour
     private Vector2 handlePosition;
     public Color32 yellow = new Color32(255, 187, 50, 255);
     public Color32 purple = new Color32(155, 107, 255, 255);
+    [SerializeField] Sprite lightImage;
+    [SerializeField] Sprite darkImage;
+    [SerializeField] SVGImage toggleIcone;
+
 
     private void Awake()
     {
@@ -48,12 +52,14 @@ public class SwitchToggle : MonoBehaviour
     {
         //Sprite color = uiHandleRectTransform.GetComponent<SVGImage>().sprite;
         SVGImage color = uiHandleRectTransform.GetComponent<SVGImage>();
+        toggleIcone.sprite = darkImage;
         color.DOColor(yellow, .25f);
     }
     private void ToLightUI()
     {
         //Sprite color = uiHandleRectTransform.GetComponent<SVGImage>().sprite;
         SVGImage color = uiHandleRectTransform.GetComponent<SVGImage>();
+        toggleIcone.sprite = lightImage;
         color.DOColor(purple, .25f);
     }
 }

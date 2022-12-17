@@ -3,8 +3,7 @@
     <Files>
       <File FileName="Assets/Scripts/HowToPlayController.cs" Line="83" Column="22" />
       <File FileName="Assets/Scripts/LineUI.cs" Line="22" Column="1" />
-      <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" Line="15" Column="1" />
-      <File FileName="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGImage.cs" Line="10" Column="11" />
+      <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" Line="14" Column="41" />
       <File FileName="Assets/Scripts/UIManager.cs" Line="10" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
