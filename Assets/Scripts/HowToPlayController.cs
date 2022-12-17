@@ -11,8 +11,7 @@ public class HowToPlayController : MonoBehaviour
     [SerializeField] Button pageController;
     CanvasGroup currentCG;
     int index = 0;
-    [SerializeField] LineRenderer lr;
-    [SerializeField]LineTest lt;
+    [SerializeField] LineUI line;
 
     private void Awake()
     {
@@ -36,6 +35,7 @@ public class HowToPlayController : MonoBehaviour
                 continue;
             }
             pageParent.GetChild(i).GetComponent<CanvasGroup>().alpha = 0;
+            line.points = new List<RectTransform>();
         }
     }
     void Next()
@@ -74,20 +74,13 @@ public class HowToPlayController : MonoBehaviour
     }
     void DrawLine()
     {
-        lt.points = new List<RectTransform>();
+        
         for (int i = 0; i < index + 1; i++)
         {
-            lt.points.Add(paginationUI.GetChild(i).GetComponent<RectTransform>());
+            line.AddLine(paginationUI.GetChild(i).GetComponent<RectTransform>());
         }
-        //uILineIllustrator.points = index + 1;
-        //uILineIllustrator.points.Clear();
-        lt.DrawLine();
-        return;
-        lr.positionCount = index + 1;
-        for (int i =0; i< index + 1; i++)
-        {
-            lr.SetPosition(i, paginationUI.GetChild(i).GetChild(0).position);
-        }
+
+        line.DrawLine();
     }
 
 
@@ -95,9 +88,8 @@ public class HowToPlayController : MonoBehaviour
     {
         if (index + 1 >= pageParent.childCount)
         {
-            lt.Clear();
+            line.Clear();
             index = 0;
-            lt.points.Clear();
         }
         else
         {

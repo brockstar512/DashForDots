@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class LineTest : MonoBehaviour
 {
     public List<RectTransform> points;
-    [SerializeField] RectTransform graphContainer;
-    [SerializeField] Transform parent;
-    public Color32 color;
+    RectTransform lineTest;
+    [SerializeField] Transform lineParent;
+    [SerializeField] Color32 color;
     private void Awake()
     {
         points = new List<RectTransform>();
-        graphContainer = GetComponent<RectTransform>();
+        lineTest = GetComponent<RectTransform>();
     }
     public void DrawLine()
     {
@@ -20,28 +20,11 @@ public class LineTest : MonoBehaviour
         for(int i  =0; i < points.Count-1; i++)
         {
             CreateDotConnection(points[i].anchoredPosition, points[i+1].anchoredPosition);
+            //set active
         }
 
     }
-    //private void ShowGraph(List<int> valueList)
-    //{
-    //    float graphHeight = graphContainer.sizeDelta.y;
-    //    float yMaximum = 100f;
-    //    float xSize = 50f;
 
-    //    GameObject lastCircleGameObject = null;
-    //    for (int i = 0; i < valueList.Count; i++)
-    //    {
-    //        float xPosition = xSize + i * xSize;
-    //        float yPosition = (valueList[i] / yMaximum) * graphHeight;
-    //        GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
-    //        if (lastCircleGameObject != null)
-    //        {
-    //            CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition);
-    //        }
-    //        lastCircleGameObject = circleGameObject;
-    //    }
-    //}
 
     private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
     {
@@ -62,10 +45,17 @@ public class LineTest : MonoBehaviour
 
     public void Clear()
     {
-        for(int i =0; i < graphContainer.transform.childCount; i++)
+        points.Clear();
+        for (int i =0; i < lineTest.transform.childCount; i++)
         {
-            Destroy(graphContainer.GetChild(i).gameObject);
+            Destroy(lineTest.GetChild(i).gameObject);
+            //turn off
         }
+    }
+
+    public void AddLine(RectTransform point)
+    {
+        points.Add(point);
     }
 
     public float GetAngleFromVectorFloat(Vector3 dir)

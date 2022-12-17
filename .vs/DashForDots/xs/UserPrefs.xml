@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/HowToPlayController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LineTest.cs">
     <Files>
-      <File FileName="Assets/Scripts/HowToPlayController.cs" Line="15" Column="33" />
-      <File FileName="Assets/Scripts/LineIllustrator.cs" Line="6" Column="29" />
-      <File FileName="Assets/Scripts/LineTest.cs" Line="17" Column="6" />
+      <File FileName="Assets/Scripts/HowToPlayController.cs" Line="14" Column="29" />
+      <File FileName="Assets/Scripts/LineTest.cs" Line="46" Column="3" />
+      <File FileName="Assets/Scripts/LineUI.cs" Line="7" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
