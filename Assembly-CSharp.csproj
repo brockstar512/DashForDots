@@ -62,6 +62,7 @@
     <Compile Include="Assets/Scripts/HowToPlayController.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
     <Compile Include="Assets/Scripts/LineUI.cs" />
+    <Compile Include="Assets/Scripts/Package Scripts/SwitchToggle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

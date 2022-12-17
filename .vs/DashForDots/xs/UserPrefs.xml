@@ -1,9 +1,11 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LineTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Package Scripts/SwitchToggle.cs">
     <Files>
-      <File FileName="Assets/Scripts/HowToPlayController.cs" Line="14" Column="29" />
-      <File FileName="Assets/Scripts/LineTest.cs" Line="46" Column="3" />
-      <File FileName="Assets/Scripts/LineUI.cs" Line="7" Column="20" />
+      <File FileName="Assets/Scripts/HowToPlayController.cs" Line="83" Column="22" />
+      <File FileName="Assets/Scripts/LineUI.cs" Line="22" Column="1" />
+      <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" Line="15" Column="1" />
+      <File FileName="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGImage.cs" Line="10" Column="11" />
+      <File FileName="Assets/Scripts/UIManager.cs" Line="10" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
