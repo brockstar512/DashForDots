@@ -7,7 +7,8 @@ public class CameraControl : MonoBehaviour
     Vector3 touchStart;
     public float zoomOutMin = 1;
     public float zoomOutMax = 8;
-
+    public float speed;
+    [SerializeField] PolygonCollider2D confiner;
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +34,7 @@ public class CameraControl : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Camera.main.transform.position += direction * .01f;//<-- speed
+            Camera.main.transform.position += direction * speed;//<-- speed
             //1.77777777778
 
         }
