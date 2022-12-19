@@ -695,13 +695,13 @@
       <Project>{C66767B6-D7B6-DA23-87E3-57942205E2A3}</Project>
       <Name>Unity.2D.Animation.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{D4A1B1E6-7B17-E140-32F1-E72AAFD67167}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{F4D5C09C-8358-1C5F-270A-7A811B6FD29A}</Project>
       <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{D4A1B1E6-7B17-E140-32F1-E72AAFD67167}</Project>
+      <Name>UnityEditor.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
       <Project>{2501E6A2-3DA8-00C4-25F8-5349CDE8AFCB}</Project>

@@ -31,6 +31,8 @@ public class SwitchToggle : MonoBehaviour
     {
         Debug.Log($"is On? {isOn}");
         uiHandleRectTransform.DOAnchorPos(isOn ? handlePosition : handlePosition * -1, .25f);
+        //below should be in the theme manager script
+        //but the ui image change should be here
         switch (isOn)
         {
             case true:
