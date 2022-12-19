@@ -34,6 +34,8 @@ public class CameraControl : MonoBehaviour
         {
             Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Camera.main.transform.position += direction * .01f;//<-- speed
+            //1.77777777778
+
         }
         zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
