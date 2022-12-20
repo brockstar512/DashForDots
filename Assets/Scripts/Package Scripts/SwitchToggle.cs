@@ -36,10 +36,12 @@ public class SwitchToggle : MonoBehaviour
         switch (isOn)
         {
             case true:
-                ToLightUI();
+                ToLightUI();//invoke
+                toggleIcone.sprite = lightImage;
                 break;
             case false:
-                ToDarkUI();
+                ToDarkUI();//invoke
+                toggleIcone.sprite = darkImage;
                 break;
         }
 

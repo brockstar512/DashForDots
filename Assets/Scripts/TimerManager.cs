@@ -39,7 +39,8 @@ public class TimerManager : MonoBehaviour
         timeToDisplay += 1;
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        if( minutes <=0 && seconds <= 5)
+
+        if ( minutes <=0 && seconds <= 5)
         {
             timeTitle.text = "Hurry up!";
             timeTitle.color = Color.red;

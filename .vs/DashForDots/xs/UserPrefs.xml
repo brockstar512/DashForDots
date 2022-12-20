@@ -1,12 +1,11 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TimerManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Package Scripts/SwitchToggle.cs">
     <Files>
       <File FileName="Assets/Scripts/HowToPlayController.cs" Line="83" Column="22" />
       <File FileName="Assets/Scripts/LineUI.cs" />
-      <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" />
-      <File FileName="Assets/Scripts/UIManager.cs" />
-      <File FileName="Assets/Scripts/Package Scripts/CameraControl.cs" Line="12" Column="56" />
-      <File FileName="Assets/Scripts/TimerManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" Line="12" Column="26" />
+      <File FileName="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" Line="21" Column="1" />
+      <File FileName="Assets/Scripts/Theme Handler/ColorThemeManager.cs" Line="9" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
