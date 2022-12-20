@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.VectorGraphics;
 using DG.Tweening;
+using System;
 
 
 public class SwitchToggle : MonoBehaviour
@@ -16,13 +17,32 @@ public class SwitchToggle : MonoBehaviour
     [SerializeField] Sprite lightImage;
     [SerializeField] Sprite darkImage;
     [SerializeField] SVGImage toggleIcone;
-
+    
+    public enum Theme
+    {
+        lightTheme,
+        darkTheme
+    }
+    public Theme currentTheme;
+    public static SwitchToggle Instance { get; private set; }
+    public event Action lightMode;
+    public event Action darkMode;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         toggle = GetComponent<Toggle>();
         handlePosition = uiHandleRectTransform.anchoredPosition;
         toggle.onValueChanged.AddListener(OnSwitch);
+
         if (toggle.isOn)
             OnSwitch(true);
     }
@@ -31,39 +51,26 @@ public class SwitchToggle : MonoBehaviour
     {
         Debug.Log($"is On? {isOn}");
         uiHandleRectTransform.DOAnchorPos(isOn ? handlePosition : handlePosition * -1, .25f);
-        //below should be in the theme manager script
-        //but the ui image change should be here
+
         switch (isOn)
         {
             case true:
-                ToLightUI();//invoke
+                this.lightMode?.Invoke();
                 toggleIcone.sprite = lightImage;
+                currentTheme = Theme.lightTheme;
                 break;
             case false:
-                ToDarkUI();//invoke
+                this.darkMode?.Invoke();
                 toggleIcone.sprite = darkImage;
+                currentTheme = Theme.darkTheme;
                 break;
         }
-
+        //call terry wednesday
+        //meeting thursday at 1
     }
 
     private void OnDestroy()
     {
         toggle.onValueChanged.RemoveListener(OnSwitch);
-    }
-
-    private void ToDarkUI()
-    {
-        //Sprite color = uiHandleRectTransform.GetComponent<SVGImage>().sprite;
-        SVGImage color = uiHandleRectTransform.GetComponent<SVGImage>();
-        toggleIcone.sprite = darkImage;
-        color.DOColor(yellow, .25f);
-    }
-    private void ToLightUI()
-    {
-        //Sprite color = uiHandleRectTransform.GetComponent<SVGImage>().sprite;
-        SVGImage color = uiHandleRectTransform.GetComponent<SVGImage>();
-        toggleIcone.sprite = lightImage;
-        color.DOColor(purple, .25f);
     }
 }

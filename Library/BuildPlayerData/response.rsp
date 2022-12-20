@@ -10,6 +10,7 @@
 -a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/UnityEngine.UI.dll"
 -a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/Unity.Mathematics.dll"
 -a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/Unity.2D.IK.Runtime.dll"
+-a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/Cinemachine.dll"
 -a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/Unity.2D.Animation.Runtime.dll"
 -a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/Unity.2D.Common.Runtime.dll"
 -a="/Users/marshallbrock/Documents/unity projects/2d/DashForDots/Library/PlayerScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll"
