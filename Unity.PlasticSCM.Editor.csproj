@@ -272,8 +272,8 @@
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/Views/CreateWorkspace/DrawCreateWorkspaceView.cs" />
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/Views/Changesets/ChangesetsListHeaderState.cs" />
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/DrawGuiModeSwitcher.cs" />
-    <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/Gluon/UpdateReport/UpdateReportListView.cs" />
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/CheckWorkspaceTreeNodeStatus.cs" />
+    <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/Gluon/UpdateReport/UpdateReportListView.cs" />
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/Tool/LaunchTool.cs" />
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/AssetsUtils/Processor/AssetsProcessor.cs" />
     <Compile Include="Library/PackageCache/com.unity.collab-proxy@1.15.18/Editor/PlasticSCM/ViewSwitcher.cs" />
@@ -963,13 +963,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{F4D5C09C-8358-1C5F-270A-7A811B6FD29A}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{D4A1B1E6-7B17-E140-32F1-E72AAFD67167}</Project>
       <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{F4D5C09C-8358-1C5F-270A-7A811B6FD29A}</Project>
+      <Name>UnityEngine.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
       <Project>{2501E6A2-3DA8-00C4-25F8-5349CDE8AFCB}</Project>

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/LayoutElement.cs" />
+    <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/GridLayoutGroup.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Image.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Toggle.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/IGraphicEnabledDisabled.cs" />
@@ -137,7 +138,6 @@
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventHandle.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/LayoutGroup.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInputModule.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/GridLayoutGroup.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/PointerInputModule.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/TouchInputModule.cs" />
     <Compile Include="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/RaycasterManager.cs" />

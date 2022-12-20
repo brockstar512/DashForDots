@@ -739,6 +739,14 @@
       <Project>{440F5092-466B-0EC5-7D8B-BACD9511D33E}</Project>
       <Name>Unity.2D.IK.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{583C368C-AA0C-ECBC-062E-57E5DAA46CCB}</Project>
+      <Name>Cinemachine</Name>
+    </ProjectReference>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{196EE468-FA21-19CB-DC72-3C608B772A3D}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.2D.Animation.Triangle.Editor.csproj">
       <Project>{A56DC118-030A-1A48-A392-B2FF74B71795}</Project>
       <Name>Unity.2D.Animation.Triangle.Editor</Name>

@@ -170,8 +170,8 @@
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/Api/TestResultAdaptor.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestRun/TestJobData.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestRunner/Utils/EditorAssemblyWrapper.cs" />
-    <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/CommandLineTest/RunData.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestRunner/Utils/TestListJob.cs" />
+    <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/CommandLineTest/RunData.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/Api/ITestRunnerApi.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/RequirePlatformSupportAttribute.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestLaunchers/PlayerLauncherBuildOptions.cs" />
@@ -214,10 +214,10 @@
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/CommandLineTest/ExitCallbacks.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestRunner/Utils/TestListCacheData.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/CommandLineTest/RunSettings.cs" />
-    <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestLaunchers/TestLauncherBase.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/GUI/TestListTreeView/TestListTreeViewDataSource.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/Api/TestRunnerApi.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/Api/IErrorCallbacks.cs" />
+    <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/TestLaunchers/TestLauncherBase.cs" />
     <Compile Include="Library/PackageCache/com.unity.test-framework@1.1.31/UnityEditor.TestRunner/UnityTestProtocol/IUtpLogger.cs" />
   </ItemGroup>
   <ItemGroup>

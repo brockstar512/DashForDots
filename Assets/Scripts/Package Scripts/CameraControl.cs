@@ -7,8 +7,18 @@ public class CameraControl : MonoBehaviour
     Vector3 touchStart;
     public float zoomOutMin = 1;
     public float zoomOutMax = 8;
-    public float speed;
-    [SerializeField] PolygonCollider2D confiner;
+    float speed = 5f;
+    [SerializeField] PolygonCollider2D CameraConfinerBox;
+    //[SerializeField] BoxCollider2D CameraConfinerBox;
+    float minX, minY, maxX, maxY;
+    Camera cam;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+        GetBounds();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -34,7 +44,16 @@ public class CameraControl : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Camera.main.transform.position += direction * speed;//<-- speed
+
+
+            Debug.Log($"Here is the direction that it will move {direction}");
+            //Camera.main.transform.position += direction * speed;//<-- speed
+
+            this.transform.position =  Vector3.Slerp(transform.position, transform.position + direction, speed * Time.deltaTime);
+            float newX = Mathf.Clamp(this.transform.position.x, minX, maxX);
+            float newY = Mathf.Clamp(this.transform.position.y, minY, maxY);
+            transform.position = new Vector3(newX, newY, -10f);
+
             //1.77777777778
 
         }
@@ -45,4 +64,26 @@ public class CameraControl : MonoBehaviour
     {
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
     }
+
+    void GetBounds()
+    {
+        Vector2 minBounds = new Vector2(CameraConfinerBox.transform.position.x - CameraConfinerBox.bounds.size.x / 2f, CameraConfinerBox.transform.position.y - CameraConfinerBox.bounds.size.y / 2f);
+        Vector2 maxBounds = new Vector2(CameraConfinerBox.transform.position.x + CameraConfinerBox.bounds.size.x / 2f, CameraConfinerBox.transform.position.y + CameraConfinerBox.bounds.size.y / 2f);
+
+        float camHeight = cam.orthographicSize;
+        float camWidth = cam.orthographicSize * cam.aspect;
+
+        minX = minBounds.x + camWidth;
+        maxX = maxBounds.x - camWidth;
+        minY = minBounds.y + camHeight;
+        maxY = maxBounds.y - camHeight;
+    }
+
+    //refresh x and y in case you zoom
+    private void LateUpdate()
+    {
+        GetBounds();
+    }
 }
+
+
