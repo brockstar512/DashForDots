@@ -1,9 +1,8 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - ColorThemeHelper
-    - PersistentCanvas
-    - SwitchToggle
+    - CameraControl
+    - TimerManager
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
     Unity.2D.Animation.Editor.dll:
@@ -38,11 +37,14 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.ContentSizeFitter
     - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Image
-    - UnityEngine.UI.Toggle
+    - UnityEngine.UI.GridLayoutGroup
+    - UnityEngine.UI.HorizontalLayoutGroup
+    - UnityEngine.UI.LayoutElement
+    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
-    Assets/Scenes/Home.unity:
+    Assets/Scenes/Game.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -57,14 +59,18 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 49
       Script: {instanceID: 0}
+    - Class: 60
+      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1570}
+      Script: {instanceID: 1500}
     - Class: 114
-      Script: {instanceID: 1712}
+      Script: {instanceID: 1502}
+    - Class: 114
+      Script: {instanceID: 1812}
     - Class: 114
       Script: {instanceID: 1928}
     - Class: 114
@@ -84,17 +90,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3692}
     - Class: 114
-      Script: {instanceID: 3718}
+      Script: {instanceID: 3944}
+    - Class: 114
+      Script: {instanceID: 4126}
     - Class: 114
       Script: {instanceID: 4192}
     - Class: 114
       Script: {instanceID: 5228}
     - Class: 114
+      Script: {instanceID: 5310}
+    - Class: 114
       Script: {instanceID: 5664}
     - Class: 114
-      Script: {instanceID: 74848}
-    - Class: 114
-      Script: {instanceID: 79626}
+      Script: {instanceID: 21826}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -102,6 +110,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 212
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -1002,5 +1012,5 @@ ScriptsOnlyBuild:
     className: ColorThemeHelper
   platform: 2
   scenePathNames:
-  - Assets/Scenes/Home.unity
+  - Assets/Scenes/Game.unity
   playerPath: /Users/marshallbrock/Desktop/abc.app

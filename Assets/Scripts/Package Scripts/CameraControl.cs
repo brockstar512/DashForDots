@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     Vector3 touchStart;
-    public float zoomOutMin = 1;
-    public float zoomOutMax = 8;
+    float zoomOutMin = 4;
+    float zoomOutMax;
     float speed = 5f;
     [SerializeField] PolygonCollider2D CameraConfinerBox;
     //[SerializeField] BoxCollider2D CameraConfinerBox;
@@ -17,6 +17,8 @@ public class CameraControl : MonoBehaviour
     {
         cam = Camera.main;
         GetBounds();
+        //get orhographic size for max zooms
+        zoomOutMax = cam.orthographicSize;
     }
 
     // Update is called once per frame
@@ -63,6 +65,9 @@ public class CameraControl : MonoBehaviour
     void zoom(float increment)
     {
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
+        float newX = Mathf.Clamp(this.transform.position.x, minX, maxX);
+        float newY = Mathf.Clamp(this.transform.position.y, minY, maxY);
+        transform.position = new Vector3(newX, newY, -10f);
     }
 
     void GetBounds()
