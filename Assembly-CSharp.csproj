@@ -60,13 +60,19 @@
     <Compile Include="Assets/Scripts/LineUI.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
     <Compile Include="Assets/Scripts/UIManager.cs" />
+    <Compile Include="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" />
+    <Compile Include="Assets/Scripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/UILineIllustrator.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CameraControl.cs" />
     <Compile Include="Assets/Scripts/HowToPlayController.cs" />
-    <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/PersistentCanvas.cs" />
-    <Compile Include="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" />
+    <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
+    <Compile Include="Assets/Scripts/State/AppleWholeState.cs" />
+    <Compile Include="Assets/Scripts/State/StateManager.cs" />
+    <Compile Include="Assets/Scripts/State/AppleGrowState.cs" />
+    <Compile Include="Assets/Scripts/State/BaseState.cs" />
+    <Compile Include="Assets/Scripts/State/AppleChewedState.cs" />
+    <Compile Include="Assets/Scripts/State/AppleRottenState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

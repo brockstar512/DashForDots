@@ -96,13 +96,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4192}
     - Class: 114
-      Script: {instanceID: 5228}
+      Script: {instanceID: 5068}
     - Class: 114
-      Script: {instanceID: 5310}
+      Script: {instanceID: 5232}
     - Class: 114
-      Script: {instanceID: 5664}
+      Script: {instanceID: 5314}
     - Class: 114
-      Script: {instanceID: 21826}
+      Script: {instanceID: 5668}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -110,8 +110,6 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 212
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -766,6 +764,12 @@ ScriptsOnlyBuild:
     className: CinemachineGroupComposer
   - hash:
       serializedVersion: 2
+      Hash: 0d9355aa75ee8653e0d732de10444175
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ColorThemeHelper
+  - hash:
+      serializedVersion: 2
       Hash: b424b4eeb810aecb0ff91c62639241e9
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.Experimental.U2D.Animation
@@ -788,6 +792,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalReceiver
+  - hash:
+      serializedVersion: 2
+      Hash: 1889c34f753d9b61992621b56cb105d2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TimerManager
   - hash:
       serializedVersion: 2
       Hash: 040dd48e3a027d5424519a5fa2009df4
@@ -856,7 +866,7 @@ ScriptsOnlyBuild:
     className: SpriteSkinEntity
   - hash:
       serializedVersion: 2
-      Hash: 4bb94cd37e0a84be9fdc2b249e84ae20
+      Hash: 245af700ddfc2bf5b009b8a8d555c40e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraControl
@@ -953,6 +963,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PersistentCanvas
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ActivationPlayableAsset
@@ -992,24 +1008,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Scroller
-  - hash:
-      serializedVersion: 2
-      Hash: 1889c34f753d9b61992621b56cb105d2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: TimerManager
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PersistentCanvas
-  - hash:
-      serializedVersion: 2
-      Hash: 0d9355aa75ee8653e0d732de10444175
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ColorThemeHelper
   platform: 2
   scenePathNames:
   - Assets/Scenes/Game.unity
