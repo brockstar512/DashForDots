@@ -9,10 +9,10 @@ public class NavigationManager : MonoBehaviour
 {
     public static NavigationManager Instance { get; private set; }
     [SerializeField] Button LocalPlay;
-    //[SerializeField] Button OnlinePlay;
+    [SerializeField] Button OnlinePlay;
     [SerializeField] Button HowToPlay;
     [SerializeField] CanvasGroup HowToPlayScreen;
-    //[SerializeField] CanvasGroup OnlinePlayScreen;
+    [SerializeField] CanvasGroup OnlinePlayScreen;
     [SerializeField] CanvasGroup LocalPlayScreen;
     [SerializeField] CanvasGroup LandingPage;
     private Stack<CanvasGroup> stack;
@@ -38,7 +38,9 @@ public class NavigationManager : MonoBehaviour
     {
         LocalPlay.onClick.AddListener(delegate { OpenPage(LocalPlayScreen); });
         HowToPlay.onClick.AddListener(delegate { OpenPage(HowToPlayScreen); });
-        
+        OnlinePlay.onClick.AddListener(delegate { OpenPage(OnlinePlayScreen); });
+
+
     }
 
     void OpenPage(CanvasGroup screen)
