@@ -2,6 +2,19 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraControl
+    - ColorThemeHelper
+    - DecisionState
+    - ExploringState
+    - HowToPlayController
+    - InspectingState
+    - LineUI
+    - LocalGameController
+    - NavigationManager
+    - NeutralState
+    - PersistentCanvas
+    - QuitState
+    - StateManager
+    - SwitchToggle
     - TimerManager
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
@@ -41,7 +54,9 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.HorizontalLayoutGroup
+    - UnityEngine.UI.Image
     - UnityEngine.UI.LayoutElement
+    - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/Scenes/Game.unity:
@@ -57,8 +72,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 60
       Script: {instanceID: 0}
     - Class: 81
@@ -69,6 +82,89 @@ ScriptsOnlyBuild:
       Script: {instanceID: 1500}
     - Class: 114
       Script: {instanceID: 1502}
+    - Class: 114
+      Script: {instanceID: 1570}
+    - Class: 114
+      Script: {instanceID: 1812}
+    - Class: 114
+      Script: {instanceID: 1928}
+    - Class: 114
+      Script: {instanceID: 2604}
+    - Class: 114
+      Script: {instanceID: 2836}
+    - Class: 114
+      Script: {instanceID: 3036}
+    - Class: 114
+      Script: {instanceID: 3094}
+    - Class: 114
+      Script: {instanceID: 3296}
+    - Class: 114
+      Script: {instanceID: 3560}
+    - Class: 114
+      Script: {instanceID: 3692}
+    - Class: 114
+      Script: {instanceID: 3944}
+    - Class: 114
+      Script: {instanceID: 4126}
+    - Class: 114
+      Script: {instanceID: 5068}
+    - Class: 114
+      Script: {instanceID: 5314}
+    - Class: 114
+      Script: {instanceID: 50038}
+    - Class: 114
+      Script: {instanceID: 51298}
+    - Class: 114
+      Script: {instanceID: 51310}
+    - Class: 114
+      Script: {instanceID: 51318}
+    - Class: 114
+      Script: {instanceID: 51930}
+    - Class: 114
+      Script: {instanceID: 52132}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
+      Script: {instanceID: 0}
+    Assets/Scenes/Home.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1500}
+    - Class: 114
+      Script: {instanceID: 1570}
+    - Class: 114
+      Script: {instanceID: 1712}
     - Class: 114
       Script: {instanceID: 1812}
     - Class: 114
@@ -90,19 +186,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3692}
     - Class: 114
+      Script: {instanceID: 3718}
+    - Class: 114
       Script: {instanceID: 3944}
     - Class: 114
       Script: {instanceID: 4126}
     - Class: 114
       Script: {instanceID: 4192}
     - Class: 114
-      Script: {instanceID: 5068}
+      Script: {instanceID: 4440}
+    - Class: 114
+      Script: {instanceID: 4946}
     - Class: 114
       Script: {instanceID: 5232}
     - Class: 114
-      Script: {instanceID: 5314}
-    - Class: 114
       Script: {instanceID: 5668}
+    - Class: 114
+      Script: {instanceID: 5772}
+    - Class: 114
+      Script: {instanceID: 6116}
+    - Class: 114
+      Script: {instanceID: 79208}
+    - Class: 114
+      Script: {instanceID: 141426}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -118,6 +224,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -926,7 +1034,7 @@ ScriptsOnlyBuild:
     className: CinemachineCollisionImpulseSource
   - hash:
       serializedVersion: 2
-      Hash: 2e3d21327840f1a857bb85fb610482f4
+      Hash: e2b1c486f0f2ab1c7ea11a33c84deb8a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HowToPlayController
@@ -1008,7 +1116,56 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Scroller
+  - hash:
+      serializedVersion: 2
+      Hash: 5930d9ef8e0ef35e2dc24178a29c3d03
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StateManager
+  - hash:
+      serializedVersion: 2
+      Hash: 8f62e3bef576ccd126f4a0559c6d4677
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NeutralState
+  - hash:
+      serializedVersion: 2
+      Hash: 8f62e3bef576ccd126f4a0559c6d4677
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ExploringState
+  - hash:
+      serializedVersion: 2
+      Hash: 8f62e3bef576ccd126f4a0559c6d4677
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InspectingState
+  - hash:
+      serializedVersion: 2
+      Hash: 8f62e3bef576ccd126f4a0559c6d4677
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DecisionState
+  - hash:
+      serializedVersion: 2
+      Hash: 5b16528da3c9a28dbacf01e3ef337436
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuitState
+  - hash:
+      serializedVersion: 2
+      Hash: 951e1f6f3c2081356a8c3823f38a7330
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NavigationManager
+  - hash:
+      serializedVersion: 2
+      Hash: 8589b61f3165b31dc91ce3d38ce4cf59
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LocalGameController
   platform: 2
   scenePathNames:
+  - Assets/Scenes/Home.unity
   - Assets/Scenes/Game.unity
   playerPath: /Users/marshallbrock/Desktop/abc.app

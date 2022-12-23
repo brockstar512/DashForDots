@@ -9,12 +9,16 @@ public class ColorThemeHelper : MonoBehaviour
     //and have another sheet have all the colors
     public Color32 lightTheme;
     public Color32 darkTheme;
-    [HideInInspector]
-    public SVGImage image;
+    private SVGImage image;
 
-    private void Start()
+    public virtual void GetTarget()
     {
         image = GetComponent<SVGImage>();
+
+    }
+    public void Start()
+    {
+        GetTarget();
         SwitchToggle.Instance.lightMode += ToLightUI;
         SwitchToggle.Instance.darkMode += ToDarkUI;
 
@@ -37,7 +41,7 @@ public class ColorThemeHelper : MonoBehaviour
         image.DOColor(this.lightTheme, .25f);   
     }
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         SwitchToggle.Instance.lightMode -= ToLightUI;
         SwitchToggle.Instance.darkMode -= ToDarkUI;

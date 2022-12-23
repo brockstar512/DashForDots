@@ -3,7 +3,6 @@
     <Files>
       <File FileName="Assets/Scripts/State/StateManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" Line="63" Column="30" />
-      <File FileName="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" Line="6" Column="30" />
       <File FileName="Assets/Scripts/Package Scripts/CameraControl.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/State/BaseState.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/State/NeutralState.cs" Line="25" Column="1" />
@@ -11,9 +10,9 @@
       <File FileName="Assets/Scripts/State/InspectingState.cs" Line="32" Column="1" />
       <File FileName="Assets/Scripts/State/DecisionState.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/State/QuitState.cs" Line="13" Column="1" />
-      <File FileName="Assets/Scripts/NavigationManager.cs" Line="31" Column="10" />
-      <File FileName="Assets/Scripts/HowToPlayController.cs" Line="24" Column="85" />
-      <File FileName="Assets/Scripts/LocalGameController.cs" Line="11" Column="6" />
+      <File FileName="Assets/Scripts/NavigationManager.cs" Line="48" Column="32" />
+      <File FileName="Assets/Scripts/HowToPlayController.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scripts/LocalGameController.cs" Line="4" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

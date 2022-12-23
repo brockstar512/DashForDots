@@ -76,6 +76,7 @@
     <Compile Include="Assets/Scripts/State/QuitState.cs" />
     <Compile Include="Assets/Scripts/NavigationManager.cs" />
     <Compile Include="Assets/Scripts/LocalGameController.cs" />
+    <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

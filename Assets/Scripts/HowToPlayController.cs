@@ -23,6 +23,7 @@ public class HowToPlayController : MonoBehaviour
         back.onClick.AddListener(NavigationManager.Instance.Back);
         back.onClick.AddListener(delegate { gameTitle.gameObject.SetActive(true);});
 
+    
     }
     private void OnEnable()
     {
