@@ -67,12 +67,15 @@
     <Compile Include="Assets/Scripts/HowToPlayController.cs" />
     <Compile Include="Assets/Scripts/PersistentCanvas.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/State/AppleWholeState.cs" />
     <Compile Include="Assets/Scripts/State/StateManager.cs" />
-    <Compile Include="Assets/Scripts/State/AppleGrowState.cs" />
     <Compile Include="Assets/Scripts/State/BaseState.cs" />
-    <Compile Include="Assets/Scripts/State/AppleChewedState.cs" />
-    <Compile Include="Assets/Scripts/State/AppleRottenState.cs" />
+    <Compile Include="Assets/Scripts/State/NeutralState.cs" />
+    <Compile Include="Assets/Scripts/State/ExploringState.cs" />
+    <Compile Include="Assets/Scripts/State/InspectingState.cs" />
+    <Compile Include="Assets/Scripts/State/DecisionState.cs" />
+    <Compile Include="Assets/Scripts/State/QuitState.cs" />
+    <Compile Include="Assets/Scripts/NavigationManager.cs" />
+    <Compile Include="Assets/Scripts/LocalGameController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

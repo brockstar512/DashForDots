@@ -1,20 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
+    [SerializeField] Transform dotsParent;
+    [SerializeField] Button quitButton;
 
     BaseState currentState;
-    public AppleGrowState GrowState = new AppleGrowState();
-    public AppleWholeState WholeState = new AppleWholeState();
-    public AppleRottenState RottenState = new AppleRottenState();
-    public AppleChewedState ChewedState = new AppleChewedState();
+    public NeutralState NeutralState;
+    public ExploringState ExploringState;
+    public InspectingState InspectingState;
+    public QuitState QuitState;
+    public DecisionState DecisionState;
+
+
+
+    private void Awake()
+    {
+        HandleDots();
+        quitButton.onClick.AddListener(delegate { SwitchState(QuitState); });
+        NeutralState.Initialize();
+        ExploringState.Initialize();
+        InspectingState.Initialize();
+        QuitState.Initialize();
+        DecisionState.Initialize();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentState = GrowState;
+        currentState = NeutralState;
         currentState.EnterState(this);
     }
 
@@ -26,14 +44,27 @@ public class StateManager : MonoBehaviour
 
     public void SwitchState(BaseState state)
     {
+        currentState.LeaveState();
         currentState = state;
         state.EnterState(this);
     }
-
-    private void OnCollisionEnter(Collision collision)
+    public void Inspect(Transform dot)
     {
-        currentState.OnCollisionEnter(this, collision);
+        SwitchState(InspectingState);
+        InspectingState.View(dot);
     }
+
+    void HandleDots()
+    {
+        for(int i = 0; i < dotsParent.childCount; i++)
+        {
+            Button dot = dotsParent.GetChild(i).GetComponent<Button>();
+            dot.onClick.RemoveAllListeners();
+            dot.onClick.AddListener(delegate { Inspect(dot.transform); });
+
+        }
+    }
+
 }
 
 //public enum PlayerState
@@ -44,4 +75,7 @@ public class StateManager : MonoBehaviour
 //    WATCH,
 //    END,
 
-//}
+
+
+//neutral when you move -> inspecting... when you tap a dot -> confirm/delete
+//

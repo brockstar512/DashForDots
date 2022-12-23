@@ -9,18 +9,25 @@ public class HowToPlayController : MonoBehaviour
     [SerializeField] Transform paginationUI;
     [SerializeField] Transform pageParent;
     [SerializeField] Button pageController;
+    [SerializeField] Button back;
     CanvasGroup currentCG;
     int index = 0;
     [SerializeField] LineUI line;
+    [SerializeField] GameObject gameTitle;
 
     private void Awake()
     {
         pageController.onClick.RemoveAllListeners();
         pageController.onClick.AddListener(Next);
-        
+        back.onClick.RemoveAllListeners();
+        back.onClick.AddListener(NavigationManager.Instance.Back);
+        back.onClick.AddListener(delegate { gameTitle.gameObject.SetActive(true);});
+
     }
     private void OnEnable()
     {
+        gameTitle.gameObject.SetActive(false);
+
         Debug.Log("Enable");
         index = 0;
         HandleDot();
@@ -38,6 +45,7 @@ public class HowToPlayController : MonoBehaviour
             line.points = new List<RectTransform>();
         }
     }
+
     void Next()
     {
         ManagePages();

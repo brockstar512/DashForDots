@@ -9,6 +9,7 @@ public class ColorThemeHelper : MonoBehaviour
     //and have another sheet have all the colors
     public Color32 lightTheme;
     public Color32 darkTheme;
+    [HideInInspector]
     public SVGImage image;
 
     private void Start()
