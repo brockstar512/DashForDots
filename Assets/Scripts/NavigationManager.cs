@@ -11,10 +11,14 @@ public class NavigationManager : MonoBehaviour
     [SerializeField] Button LocalPlay;
     [SerializeField] Button OnlinePlay;
     [SerializeField] Button HowToPlay;
+    [SerializeField] Button JoinOnlineGame;
+    [SerializeField] Button CreateOnlineGame;
     [SerializeField] CanvasGroup HowToPlayScreen;
     [SerializeField] CanvasGroup OnlinePlayScreen;
     [SerializeField] CanvasGroup LocalPlayScreen;
     [SerializeField] CanvasGroup LandingPage;
+    [SerializeField] CanvasGroup JoinOnlineGameScreen;
+    [SerializeField] CanvasGroup CreateOnlineGameScreen;
     private Stack<CanvasGroup> stack;
     CanvasGroup currentPage;
 
@@ -39,6 +43,8 @@ public class NavigationManager : MonoBehaviour
         LocalPlay.onClick.AddListener(delegate { OpenPage(LocalPlayScreen); });
         HowToPlay.onClick.AddListener(delegate { OpenPage(HowToPlayScreen); });
         OnlinePlay.onClick.AddListener(delegate { OpenPage(OnlinePlayScreen); });
+        JoinOnlineGame.onClick.AddListener(delegate { OpenSubMenu(JoinOnlineGameScreen); });
+        CreateOnlineGame.onClick.AddListener(delegate { OpenSubMenu(CreateOnlineGameScreen); });
 
 
     }
@@ -46,7 +52,23 @@ public class NavigationManager : MonoBehaviour
     void OpenPage(CanvasGroup screen)
     {
         screen.gameObject.SetActive(true);
-        currentPage.DOFade(0, .1f).OnComplete(()=> {
+
+            currentPage.DOFade(0, .1f).OnComplete(() =>
+            {
+                screen.DOFade(1, .2f).OnComplete(() =>
+                {
+                    stack.Push(currentPage);
+                    currentPage.gameObject.SetActive(false);
+                    currentPage = screen;
+                });
+            });
+
+    }
+
+    void OpenSubMenu(CanvasGroup screen)
+    {
+        screen.gameObject.SetActive(true);
+        currentPage.DOFade(0, .1f).OnComplete(() => {
             screen.DOFade(1, .2f).OnComplete(() =>
             {
                 stack.Push(currentPage);
@@ -56,7 +78,6 @@ public class NavigationManager : MonoBehaviour
         });
 
     }
-
 
     public void Back()
     {

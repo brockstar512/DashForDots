@@ -182,8 +182,8 @@
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Manipulators/Utils/EditModeUtils.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Manipulators/TimelineClipGroup.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/inspectors/TimelineAssetInspector.cs" />
-    <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Utilities/PropertyCollector.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Activation/ActivationTrackEditor.cs" />
+    <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Utilities/PropertyCollector.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Manipulators/Sequence/EaseClip.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/ViewModel/TimelineWindowViewPrefs.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/TimelineWindow_PlayableLookup.cs" />
@@ -227,8 +227,8 @@
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Signals/Styles.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/TimelineWindow_StateChange.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Utilities/TypeUtility.cs" />
-    <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Attributes/ShortcutAttribute.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/inspectors/MarkerInspector.cs" />
+    <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Attributes/ShortcutAttribute.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Audio/AudioPlayableAssetInspector.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Manipulators/Sequence/RectangleZoom.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/Modes/TimeReferenceMode.cs" />
@@ -270,9 +270,9 @@
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/treeview/TrackGui/TimelineGroupGUI.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Actions/ActionManager.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/Modes/TimelineReadOnlyMode.cs" />
-    <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Utilities/BindingUtility.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/inspectors/ClipInspector/ClipInspectorCurveEditor.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/ViewModel/TimelineAssetViewModel.cs" />
+    <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Utilities/BindingUtility.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Utilities/ObjectExtension.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Recording/TrackAssetRecordingExtensions.cs" />
     <Compile Include="Library/PackageCache/com.unity.timeline@1.4.8/Editor/Animation/BindingSelector.cs" />
@@ -554,8 +554,14 @@
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library/PackageCache/com.unity.collab-proxy@1.15.18/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library/PackageCache/com.unity.collab-proxy@1.15.18/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenProEditor">
+      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library/PackageCache/com.unity.collab-proxy@1.15.18/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
@@ -563,20 +569,14 @@
     <Reference Include="DOTweenEditor">
       <HintPath>Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="DemiEditor">
+      <HintPath>Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
+    </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library/PackageCache/com.unity.collab-proxy@1.15.18/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenProEditor">
-      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiEditor">
-      <HintPath>Assets/Plugins/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>

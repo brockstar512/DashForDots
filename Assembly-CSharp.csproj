@@ -56,27 +56,27 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/State/BaseState.cs" />
+    <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />
+    <Compile Include="Assets/Scripts/State/QuitState.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/SwitchToggle.cs" />
+    <Compile Include="Assets/Scripts/State/NeutralState.cs" />
+    <Compile Include="Assets/Scripts/LocalGameController.cs" />
     <Compile Include="Assets/Scripts/LineUI.cs" />
+    <Compile Include="Assets/Scripts/State/StateManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
     <Compile Include="Assets/Scripts/UIManager.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" />
     <Compile Include="Assets/Scripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/UILineIllustrator.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CameraControl.cs" />
-    <Compile Include="Assets/Scripts/HowToPlayController.cs" />
-    <Compile Include="Assets/Scripts/PersistentCanvas.cs" />
-    <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/State/StateManager.cs" />
-    <Compile Include="Assets/Scripts/State/BaseState.cs" />
-    <Compile Include="Assets/Scripts/State/NeutralState.cs" />
     <Compile Include="Assets/Scripts/State/ExploringState.cs" />
     <Compile Include="Assets/Scripts/State/InspectingState.cs" />
     <Compile Include="Assets/Scripts/State/DecisionState.cs" />
-    <Compile Include="Assets/Scripts/State/QuitState.cs" />
     <Compile Include="Assets/Scripts/NavigationManager.cs" />
-    <Compile Include="Assets/Scripts/LocalGameController.cs" />
-    <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />
+    <Compile Include="Assets/Scripts/HowToPlayController.cs" />
+    <Compile Include="Assets/Scripts/PersistentCanvas.cs" />
+    <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -326,11 +326,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>/Applications/Unity/Hub/Editor/2020.3.36f1/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
-    </Reference>
     <Reference Include="DemiLib">
       <HintPath>Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
