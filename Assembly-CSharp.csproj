@@ -56,27 +56,27 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/State/BaseState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/BaseState.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />
-    <Compile Include="Assets/Scripts/State/QuitState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/QuitState.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/SwitchToggle.cs" />
-    <Compile Include="Assets/Scripts/State/NeutralState.cs" />
-    <Compile Include="Assets/Scripts/LocalGameController.cs" />
-    <Compile Include="Assets/Scripts/LineUI.cs" />
-    <Compile Include="Assets/Scripts/State/StateManager.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/NeutralState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/LocalGameController.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/LineUI.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/StateManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
-    <Compile Include="Assets/Scripts/UIManager.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" />
-    <Compile Include="Assets/Scripts/TimerManager.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/UILineIllustrator.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CameraControl.cs" />
-    <Compile Include="Assets/Scripts/State/ExploringState.cs" />
-    <Compile Include="Assets/Scripts/State/InspectingState.cs" />
-    <Compile Include="Assets/Scripts/State/DecisionState.cs" />
-    <Compile Include="Assets/Scripts/NavigationManager.cs" />
-    <Compile Include="Assets/Scripts/HowToPlayController.cs" />
-    <Compile Include="Assets/Scripts/PersistentCanvas.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/ExploringState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/InspectingState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/DecisionState.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/NavigationManager.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/PersistentCanvas.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/BotFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
