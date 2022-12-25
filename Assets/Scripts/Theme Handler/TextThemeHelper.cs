@@ -5,7 +5,7 @@ public class TextThemeHelper : MonoBehaviour
 {
     public Color32 lightTheme;
     public Color32 darkTheme;
-    public TextMeshProUGUI image;
+    TextMeshProUGUI image;
 
     public void GetTarget()
     {
