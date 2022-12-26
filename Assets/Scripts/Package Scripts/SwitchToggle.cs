@@ -49,7 +49,7 @@ public class SwitchToggle : MonoBehaviour
 
     void OnSwitch(bool isOn)
     {
-        Debug.Log($"is On? {isOn}");
+        //Debug.Log($"is On? {isOn}");
         uiHandleRectTransform.DOAnchorPos(isOn ? handlePosition : handlePosition * -1, .25f);
 
         switch (isOn)

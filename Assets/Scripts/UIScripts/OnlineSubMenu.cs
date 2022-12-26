@@ -45,7 +45,7 @@ public class OnlineSubMenu : MonoBehaviour
 
         if (subStack.Count == 1)
         {
-            Debug.Log("splash image");
+            //Debug.Log("splash image");
             //assign original back
             back.onClick.RemoveAllListeners();
             back.onClick.AddListener(NavigationManager.Instance.Back);

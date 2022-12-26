@@ -11,6 +11,7 @@ public class ColorThemeHelper : MonoBehaviour
     public Color32 darkTheme;
     private SVGImage image;
 
+
     public virtual void GetTarget()
     {
         image = GetComponent<SVGImage>();

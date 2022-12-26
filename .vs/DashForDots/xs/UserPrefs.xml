@@ -8,11 +8,11 @@
       <File FileName="Assets/Scripts/State/InspectingState.cs" Line="32" Column="1" />
       <File FileName="Assets/Scripts/State/DecisionState.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/State/QuitState.cs" Line="13" Column="1" />
-      <File FileName="Assets/Scripts/GameScripts/LocalGameController.cs" Line="58" Column="26" />
-      <File FileName="Assets/Scripts/UIScripts/NavigationManager.cs" Line="66" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/LocalGameController.cs" Line="36" Column="1" />
+      <File FileName="Assets/Scripts/UIScripts/NavigationManager.cs" Line="51" Column="55" />
       <File FileName="Assets/Scripts/Theme Handler/TextThemeHelper.cs" Line="19" Column="40" />
       <File FileName="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" Line="21" Column="21" />
-      <File FileName="Assets/Scripts/UIScripts/OnlineSubMenu.cs" Line="8" Column="1" />
+      <File FileName="Assets/Scripts/UIScripts/OnlineSubMenu.cs" Line="52" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

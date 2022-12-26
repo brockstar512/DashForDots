@@ -480,7 +480,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414309676}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20699f5fe7e2f4920a82fecbb9d11252, type: 3}
   m_Name: 
@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 766883400}
   - component: {fileID: 766883401}
   m_Layer: 5
-  m_Name: Game State Screens
+  m_Name: Game State Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
