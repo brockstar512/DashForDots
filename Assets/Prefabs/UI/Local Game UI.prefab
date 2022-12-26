@@ -150,7 +150,6 @@ MonoBehaviour:
   darkTheme:
     serializedVersion: 2
     rgba: 4294967295
-  image: {fileID: 0}
 --- !u!114 &4217490980216679647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,6 +670,7 @@ GameObject:
   - component: {fileID: 5575257101797757323}
   - component: {fileID: 5575257101797757324}
   - component: {fileID: 4046173659686144096}
+  - component: {fileID: 7625800655020948930}
   m_Layer: 5
   m_Name: Range Button
   m_TagString: Untagged
@@ -780,6 +780,18 @@ MonoBehaviour:
   darkTheme:
     serializedVersion: 2
     rgba: 4289104486
+--- !u!225 &7625800655020948930
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5575257101797757326}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5575257102260479173
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +981,6 @@ MonoBehaviour:
   darkTheme:
     serializedVersion: 2
     rgba: 4292594611
-  image: {fileID: 0}
 --- !u!1 &5575257102534150819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,7 +1054,7 @@ MonoBehaviour:
   next: {fileID: 8831124823091787533}
   playerCountText: {fileID: 6502952709329855731}
   botsCountText: {fileID: 5575257102260479169}
-  botsSection: {fileID: 5575257101797757326}
+  botsSection: {fileID: 7625800655020948930}
   difficultyPage: {fileID: 0}
 --- !u!114 &546052822025795313
 MonoBehaviour:
@@ -1750,7 +1761,6 @@ MonoBehaviour:
   darkTheme:
     serializedVersion: 2
     rgba: 4294967295
-  image: {fileID: 0}
 --- !u!1 &5575257103102347671
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,6 +2012,7 @@ GameObject:
   - component: {fileID: 5575257103729235137}
   - component: {fileID: 5575257103729235151}
   - component: {fileID: 5575257103729235136}
+  - component: {fileID: 2704266569124901023}
   m_Layer: 5
   m_Name: Back Text
   m_TagString: Untagged
@@ -2065,8 +2076,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289170022
-  m_fontColor: {r: 0.40000004, g: 0.5411765, b: 0.654902, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2125,6 +2136,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2704266569124901023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5575257103729235138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f36951b8c006349f3a86e14de269d09d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightTheme:
+    serializedVersion: 2
+    rgba: 4289170022
+  darkTheme:
+    serializedVersion: 2
+    rgba: 4292594611
 --- !u!1 &6502952707558944872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2771,7 +2800,6 @@ MonoBehaviour:
   darkTheme:
     serializedVersion: 2
     rgba: 4292594611
-  image: {fileID: 0}
 --- !u!1 &7424592645466161007
 GameObject:
   m_ObjectHideFlags: 0

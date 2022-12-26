@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BotFactory
     - CameraControl
     - ColorThemeHelper
     - DecisionState
@@ -220,6 +221,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5824}
     - Class: 114
       Script: {instanceID: 6174}
+    - Class: 114
+      Script: {instanceID: 103240}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -535,7 +538,7 @@ ScriptsOnlyBuild:
     className: CinemachineHardLookAt
   - hash:
       serializedVersion: 2
-      Hash: bc6360734ae7a9ff551e5c6a52ca26c2
+      Hash: 5b914785984911375da705578adfbc98
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TextThemeHelper
@@ -727,7 +730,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 2e0d48b2425c092f1e880b397cda5265
+      Hash: f9b2cbbd72258b2668ae59b89ff14ad2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LocalGameController
@@ -1199,6 +1202,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Scroller
+  - hash:
+      serializedVersion: 2
+      Hash: 8589b61f3165b31dc91ce3d38ce4cf59
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BotFactory
   platform: 2
   scenePathNames:
   - Assets/Scenes/Home.unity

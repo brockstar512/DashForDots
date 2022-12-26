@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 120594052046890970}
   - component: {fileID: 120594052046890972}
   - component: {fileID: 120594052046890973}
-  - component: {fileID: 1435455189082650900}
+  - component: {fileID: 1678260231858671770}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289170021
-  m_fontColor: {r: 0.39607844, g: 0.5411765, b: 0.654902, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1435455189082650900
+--- !u!114 &1678260231858671770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,15 +144,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 120594052046890971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fe8e38f2f47e4df6980ff2ef7c7877b, type: 3}
+  m_Script: {fileID: 11500000, guid: f36951b8c006349f3a86e14de269d09d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightTheme:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4289170021
   darkTheme:
     serializedVersion: 2
-    rgba: 4287328593
+    rgba: 4294967295
 --- !u!1 &3714093282536632085
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,6 +599,7 @@ GameObject:
   - component: {fileID: 5849368276985954117}
   - component: {fileID: 4291431649002583744}
   - component: {fileID: 3473489311708087540}
+  - component: {fileID: 7419880650606375228}
   m_Layer: 5
   m_Name: Back Text
   m_TagString: Untagged
@@ -722,6 +723,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7419880650606375228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895640430257794212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f36951b8c006349f3a86e14de269d09d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightTheme:
+    serializedVersion: 2
+    rgba: 4289170022
+  darkTheme:
+    serializedVersion: 2
+    rgba: 4292594611
 --- !u!1 &6639033425307820966
 GameObject:
   m_ObjectHideFlags: 0

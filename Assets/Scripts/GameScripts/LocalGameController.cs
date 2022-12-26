@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class LocalGameController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class LocalGameController : MonoBehaviour
     [SerializeField] Button next;
     [SerializeField] TextMeshProUGUI playerCountText;
     [SerializeField] TextMeshProUGUI botsCountText;
-    [SerializeField] GameObject botsSection;
+    [SerializeField] CanvasGroup botsSection;
     [SerializeField] CanvasGroup difficultyPage;
     CanvasGroup cg;
 
@@ -28,6 +29,7 @@ public class LocalGameController : MonoBehaviour
 
     private void Awake()
     {
+        //botsSection.SetActive(true);
         cg = GetComponent<CanvasGroup>();
         back.onClick.RemoveAllListeners();
         back.onClick.AddListener(NavigationManager.Instance.Back);
@@ -37,7 +39,7 @@ public class LocalGameController : MonoBehaviour
         DecreasePlayers.onClick.AddListener(delegate { WrapPlayer(-1); });
         IncreaseBots.onClick.AddListener(delegate { WrapBot(1); });
         DecreaseBots.onClick.AddListener(delegate { WrapBot(-1); });
-        includeBots.onValueChanged.AddListener(delegate { botsSection.SetActive(includeBots.isOn); });
+        includeBots.onValueChanged.AddListener(delegate { ToggleBots(includeBots.isOn); });
         next.onClick.RemoveAllListeners();
         next.onClick.AddListener(Next);
 
@@ -45,7 +47,31 @@ public class LocalGameController : MonoBehaviour
         botCount = 0;
         WrapPlayer(0);
         WrapBot(0);
-        botsSection.SetActive(includeBots.isOn);
+
+        //botsSection.SetActive(includeBots.isOn);
+    }
+
+    //        includeBots.onValueChanged.AddListener(delegate { botsSection.SetActive(includeBots.isOn); });
+
+    void ToggleBots(bool isOn)
+    {
+        Debug.Log("Toggle");
+        switch (isOn)
+        {
+            case true:
+                botsSection.gameObject.SetActive(isOn);//maybe it's just collapsed? instead of off?
+                botsSection.DOFade(1, .1f);
+                break;
+            case false:
+                botsSection.DOFade(0, .1f).OnComplete(() =>
+                {
+                    botsSection.gameObject.SetActive(isOn);
+
+                });
+                break;
+        }
+        //turn on object
+        //animate object
     }
 
     void WrapPlayer(int increaseOrDecrease)
