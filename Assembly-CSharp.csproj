@@ -77,6 +77,7 @@
     <Compile Include="Assets/Scripts/UIScripts/PersistentCanvas.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
     <Compile Include="Assets/Scripts/UIScripts/BotFactory.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/OnlineSubMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
