@@ -11,8 +11,8 @@ public class QuitState : BaseState
     public override void Initialize()
     {
         this.cg = GetComponent<CanvasGroup>();
-        cg.alpha = 0;
-        this.GetPage.DOScale(Vector3.zero, 0);
+        cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
+
         cancel.onClick.AddListener(Cancel);
         confirm.onClick.AddListener(Quit);
 
@@ -28,7 +28,7 @@ public class QuitState : BaseState
     }
     public override void LeaveState()
     {
-
+        cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 
     void Cancel()

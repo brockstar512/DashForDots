@@ -15,6 +15,7 @@ public class StateManager : MonoBehaviour
     public InspectingState InspectingState;
     public QuitState QuitState;
     public DecisionState DecisionState;
+    public CanvasGroup currentUI;
 
 
 
@@ -44,10 +45,25 @@ public class StateManager : MonoBehaviour
 
     public void SwitchState(BaseState state)
     {
+        Debug.Log("Here" + state);
         currentState.LeaveState();
-        currentState = state;
+
+        if(currentState is NeutralState)
+        {
+
+        }
+        if (currentState is ExploringState)
+        {
+
+        }
+        if (currentState is InspectingState)
+        {
+
+        }
+        //currentState = state;
         state.EnterState(this);
     }
+
     public void Inspect(Transform dot)
     {
         SwitchState(InspectingState);
@@ -61,19 +77,13 @@ public class StateManager : MonoBehaviour
             Button dot = dotsParent.GetChild(i).GetComponent<Button>();
             dot.onClick.RemoveAllListeners();
             dot.onClick.AddListener(delegate { Inspect(dot.transform); });
-
         }
     }
 
+
 }
 
-//public enum PlayerState
-//{
-//    TURNSTART,
-//    CHOOSE,
-//    CONFIRM,
-//    WATCH,
-//    END,
+
 
 
 

@@ -2,28 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
+
 public class NeutralState : BaseState
 {
-    
+    StateManager StateManager;
+
     public override void Initialize()
     {
         this.cg = GetComponent<CanvasGroup>();
     }
     public override void EnterState(StateManager stateManager)
     {
-        this.GetPage.DOScale(Vector3.one, 0);
-        cg.DOFade(1, .25f);
-
-
+        this.StateManager = stateManager;
+        this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
     }
     public override void UpdateState(StateManager stateManager)
     {
 
+
     }
+
     public override void LeaveState()
     {
-        cg.DOFade(0,.15f);
-        this.GetPage.DOScale(Vector3.zero, 0);
+        cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
 
     }
 }
