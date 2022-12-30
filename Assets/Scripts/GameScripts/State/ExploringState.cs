@@ -37,6 +37,7 @@ public class ExploringState : BaseState
     private void Reset()
     {
         camController.transform.position = cachedPos;
+        camController.m_Lens.OrthographicSize = 24;
         StateManager.SwitchState(this);
         //go to eutral state
     }

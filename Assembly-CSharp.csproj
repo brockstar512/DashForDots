@@ -57,14 +57,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/GameScripts/State/BaseState.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/BotFactory.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/OnlineSubMenu.cs" />
+    <Compile Include="Assets/Scripts/Package Scripts/SwipeDemo.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/DirectionId.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/SwipeListener.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/SwipesToVectorEvents.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_Hexagonal.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_EightDirections.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/QuitState.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/SwitchToggle.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/NeutralState.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/SwipeDetectionMode.cs" />
     <Compile Include="Assets/Scripts/GameScripts/LocalGameController.cs" />
     <Compile Include="Assets/Scripts/UIScripts/LineUI.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/StateManager.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/VectorToDirection.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/Errors.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" />
     <Compile Include="Assets/Scripts/GameScripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/UILineIllustrator.cs" />
@@ -72,12 +83,14 @@
     <Compile Include="Assets/Scripts/GameScripts/State/ExploringState.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/InspectingState.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/DecisionState.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_Vector.cs" />
     <Compile Include="Assets/Scripts/UIScripts/NavigationManager.cs" />
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/Scripts/UIScripts/PersistentCanvas.cs" />
+    <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/UIScripts/BotFactory.cs" />
-    <Compile Include="Assets/Scripts/UIScripts/OnlineSubMenu.cs" />
+    <Compile Include="Assets/Scripts/Package Scripts/ZoomDemo.cs" />
+    <Compile Include="Assets/Scripts/Package Scripts/CenterPlayerDemo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
