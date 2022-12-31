@@ -884,6 +884,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
+--- !u!224 &712800271 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6734765079069142456, guid: c17183f224c0f4897aaff2ffcacc5664, type: 3}
+  m_PrefabInstance: {fileID: 6734765079927129155}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &766883399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1464,8 @@ GameObject:
   - component: {fileID: 1396335449}
   - component: {fileID: 1396335451}
   - component: {fileID: 1396335450}
+  - component: {fileID: 1396335452}
+  - component: {fileID: 1396335453}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -1586,6 +1593,36 @@ MonoBehaviour:
   _upRight: 1
   _downLeft: 1
   _downRight: 1
+--- !u!114 &1396335452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396335446}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 012c1f1aaf9234c75afa18a06b655c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomOutMin: 5
+  zoomOutMax: 0
+  camController: {fileID: 1396335447}
+--- !u!114 &1396335453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396335446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1fcaa125c66494b9852a20692f8fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camController: {fileID: 1396335447}
+  dot: {fileID: 712800271}
+  zoom: 0
 --- !u!1 &1428598743
 GameObject:
   m_ObjectHideFlags: 0
