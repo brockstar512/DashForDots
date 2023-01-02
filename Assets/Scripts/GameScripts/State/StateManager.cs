@@ -80,7 +80,6 @@ public class StateManager : MonoBehaviour
 
     public void Inspect(Transform dot)
     {
-
         target = dot;
         SwitchState(InspectingState);
     }
