@@ -91,6 +91,11 @@
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/ZoomDemo.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CenterPlayerDemo.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/CameraBaseState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/CameraZoomState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/CameraPanState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/CameraNeutralState.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/CameraFocusState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

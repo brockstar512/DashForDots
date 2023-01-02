@@ -1,15 +1,19 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/State/StateManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/State/NeutralState.cs">
     <Files>
-      <File FileName="Assets/Scripts/State/StateManager.cs" Line="37" Column="32" />
-      <File FileName="Assets/Scripts/State/NeutralState.cs" Line="20" Column="43" />
-      <File FileName="Assets/Scripts/State/ExploringState.cs" Line="7" Column="1" />
-      <File FileName="Assets/Scripts/State/InspectingState.cs" Line="26" Column="62" />
+      <File FileName="Assets/Scripts/State/StateManager.cs" Line="48" Column="1" />
+      <File FileName="Assets/Scripts/State/NeutralState.cs" Line="12" Column="41" />
+      <File FileName="Assets/Scripts/State/ExploringState.cs" Line="75" Column="27" />
+      <File FileName="Assets/Scripts/State/InspectingState.cs" Line="23" Column="21" />
       <File FileName="Assets/Scripts/State/DecisionState.cs" Line="9" Column="1" />
       <File FileName="Assets/Scripts/State/QuitState.cs" Line="9" Column="24" />
-      <File FileName="Assets/Scripts/Package Scripts/SwipeDemo.cs" Line="89" Column="22" />
-      <File FileName="Assets/Scripts/Package Scripts/ZoomDemo.cs" Line="52" Column="6" />
-      <File FileName="Assets/Scripts/Package Scripts/CenterPlayerDemo.cs" Line="29" Column="54" />
+      <File FileName="Assets/Scripts/Package Scripts/CenterPlayerDemo.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/State/CameraBaseState.cs" Line="9" Column="39" />
+      <File FileName="Assets/Scripts/GameScripts/State/BaseState.cs" Line="10" Column="21" />
+      <File FileName="Assets/Scripts/GameScripts/State/CameraZoomState.cs" Line="9" Column="24" />
+      <File FileName="Assets/Scripts/GameScripts/State/CameraPanState.cs" Line="38" Column="35" />
+      <File FileName="Assets/Scripts/GameScripts/State/CameraNeutralState.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/State/CameraFocusState.cs" Line="7" Column="57" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

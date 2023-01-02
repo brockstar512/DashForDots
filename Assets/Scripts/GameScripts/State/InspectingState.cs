@@ -22,11 +22,10 @@ public class InspectingState : BaseState
 
     public void View(Transform target)
     {
+        Vector3 newPos = new Vector3(target.transform.position.x, target.transform.position.y, -10);
         zoom = camController.m_Lens.OrthographicSize;
-        DOTween.To(() => zoom, x => zoom = x, 5, .5f).SetEase(Ease.InOutSine);
-        camController.Follow = target;
-
-
+        DOTween.To(() => zoom, x => zoom = x, 5, .75f).SetEase(Ease.InOutSine);
+        camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine);//.SetEase(Ease.InOutSine);
     }
 
     public override void EnterState(StateManager stateManager)
@@ -41,7 +40,7 @@ public class InspectingState : BaseState
     }
     public override void LeaveState()
     {
-        //cg.DOFade(0, .1f).OnComplete(()=>{ this.GetPage.DOScale(Vector3.zero, 0); });
+        cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 
     private void Reset()

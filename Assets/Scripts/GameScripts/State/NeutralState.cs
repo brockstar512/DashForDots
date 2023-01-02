@@ -7,6 +7,9 @@ using Cinemachine;
 public class NeutralState : BaseState
 {
     StateManager StateManager;
+    CameraBaseState cameraState;
+    public CameraZoomState CameraZoomState;
+    public CameraPanState CameraPanState;
 
     public override void Initialize()
     {
@@ -19,9 +22,24 @@ public class NeutralState : BaseState
     }
     public override void UpdateState(StateManager stateManager)
     {
+        if (Input.touchCount == 2)
+        {
+            cameraState = CameraZoomState;
+        }
+        else if (Input.touchCount == 1)
+        {
+            //cameraState = CameraPanState;
+        }
+        else
+        {
 
+        }
+
+        cameraState.UpdateState(StateManager);
 
     }
+
+
 
     public override void LeaveState()
     {

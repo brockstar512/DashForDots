@@ -11,6 +11,14 @@ public class ExploringState : BaseState
     [SerializeField] Button reset;
     [SerializeField] CinemachineVirtualCamera camController;
     Vector3 cachedPos;
+    private float zoomOutMin = 5;
+    private float zoomOutMax;
+
+    void Awake()
+    {
+        zoomOutMax = camController.m_Lens.OrthographicSize;
+    }
+
     public override void Initialize()
     {
         this.cg = GetComponent<CanvasGroup>();
@@ -27,7 +35,23 @@ public class ExploringState : BaseState
     }
     public override void UpdateState(StateManager stateManager)
     {
+        if (Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
 
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+            float difference = currentMagnitude - prevMagnitude;
+
+            zoom(difference * 0.01f);
+        }
+
+        zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
     public override void LeaveState()
     {
@@ -41,4 +65,12 @@ public class ExploringState : BaseState
         StateManager.SwitchState(this);
         //go to eutral state
     }
+
+    void zoom(float increment)
+    {
+        camController.m_Lens.OrthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
+    }
+
+    //camer zoom state that two scripts own
+    //this just manages ui
 }

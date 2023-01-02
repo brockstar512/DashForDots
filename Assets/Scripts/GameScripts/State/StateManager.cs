@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Cinemachine;
+using GG.Infrastructure.Utils.Swipe;
 
+[RequireComponent(typeof(SwipeListenerEvent))]
 public class StateManager : MonoBehaviour
 {
     [SerializeField] Transform dotsParent;
     [SerializeField] Button quitButton;
+    public CinemachineVirtualCamera camController;
+    public SwipeListenerEvent SwipeListener;
 
     BaseState currentState;
-    public NeutralState NeutralState;
-    public ExploringState ExploringState;
-    public InspectingState InspectingState;
+    public NeutralState NeutralState;//looking at everythig/reset
+    public ExploringState ExploringState;//scrolling around and zooming
+    public InspectingState InspectingState;//looking at choice. can scroll
     public QuitState QuitState;
     public DecisionState DecisionState;
     public CanvasGroup currentUI;
@@ -35,6 +40,12 @@ public class StateManager : MonoBehaviour
     {
         currentState = ExploringState;
         currentState.EnterState(this);
+
+
+        //intialize swipes
+        SwipeListener.RemoveAllListeners();
+        SwipeListener.AddListener(NeutralState.CameraPanState.OnSwipeHandler);
+
     }
 
     // Update is called once per frame

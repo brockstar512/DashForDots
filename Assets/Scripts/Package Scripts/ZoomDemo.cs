@@ -5,9 +5,8 @@ using Cinemachine;
 
 public class ZoomDemo : MonoBehaviour
 {
-    Vector3 touchStart;
-    public float zoomOutMin = 5;
-    public float zoomOutMax;
+    private float zoomOutMin = 5;
+    private float zoomOutMax;
     [SerializeField] CinemachineVirtualCamera camController;
 
     void Awake()
@@ -18,10 +17,7 @@ public class ZoomDemo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //touchStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
+
         if (Input.touchCount == 2)
         {
             Touch touchZero = Input.GetTouch(0);
@@ -37,12 +33,7 @@ public class ZoomDemo : MonoBehaviour
 
             zoom(difference * 0.01f);
         }
-        else if (Input.GetMouseButton(0))
-        {
-            //Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //Camera.main.transform.position += direction;
-            Debug.Log("Moving camera in wrong script");
-        }
+
         zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
 
