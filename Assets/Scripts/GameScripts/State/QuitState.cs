@@ -13,7 +13,7 @@ public class QuitState : BaseState
         this.cg = GetComponent<CanvasGroup>();
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
 
-        cancel.onClick.AddListener(Cancel);
+        cancel.onClick.AddListener(delegate { Cancel(StateManager); });
         confirm.onClick.AddListener(Quit);
 
     }
@@ -31,13 +31,12 @@ public class QuitState : BaseState
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 
-    void Cancel()
+    void Cancel(StateManager StateManager)
     {
-        Debug.Log("Cancel");
+        StateManager.SwitchState(StateManager.NeutralState);
     }
     private void Quit()
     {
         Debug.Log("Quit");
-
     }
 }

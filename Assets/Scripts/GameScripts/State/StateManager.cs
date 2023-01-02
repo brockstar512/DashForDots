@@ -228,13 +228,6 @@ public class StateManager : MonoBehaviour
         }
     }
 
-
-    //public void Reset()
-    //{
-    //    Vector3 newPos = new Vector3(0, 0, -10);
-    //    DOTween.To(() => camController.m_Lens.OrthographicSize, x => camController.m_Lens.OrthographicSize = x, zoomOutMax, .75f).SetEase(Ease.InOutSine);
-    //    camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine).OnComplete(delegate { SwitchState(NeutralState); });//.SetEase(Ease.InOutSine);
-    //}
 }
 
 

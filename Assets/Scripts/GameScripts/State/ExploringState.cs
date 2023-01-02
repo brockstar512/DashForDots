@@ -48,8 +48,8 @@ public class ExploringState : BaseState
     {
         isResetting = true;
         Vector3 newPos = new Vector3(0, 0, -10);
-        DOTween.To(() => StateManager.camController.m_Lens.OrthographicSize, x => StateManager.camController.m_Lens.OrthographicSize = x, 24, .5f);
-        StateManager.camController.transform.DOMove(newPos, .75f).SetEase(Ease.OutSine).OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); });//.SetEase(Ease.InOutSine);
+        DOTween.To(() => StateManager.camController.m_Lens.OrthographicSize, x => StateManager.camController.m_Lens.OrthographicSize = x, 24, .75f).OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); }); ;
+        StateManager.camController.transform.DOMove(newPos, .25f).SetEase(Ease.OutSine);//.OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); });//.SetEase(Ease.InOutSine);
     }
 
 }
