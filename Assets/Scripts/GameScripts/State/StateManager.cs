@@ -11,9 +11,24 @@ public class StateManager : MonoBehaviour
 {
     [SerializeField] Transform dotsParent;
     [SerializeField] Button quitButton;
-    public CinemachineVirtualCamera camController;
-    public SwipeListenerEvent SwipeListener;
 
+    [Header("Camera settings")]
+    [SerializeField] CinemachineVirtualCamera camController;
+    const float zoomOutMin = 5;
+    private float zoomOutMax;
+    private bool isZooming;
+
+    [Header("Available movements:")]
+    [SerializeField] private bool _up = true;
+    [SerializeField] private bool _down = true;
+    [SerializeField] private bool _left = true;
+    [SerializeField] private bool _right = true;
+    [SerializeField] private bool _upLeft = true;
+    [SerializeField] private bool _upRight = true;
+    [SerializeField] private bool _downLeft = true;
+    [SerializeField] private bool _downRight = true;
+
+    [Header("UI States:")]
     BaseState currentState;
     public NeutralState NeutralState;//looking at everythig/reset
     public ExploringState ExploringState;//scrolling around and zooming
@@ -21,6 +36,7 @@ public class StateManager : MonoBehaviour
     public QuitState QuitState;
     public DecisionState DecisionState;
     public CanvasGroup currentUI;
+    public Stack<BaseState> stakeStack;
 
 
 
@@ -33,6 +49,7 @@ public class StateManager : MonoBehaviour
         InspectingState.Initialize();
         QuitState.Initialize();
         DecisionState.Initialize();
+        zoomOutMax = camController.m_Lens.OrthographicSize;
     }
 
     // Start is called before the first frame update
@@ -41,16 +58,12 @@ public class StateManager : MonoBehaviour
         currentState = ExploringState;
         currentState.EnterState(this);
 
-
-        //intialize swipes
-        SwipeListener.RemoveAllListeners();
-        SwipeListener.AddListener(NeutralState.CameraPanState.OnSwipeHandler);
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        HandleScreenInputs();
         currentState.UpdateState(this);
     }
 
@@ -92,11 +105,142 @@ public class StateManager : MonoBehaviour
     }
 
 
+
+    void HandleScreenInputs()
+    {
+        if (Input.touchCount == 2)
+        {
+            isZooming = true;
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+            float difference = currentMagnitude - prevMagnitude;
+
+            zoom(difference * 0.01f);
+        }
+        //else if (Input.touchCount == 1)
+        //{
+
+        //}
+        #if UNITY_EDITOR
+            zoom(Input.GetAxis("Mouse ScrollWheel"));
+        #endif
+
+    }
+
+
+    void zoom(float increment)
+    {
+        camController.m_Lens.OrthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);//pass in camera
+        isZooming = false;
+    }
+
+    public void OnSwipeHandler(string id)
+    {
+        if (isZooming)
+            return;
+
+        Debug.Log("abc " + id);
+        switch (id)
+        {
+            case DirectionId.ID_DOWN:
+                MoveUp();
+                break;
+
+            case DirectionId.ID_UP:
+                MoveDown();
+                break;
+
+            case DirectionId.ID_RIGHT:
+                MoveLeft();
+                break;
+
+            case DirectionId.ID_LEFT:
+                MoveRight();
+                break;
+
+            case DirectionId.ID_DOWN_RIGHT:
+                MoveUpLeft();
+                break;
+
+            case DirectionId.ID_DOWN_LEFT:
+                MoveUpRight();
+                break;
+
+            case DirectionId.ID_UP_RIGHT:
+                MoveDownLeft();
+                break;
+
+            case DirectionId.ID_UP_LEFT:
+                MoveDownRight();
+                break;
+        }
+    }
+    private void MoveDownRight()
+    {
+        if (_downRight)
+        {
+            camController.transform.position += Vector3.down + Vector3.right;
+        }
+    }
+    private void MoveDownLeft()
+    {
+        if (_downLeft)
+        {
+            camController.transform.position += Vector3.down + Vector3.left;
+        }
+    }
+    private void MoveUpRight()
+    {
+        if (_upRight)
+        {
+            camController.transform.position += Vector3.up + Vector3.right;
+        }
+    }
+    private void MoveUpLeft()
+    {
+        if (_upLeft)
+        {
+            camController.transform.position += Vector3.up + Vector3.left;
+        }
+    }
+    private void MoveRight()
+    {
+        if (_right)
+        {
+            camController.transform.position += Vector3.right;
+        }
+    }
+    private void MoveLeft()
+    {
+        if (_left)
+        {
+            camController.transform.position += Vector3.left;
+        }
+    }
+    private void MoveDown()
+    {
+        if (_down)
+        {
+            camController.transform.position += Vector3.down;
+        }
+    }
+    private void MoveUp()
+    {
+        if (_up)
+        {
+            camController.transform.position += Vector3.up;
+        }
+    }
+
 }
 
 
 
 
-
-//neutral when you move -> inspecting... when you tap a dot -> confirm/delete
-//
