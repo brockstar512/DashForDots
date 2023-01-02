@@ -7,7 +7,7 @@ public class DecisionState : BaseState
 {
     StateManager StateManager;
 
-    public override void Initialize()
+    public override void Initialize(StateManager StateManager)
     {
         this.cg = GetComponent<CanvasGroup>();
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });

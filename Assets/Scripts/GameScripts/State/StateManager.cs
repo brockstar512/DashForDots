@@ -13,9 +13,9 @@ public class StateManager : MonoBehaviour
     [SerializeField] Button quitButton;
 
     [Header("Camera settings")]
-    [SerializeField] CinemachineVirtualCamera camController;
+    public CinemachineVirtualCamera camController;
     const float zoomOutMin = 5;
-    private float zoomOutMax;
+    public float zoomOutMax;
     private bool isZooming;
 
     [Header("Available movements:")]
@@ -36,7 +36,6 @@ public class StateManager : MonoBehaviour
     public QuitState QuitState;
     public DecisionState DecisionState;
     public CanvasGroup currentUI;
-    public Stack<BaseState> stakeStack;
 
 
 
@@ -44,21 +43,22 @@ public class StateManager : MonoBehaviour
     {
         HandleDots();
         quitButton.onClick.AddListener(delegate { SwitchState(QuitState); });
-        NeutralState.Initialize();
-        ExploringState.Initialize();
-        InspectingState.Initialize();
-        QuitState.Initialize();
-        DecisionState.Initialize();
+        NeutralState.Initialize(this);
+        ExploringState.Initialize(this);
+        InspectingState.Initialize(this);
+        QuitState.Initialize(this);
+        DecisionState.Initialize(this);
         zoomOutMax = camController.m_Lens.OrthographicSize;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentState = ExploringState;
+        currentState = NeutralState;
         currentState.EnterState(this);
-
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -69,23 +69,13 @@ public class StateManager : MonoBehaviour
 
     public void SwitchState(BaseState state)
     {
+        //return;
         Debug.Log("Here" + state);
+
         currentState.LeaveState();
+        currentState = state;
+        currentState.EnterState(this);
 
-        if(currentState is NeutralState)
-        {
-
-        }
-        if (currentState is ExploringState)
-        {
-
-        }
-        if (currentState is InspectingState)
-        {
-
-        }
-        //currentState = state;
-        state.EnterState(this);
     }
 
     public void Inspect(Transform dot)
@@ -104,8 +94,6 @@ public class StateManager : MonoBehaviour
         }
     }
 
-
-
     void HandleScreenInputs()
     {
         if (Input.touchCount == 2)
@@ -121,6 +109,7 @@ public class StateManager : MonoBehaviour
             float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
 
             float difference = currentMagnitude - prevMagnitude;
+            //Debug.Log($"Here is the difference {difference}  and here is the current mag {currentMagnitude}");
 
             zoom(difference * 0.01f);
         }
@@ -130,10 +119,13 @@ public class StateManager : MonoBehaviour
         //}
         #if UNITY_EDITOR
             zoom(Input.GetAxis("Mouse ScrollWheel"));
-        #endif
+#endif
+        //if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0.005f)
+        //{
+        //    Debug.Log("increment::   switch state" + Input.GetAxis("Mouse ScrollWheel"));
+        //}
 
     }
-
 
     void zoom(float increment)
     {
@@ -239,6 +231,13 @@ public class StateManager : MonoBehaviour
         }
     }
 
+
+    public void Reset()
+    {
+        Vector3 newPos = new Vector3(0, 0, -10);
+        DOTween.To(() => camController.m_Lens.OrthographicSize, x => camController.m_Lens.OrthographicSize = x, zoomOutMax, .75f).SetEase(Ease.InOutSine);
+        camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine).OnComplete(delegate { SwitchState(NeutralState); });//.SetEase(Ease.InOutSine);
+    }
 }
 
 

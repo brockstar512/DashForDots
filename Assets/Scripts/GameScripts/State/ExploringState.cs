@@ -7,70 +7,44 @@ using Cinemachine;
 
 public class ExploringState : BaseState
 {
-    StateManager StateManager;
     [SerializeField] Button reset;
-    [SerializeField] CinemachineVirtualCamera camController;
-    Vector3 cachedPos;
-    private float zoomOutMin = 5;
-    private float zoomOutMax;
 
     void Awake()
     {
-        zoomOutMax = camController.m_Lens.OrthographicSize;
     }
 
-    public override void Initialize()
+    public override void Initialize(StateManager StateManager)
     {
         this.cg = GetComponent<CanvasGroup>();
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
-        //reset.onClick.AddListener(Reset);
-
-
+        reset.onClick.AddListener(delegate { StateManager.Reset();});
     }
+
     public override void EnterState(StateManager stateManager)
     {
         this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
-        cachedPos = camController.transform.position;
-
     }
+
     public override void UpdateState(StateManager stateManager)
     {
-        if (Input.touchCount == 2)
+        
+
+
+        if (stateManager.camController.m_Lens.OrthographicSize > 23)
         {
-            Touch touchZero = Input.GetTouch(0);
-            Touch touchOne = Input.GetTouch(1);
-
-            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-            float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-            float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-
-            float difference = currentMagnitude - prevMagnitude;
-
-            zoom(difference * 0.01f);
+            stateManager.SwitchState(stateManager.NeutralState);
         }
-
-        zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
     public override void LeaveState()
     {
-        //cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
+        cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 
-    private void Reset()
-    {
-        camController.transform.position = cachedPos;
-        camController.m_Lens.OrthographicSize = 24;
-        StateManager.SwitchState(this);
-        //go to eutral state
-    }
+    //private void Reset(StateManager StateManager)
+    //{
+    //    Vector3 newPos = new Vector3(0, 0, -10);
+    //    DOTween.To(() => StateManager.camController.m_Lens.OrthographicSize, x => StateManager.camController.m_Lens.OrthographicSize = x, zoomMax, .75f).SetEase(Ease.InOutSine);
+    //    StateManager.camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine).OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); });//.SetEase(Ease.InOutSine);
+    //}
 
-    void zoom(float increment)
-    {
-        camController.m_Lens.OrthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
-    }
-
-    //camer zoom state that two scripts own
-    //this just manages ui
 }

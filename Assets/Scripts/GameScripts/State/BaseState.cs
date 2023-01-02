@@ -8,7 +8,7 @@ public abstract class BaseState : MonoBehaviour
     [HideInInspector]
     public CanvasGroup cg;
     public Transform GetPage { get { return GetComponent<Transform>(); } }
-    public abstract void Initialize();
+    public abstract void Initialize(StateManager StateManager);
     public abstract void EnterState(StateManager stateManager);
     public abstract void UpdateState(StateManager stateManager);
     public abstract void LeaveState();
