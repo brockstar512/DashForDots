@@ -10,15 +10,12 @@ public class ExploringState : BaseState
     [SerializeField] Button reset;
     bool isResetting = false;
 
-    void Awake()
-    {
-    }
+ 
 
     public override void Initialize(StateManager StateManager)
     {
-        this.cg = GetComponent<CanvasGroup>();
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
-        reset.onClick.AddListener(delegate { Reset(StateManager);});
+        reset.onClick.AddListener(delegate { StateManager.SwitchState(StateManager.ResetState);});
     }
 
     public override void EnterState(StateManager stateManager)
@@ -28,8 +25,7 @@ public class ExploringState : BaseState
 
     public override void UpdateState(StateManager stateManager)
     {
-        if (isResetting)
-            return;
+
         stateManager.HandleScreenInputs();
 
 
@@ -40,16 +36,10 @@ public class ExploringState : BaseState
     }
     public override void LeaveState()
     {
-        isResetting = false;
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 
-    private void Reset(StateManager StateManager)
-    {
-        isResetting = true;
-        Vector3 newPos = new Vector3(0, 0, -10);
-        DOTween.To(() => StateManager.camController.m_Lens.OrthographicSize, x => StateManager.camController.m_Lens.OrthographicSize = x, 24, .75f).OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); }); ;
-        StateManager.camController.transform.DOMove(newPos, .25f).SetEase(Ease.OutSine);//.OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); });//.SetEase(Ease.InOutSine);
-    }
+
+
 
 }

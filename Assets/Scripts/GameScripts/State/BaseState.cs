@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(CanvasGroup))]
 public abstract class BaseState : MonoBehaviour
 {
     [HideInInspector]
-    public CanvasGroup cg;
+    public CanvasGroup cg { get { return GetComponent<CanvasGroup>(); } }
     public Transform GetPage { get { return GetComponent<Transform>(); } }
     public abstract void Initialize(StateManager StateManager);
     public abstract void EnterState(StateManager stateManager);

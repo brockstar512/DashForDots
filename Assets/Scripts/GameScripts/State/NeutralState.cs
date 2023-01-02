@@ -8,7 +8,6 @@ public class NeutralState : BaseState
 
     public override void Initialize(StateManager StateManager)
     {
-        this.cg = GetComponent<CanvasGroup>();
     }
     public override void EnterState(StateManager stateManager)
     {

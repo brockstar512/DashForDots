@@ -11,12 +11,13 @@ public class StateManager : MonoBehaviour
 {
     [SerializeField] Transform dotsParent;
     [SerializeField] Button quitButton;
+    public Transform target;
 
     [Header("Camera settings")]
     public CinemachineVirtualCamera camController;
     const float zoomOutMin = 5;
     public float zoomOutMax;
-    private bool isZooming;
+    //private bool isZooming;
 
     [Header("Available movements:")]
     [SerializeField] private bool _up = true;
@@ -35,6 +36,7 @@ public class StateManager : MonoBehaviour
     public InspectingState InspectingState;//looking at choice. can scroll
     public QuitState QuitState;
     public DecisionState DecisionState;
+    public ResetState ResetState;
 
 
 
@@ -47,6 +49,7 @@ public class StateManager : MonoBehaviour
         InspectingState.Initialize(this);
         QuitState.Initialize(this);
         DecisionState.Initialize(this);
+        ResetState.Initialize(this);
         zoomOutMax = camController.m_Lens.OrthographicSize;
     }
 
@@ -67,7 +70,7 @@ public class StateManager : MonoBehaviour
     public void SwitchState(BaseState state)
     {
         //return;
-        Debug.Log("Here" + state);
+        Debug.Log("State Change :" + state);
 
         currentState.LeaveState();
         currentState = state;
@@ -77,8 +80,9 @@ public class StateManager : MonoBehaviour
 
     public void Inspect(Transform dot)
     {
+
+        target = dot;
         SwitchState(InspectingState);
-        InspectingState.View(dot);
     }
 
     void HandleDots()
@@ -95,7 +99,7 @@ public class StateManager : MonoBehaviour
     {
         if (Input.touchCount == 2)
         {
-            isZooming = true;
+            //isZooming = true;
             Touch touchZero = Input.GetTouch(0);
             Touch touchOne = Input.GetTouch(1);
 
@@ -110,32 +114,24 @@ public class StateManager : MonoBehaviour
 
             zoom(difference * 0.01f);
         }
-        //else if (Input.touchCount == 1)
-        //{
-
-        //}
+  
         #if UNITY_EDITOR
             zoom(Input.GetAxis("Mouse ScrollWheel"));
-#endif
-        //if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0.005f)
-        //{
-        //    Debug.Log("increment::   switch state" + Input.GetAxis("Mouse ScrollWheel"));
-        //}
+        #endif
 
     }
 
     void zoom(float increment)
     {
         camController.m_Lens.OrthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);//pass in camera
-        isZooming = false;
     }
 
     public void OnSwipeHandler(string id)
     {
-        if (isZooming)
+        if (Input.touchCount == 2 || currentState == QuitState)
             return;
 
-        Debug.Log("abc " + id);
+        //Debug.Log("abc " + id);
         switch (id)
         {
             case DirectionId.ID_DOWN:

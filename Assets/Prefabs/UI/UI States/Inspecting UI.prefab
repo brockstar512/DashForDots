@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5511629448244954802
 RectTransform:
   m_ObjectHideFlags: 0
@@ -176,8 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cg: {fileID: 0}
-  camController: {fileID: 0}
-  reset: {fileID: 9186174681791363908}
 --- !u!1 &5511629450313607957
 GameObject:
   m_ObjectHideFlags: 0

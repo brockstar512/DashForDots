@@ -91,6 +91,7 @@
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/ZoomDemo.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CenterPlayerDemo.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/ResetState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
