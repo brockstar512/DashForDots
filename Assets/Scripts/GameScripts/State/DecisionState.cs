@@ -20,7 +20,7 @@ public class DecisionState : BaseState
     }
     public override void UpdateState(StateManager stateManager)
     {
-
+        stateManager.HandleScreenInputs();
     }
     public override void LeaveState()
     {

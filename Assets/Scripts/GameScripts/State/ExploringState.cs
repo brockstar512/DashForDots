@@ -8,6 +8,7 @@ using Cinemachine;
 public class ExploringState : BaseState
 {
     [SerializeField] Button reset;
+    bool isResetting = false;
 
     void Awake()
     {
@@ -17,7 +18,7 @@ public class ExploringState : BaseState
     {
         this.cg = GetComponent<CanvasGroup>();
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
-        reset.onClick.AddListener(delegate { StateManager.Reset();});
+        reset.onClick.AddListener(delegate { Reset(StateManager);});
     }
 
     public override void EnterState(StateManager stateManager)
@@ -27,7 +28,9 @@ public class ExploringState : BaseState
 
     public override void UpdateState(StateManager stateManager)
     {
-        
+        if (isResetting)
+            return;
+        stateManager.HandleScreenInputs();
 
 
         if (stateManager.camController.m_Lens.OrthographicSize > 23)
@@ -37,14 +40,16 @@ public class ExploringState : BaseState
     }
     public override void LeaveState()
     {
+        isResetting = false;
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 
-    //private void Reset(StateManager StateManager)
-    //{
-    //    Vector3 newPos = new Vector3(0, 0, -10);
-    //    DOTween.To(() => StateManager.camController.m_Lens.OrthographicSize, x => StateManager.camController.m_Lens.OrthographicSize = x, zoomMax, .75f).SetEase(Ease.InOutSine);
-    //    StateManager.camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine).OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); });//.SetEase(Ease.InOutSine);
-    //}
+    private void Reset(StateManager StateManager)
+    {
+        isResetting = true;
+        Vector3 newPos = new Vector3(0, 0, -10);
+        DOTween.To(() => StateManager.camController.m_Lens.OrthographicSize, x => StateManager.camController.m_Lens.OrthographicSize = x, 24, .5f);
+        StateManager.camController.transform.DOMove(newPos, .75f).SetEase(Ease.OutSine).OnComplete(delegate { StateManager.SwitchState(StateManager.NeutralState); });//.SetEase(Ease.InOutSine);
+    }
 
 }

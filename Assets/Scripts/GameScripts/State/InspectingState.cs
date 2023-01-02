@@ -35,7 +35,8 @@ public class InspectingState : BaseState
     }
     public override void UpdateState(StateManager stateManager)
     {
-        camController.m_Lens.OrthographicSize = zoom;
+        //camController.m_Lens.OrthographicSize = zoom;
+        stateManager.HandleScreenInputs();
 
     }
     public override void LeaveState()

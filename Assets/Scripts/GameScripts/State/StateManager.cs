@@ -35,7 +35,6 @@ public class StateManager : MonoBehaviour
     public InspectingState InspectingState;//looking at choice. can scroll
     public QuitState QuitState;
     public DecisionState DecisionState;
-    public CanvasGroup currentUI;
 
 
 
@@ -60,10 +59,8 @@ public class StateManager : MonoBehaviour
 
 
 
-    // Update is called once per frame
     void Update()
     {
-        HandleScreenInputs();
         currentState.UpdateState(this);
     }
 
@@ -94,7 +91,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    void HandleScreenInputs()
+    public void HandleScreenInputs()
     {
         if (Input.touchCount == 2)
         {
@@ -232,12 +229,12 @@ public class StateManager : MonoBehaviour
     }
 
 
-    public void Reset()
-    {
-        Vector3 newPos = new Vector3(0, 0, -10);
-        DOTween.To(() => camController.m_Lens.OrthographicSize, x => camController.m_Lens.OrthographicSize = x, zoomOutMax, .75f).SetEase(Ease.InOutSine);
-        camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine).OnComplete(delegate { SwitchState(NeutralState); });//.SetEase(Ease.InOutSine);
-    }
+    //public void Reset()
+    //{
+    //    Vector3 newPos = new Vector3(0, 0, -10);
+    //    DOTween.To(() => camController.m_Lens.OrthographicSize, x => camController.m_Lens.OrthographicSize = x, zoomOutMax, .75f).SetEase(Ease.InOutSine);
+    //    camController.transform.DOMove(newPos, .75f).SetEase(Ease.InOutSine).OnComplete(delegate { SwitchState(NeutralState); });//.SetEase(Ease.InOutSine);
+    //}
 }
 
 

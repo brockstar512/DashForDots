@@ -17,6 +17,7 @@ public class NeutralState : BaseState
 
     public override void UpdateState(StateManager stateManager)
     {
+        stateManager.HandleScreenInputs();
 
         if (Input.touchCount == 2)
         {
