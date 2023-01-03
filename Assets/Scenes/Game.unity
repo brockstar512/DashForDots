@@ -936,6 +936,7 @@ GameObject:
   - component: {fileID: 766883400}
   - component: {fileID: 766883401}
   - component: {fileID: 766883402}
+  - component: {fileID: 766883403}
   m_Layer: 5
   m_Name: Game State Manager
   m_TagString: Untagged
@@ -1032,6 +1033,24 @@ MonoBehaviour:
   _sensetivity: 10
   _continuousDetection: 1
   _swipeDetectionMode: 3
+--- !u!114 &766883403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766883399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156f7713bdecb4262b051304fdb0dec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerColor:
+    serializedVersion: 2
+    rgba: 4285230067
+  playerOptions:
+    serializedVersion: 2
+    rgba: 4283760467
 --- !u!1 &1078658559
 GameObject:
   m_ObjectHideFlags: 3

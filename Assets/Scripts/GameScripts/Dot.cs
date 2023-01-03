@@ -1,26 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.VectorGraphics;
+using UnityEngine.UI;
+
 
 
 public class Dot : MonoBehaviour
 {
-    [SerializeField] SVGImage circle;
     public int X { get; private set; }
     public int Y { get; private set; }
     public bool isConnectedRight;
     public bool isConnectedLeft;
     public bool isConnectedUp;
     public bool isConnectedDown;
+    public ColorThemeHelper ColorThemeHelper { get; private set; }
     Dictionary<Vector2, bool> connectingCompass;//avaiable direction
+    GridManager GridManager;
 
-    public void Init(int x, int y, int boundaryLimit)
+    public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
     {
+        ColorThemeHelper = GetComponent<ColorThemeHelper>();
+        this.GridManager = GridManager;
         this.gameObject.name = $"Node {x},{y}";
         X = x;
         Y = y;
-        circle = GetComponent<SVGImage>();
 
         connectingCompass = new Dictionary<Vector2, bool>()
         {
@@ -43,6 +46,12 @@ public class Dot : MonoBehaviour
 
         Debug.Log($"x,y is {x},{y}");
         Debug.Log(connectingCompass[Vector2.down]);
-
+        this.GetComponent<Button>().onClick.AddListener(OnSelect);
     }
+
+    void OnSelect()
+    {
+        GridManager.SelectDot(X,Y);
+    }
+
 }

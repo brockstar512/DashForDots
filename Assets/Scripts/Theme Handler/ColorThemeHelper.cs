@@ -20,17 +20,7 @@ public class ColorThemeHelper : MonoBehaviour
     public void Start()
     {
         GetTarget();
-        SwitchToggle.Instance.lightMode += ToLightUI;
-        SwitchToggle.Instance.darkMode += ToDarkUI;
-
-        if(SwitchToggle.Instance.currentTheme == SwitchToggle.Theme.lightTheme)
-        {
-            ToLightUI();
-        }
-        else
-        {
-            ToDarkUI();
-        }
+        Subscribe();
     }
 
     public void ToDarkUI()
@@ -42,9 +32,29 @@ public class ColorThemeHelper : MonoBehaviour
         image.DOColor(this.lightTheme, .25f);   
     }
 
+
     public void OnDestroy()
+    {
+        UnSubscribe();
+    }
+    public void UnSubscribe()
     {
         SwitchToggle.Instance.lightMode -= ToLightUI;
         SwitchToggle.Instance.darkMode -= ToDarkUI;
+    }
+
+    public void Subscribe()
+    {
+        SwitchToggle.Instance.lightMode += ToLightUI;
+        SwitchToggle.Instance.darkMode += ToDarkUI;
+
+        if (SwitchToggle.Instance.currentTheme == SwitchToggle.Theme.lightTheme)
+        {
+            ToLightUI();
+        }
+        else
+        {
+            ToDarkUI();
+        }
     }
 }
