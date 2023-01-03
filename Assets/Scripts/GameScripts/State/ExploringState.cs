@@ -8,9 +8,6 @@ using Cinemachine;
 public class ExploringState : BaseState
 {
     [SerializeField] Button reset;
-    bool isResetting = false;
-
- 
 
     public override void Initialize(StateManager StateManager)
     {

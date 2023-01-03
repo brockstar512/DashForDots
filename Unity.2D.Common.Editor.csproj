@@ -56,10 +56,10 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/ImagePacker/Jobs/FindTightRectJob.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/ImagePacker/ImagePacker.cs" />
-    <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/AssemblyInfo.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/TextureGenerator/TextureGeneratorHelper.cs" />
+    <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/ImagePacker/Jobs/FindTightRectJob.cs" />
+    <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/AssemblyInfo.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/ImagePacker/ImagePackNode.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.common@4.2.0/Editor/ImagePacker/ImagePackerDebugEditor.cs" />
   </ItemGroup>
@@ -325,11 +325,11 @@
     <Reference Include="DOTween">
       <HintPath>Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Library/PackageCache/com.unity.render-pipelines.core@10.9.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

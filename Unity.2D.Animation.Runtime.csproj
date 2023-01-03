@@ -57,12 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteSkin.cs" />
-    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/TransformAccessJob.cs" />
-    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/NativeArrayHelper.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteSkinBatch.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/UpdateBoundsJob.cs" />
-    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/AssemblyInfo.cs" />
+    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/BufferManager.cs" />
+    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/TransformAccessJob.cs" />
+    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/NativeArrayHelper.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteSkinUpdateHelper.cs" />
+    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/AssemblyInfo.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/DeformSpriteSystem.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteSkinUtility.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/Components.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteSkinEntity.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteLib/SpriteLibraryAsset.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/PrepareSkinningSystem.cs" />
-    <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/BufferManager.cs" />
     <Compile Include="Library/PackageCache/com.unity.2d.animation@5.2.2/Runtime/SpriteSkinComposite.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -338,11 +338,11 @@
     <Reference Include="DOTween">
       <HintPath>Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Library/PackageCache/com.unity.render-pipelines.core@10.9.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Hub/Editor/2020.3.36f1/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

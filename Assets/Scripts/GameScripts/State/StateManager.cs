@@ -7,11 +7,13 @@ using Cinemachine;
 using GG.Infrastructure.Utils.Swipe;
 
 [RequireComponent(typeof(SwipeListenerEvent))]
+[RequireComponent(typeof(GridManager))]
 public class StateManager : MonoBehaviour
 {
     [SerializeField] Transform dotsParent;
     [SerializeField] Button quitButton;
     public Transform target;
+    
 
     [Header("Camera settings")]
     public CinemachineVirtualCamera camController;
@@ -92,6 +94,8 @@ public class StateManager : MonoBehaviour
             dot.onClick.RemoveAllListeners();
             dot.onClick.AddListener(delegate { Inspect(dot.transform); });
         }
+        GridManager gridManager = this.transform.GetComponent<GridManager>();
+        gridManager.Init(dotsParent);
     }
 
     public void HandleScreenInputs()

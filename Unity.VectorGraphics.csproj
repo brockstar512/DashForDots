@@ -58,26 +58,26 @@
   <ItemGroup>
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorClip.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorSprite.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Tess.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/PriorityQueue.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGImage.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Geom.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorRectangle.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorSceneTessellation.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/Clipper/C#/clipper_library/clipper.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/Matrix2D.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Dict.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorTessellation.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Sweep.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/PriorityHeap.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGParser.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorRasterization.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorUtils.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Mesh.cs" />
-    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGStyleSheet.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/MeshUtils.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/AssemblyInfo.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorScene.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Tess.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/PriorityQueue.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGImage.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/Clipper/C#/clipper_library/clipper.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/Matrix2D.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Dict.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Sweep.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/PriorityHeap.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGParser.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorUtils.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/External/LibTessDotNet/Mesh.cs" />
+    <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/SVGStyleSheet.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorEllipse.cs" />
     <Compile Include="Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.20/Runtime/VectorImageUtils.cs" />
   </ItemGroup>
@@ -351,11 +351,11 @@
     <Reference Include="DOTween">
       <HintPath>Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Library/PackageCache/com.unity.render-pipelines.core@10.9.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Hub/Editor/2020.3.36f1/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
