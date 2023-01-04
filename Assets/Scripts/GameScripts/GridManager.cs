@@ -31,7 +31,7 @@ public class GridManager : MonoBehaviour
                 Dot dot = dotParent.GetChild(childIndex).gameObject.AddComponent<Dot>();
                 dot.Init(x, y, _height,this);
                 dots[x, y] = dot;
-                dot.gameObject.name = $"Dot {x},{y}";
+                DotDefaultState(dot);
                 childIndex++;
             }
         }
@@ -40,46 +40,37 @@ public class GridManager : MonoBehaviour
 
     public void HighlightNeighbors(int x, int y)
     {
+        Debug.Log("HighlightNeighbors");
 
         currentDot.ColorThemeHelper.UnSubscribe();
         dots[x, y].GetComponent<SVGImage>().DOColor(this.playerColor, .15f); ;
 
         if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
         {
-
             Dot dot = dots[x - 1, y];
-            dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
-
-
+            DotNeighborState(dot);
         }
         if (!dots[x, y].isConnectedRight && x + 1 < _width)
         {
-
             Dot dot = dots[x + 1, y];
-            dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            DotNeighborState(dot);
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
             Dot dot = dots[x, y + 1];
-            dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            DotNeighborState(dot);
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
         {
             Dot dot = dots[x, y - 1];
-            dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            DotNeighborState(dot);
+
         }
     }
 
     public async Task UnHighlightNeighbors(int x, int y, bool isResetting)
     {
+        Debug.Log("UnHighlightNeighbors");
         await currentDot.ColorThemeHelper.Subscribe(true);
 
         if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
@@ -93,10 +84,7 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
-            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
-            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
-
-
+            DotDefaultState(dot);
 
         }
         if (!dots[x, y].isConnectedRight && x + 1 < _width)
@@ -110,9 +98,7 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
-            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
-            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
-
+            DotDefaultState(dot);
 
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
@@ -126,10 +112,7 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
-            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
-            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
-
-
+            DotDefaultState(dot);
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
         {
@@ -142,9 +125,9 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
-            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
-            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
+            DotDefaultState(dot);
         }
+        currentDot = null;
         await Task.Yield();
     }
 
@@ -160,8 +143,18 @@ public class GridManager : MonoBehaviour
         HighlightNeighbors(x,y);
     }
 
-    public void ChooseNeighbor()
+    public void DotNeighborState(Dot dot)
     {
+        dot.GetComponent<Button>().onClick.RemoveAllListeners();
+        dot.ColorThemeHelper.UnSubscribe();
+        dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
 
+    }
+
+    void DotDefaultState(Dot dot)
+    {
+        dot.GetComponent<Button>().onClick.RemoveAllListeners();
+        dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
+        dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
     }
 }

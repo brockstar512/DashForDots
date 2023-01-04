@@ -9,21 +9,22 @@ public class Dot : MonoBehaviour
 {
     public int X { get; private set; }
     public int Y { get; private set; }
-    public bool isConnectedRight;
-    public bool isConnectedLeft;
-    public bool isConnectedUp;
-    public bool isConnectedDown;
+    public bool isConnectedRight { get; private set; }
+    public bool isConnectedLeft { get; private set; }
+    public bool isConnectedUp { get; private set; }
+    public bool isConnectedDown { get; private set; }
     public ColorThemeHelper ColorThemeHelper { get; private set; }
-    Dictionary<Vector2, bool> connectingCompass;//avaiable direction
+    public Dictionary<Vector2, bool> connectingCompass { get; private set; }//avaiable direction
     GridManager GridManager;
 
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
     {
         ColorThemeHelper = GetComponent<ColorThemeHelper>();
         this.GridManager = GridManager;
-        this.gameObject.name = $"Node {x},{y}";
         X = x;
         Y = y;
+        this.gameObject.name = $"Dot {X},{Y}";
+
 
         connectingCompass = new Dictionary<Vector2, bool>()
         {
@@ -46,7 +47,7 @@ public class Dot : MonoBehaviour
 
         Debug.Log($"x,y is {x},{y}");
         //Debug.Log(connectingCompass[Vector2.down]);
-        this.GetComponent<Button>().onClick.AddListener(OnSelect);
+        //this.GetComponent<Button>().onClick.AddListener(OnSelect);
     }
 
     public void OnSelect()
