@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] Dot[,] dots;
     int _height, _width;
-    Dot currentDot;
+    public Dot currentDot { get; private set; }
     public Color32 playerColor;
     public Color32 playerOptions;
 
@@ -39,14 +39,14 @@ public class GridManager : MonoBehaviour
     {
 
         currentDot.ColorThemeHelper.UnSubscribe();
-        dots[x, y].GetComponent<SVGImage>().color = playerColor;
+        dots[x, y].GetComponent<SVGImage>().DOColor(this.playerColor, .15f); ;
 
         if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
         {
 
             Dot dot = dots[x - 1, y];
             dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().color = this.playerOptions;
+            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
 
 
         }
@@ -55,16 +55,15 @@ public class GridManager : MonoBehaviour
 
             Dot dot = dots[x + 1, y];
             dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().color = this.playerOptions;
+            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
 
 
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
-
             Dot dot = dots[x, y + 1];
             dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().color = this.playerOptions;
+            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
             //image.DOColor(this.playerOptions, .15f);
 
 
@@ -73,37 +72,63 @@ public class GridManager : MonoBehaviour
         {
             Dot dot = dots[x, y - 1];
             dot.ColorThemeHelper.UnSubscribe();
-            dot.GetComponent<SVGImage>().color = this.playerOptions;
+            dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
         }
     }
     //it's unsubscribing but not changing color
-    public async Task UnHighlightNeighbors(int x, int y)
+    public async Task UnHighlightNeighbors(int x, int y, bool isResetting)
     {
         await currentDot.ColorThemeHelper.Subscribe(true);
 
         if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
         {
             Dot dot = dots[x - 1, y];
-            await dot.ColorThemeHelper.Subscribe(true);
+            if (!isResetting)
+            {
+                await dot.ColorThemeHelper.Subscribe(true);
+            }
+            else
+            {
+                dot.ColorThemeHelper.Subscribe();
+            }
 
         }
         if (!dots[x, y].isConnectedRight && x + 1 < _width)
         {
             Dot dot = dots[x + 1, y];
-            await dot.ColorThemeHelper.Subscribe(true);
-
+            if (!isResetting)
+            {
+                await dot.ColorThemeHelper.Subscribe(true);
+            }
+            else
+            {
+                dot.ColorThemeHelper.Subscribe();
+            }
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
             Dot dot = dots[x, y + 1];
-            await dot.ColorThemeHelper.Subscribe(true);
-
+            if (!isResetting)
+            {
+                await dot.ColorThemeHelper.Subscribe(true);
+            }
+            else
+            {
+                dot.ColorThemeHelper.Subscribe();
+            }
 
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
         {
             Dot dot = dots[x, y - 1];
-            await dot.ColorThemeHelper.Subscribe(true);
+            if (!isResetting)
+            {
+                await dot.ColorThemeHelper.Subscribe(true);
+            }
+            else
+            {
+                dot.ColorThemeHelper.Subscribe();
+            }
         }
         await Task.Yield();
     }
@@ -112,26 +137,12 @@ public class GridManager : MonoBehaviour
     {
         if(currentDot != null && currentDot != dots[x, y])
         {
-            await UnHighlightNeighbors(currentDot.X, currentDot.Y);
-
-
+            await UnHighlightNeighbors(currentDot.X, currentDot.Y,false);
         }
 
         currentDot = dots[x, y];
         currentDot.GetComponent<SVGImage>().color = playerColor;
         HighlightNeighbors(x,y);
     }
-    //maybe one that doensnt rely on start
-    //on start it forces color
-    public async Task LeaveDot()
-    {
-        await UnHighlightNeighbors(currentDot.X, currentDot.Y);
-        await Task.Yield();
-    }
 
-    void ShowColor(SVGImage image)
-    {
-        image.color = this.playerOptions;
-        //image.DOColor(this.playerOptions, .15f);
-    }
 }

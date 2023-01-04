@@ -18,10 +18,10 @@ public class ColorThemeHelper : MonoBehaviour
         image = GetComponent<SVGImage>();
 
     }
-    public virtual async void Start()
+    public virtual void Start()
     {
         GetTarget();
-        await Subscribe();
+        Subscribe();
         //Debug.Log("Hello");
     }
 
@@ -47,9 +47,8 @@ public class ColorThemeHelper : MonoBehaviour
         SwitchToggle.Instance.darkMode -= ToDarkUI;
     }
 
-    public async Task Subscribe()
+    public void Subscribe()
     {
-        Debug.Log("STACK");
 
         SwitchToggle.Instance.lightMode += ToLightUI;
         SwitchToggle.Instance.darkMode += ToDarkUI;
@@ -60,16 +59,11 @@ public class ColorThemeHelper : MonoBehaviour
         }
         else
         {
-            ToDarkUI();//this is causing it to be overrten
+            ToDarkUI();
         }
-        //await Task.Delay(1000);
-        Debug.Log("SUBSCRIBING");
-        await Task.Yield();
     }
-    public async Task Subscribe(bool sub)
+    public async Task Subscribe(bool quickSub)
     {
-        Debug.Log("STACK");
-
         SwitchToggle.Instance.lightMode += ToLightUI;
         SwitchToggle.Instance.darkMode += ToDarkUI;
 
@@ -81,8 +75,6 @@ public class ColorThemeHelper : MonoBehaviour
         {
             image.color = this.darkTheme;
         }
-        //await Task.Delay(1000);
-        Debug.Log("SUBSCRIBING");
         await Task.Yield();
     }
 }

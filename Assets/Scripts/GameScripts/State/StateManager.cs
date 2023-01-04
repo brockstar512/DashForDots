@@ -13,7 +13,8 @@ public class StateManager : MonoBehaviour
     [SerializeField] Transform dotsParent;
     [SerializeField] Button quitButton;
     public Transform target;
-    
+    GridManager gridManager;
+
 
     [Header("Camera settings")]
     public CinemachineVirtualCamera camController;
@@ -69,10 +70,13 @@ public class StateManager : MonoBehaviour
         currentState.UpdateState(this);
     }
 
-    public void SwitchState(BaseState state)
+    public async void SwitchState(BaseState state)
     {
-        //return;
-        //Debug.Log("State Change :" + state);
+
+        if (state == ResetState && gridManager.currentDot != null)
+        {
+            await gridManager.UnHighlightNeighbors(gridManager.currentDot.X, gridManager.currentDot.Y,true);
+        }
 
         currentState.LeaveState();
         currentState = state;
@@ -94,7 +98,7 @@ public class StateManager : MonoBehaviour
             dot.onClick.RemoveAllListeners();
             dot.onClick.AddListener(delegate { Inspect(dot.transform); });
         }
-        GridManager gridManager = this.transform.GetComponent<GridManager>();
+        gridManager = this.transform.GetComponent<GridManager>();
         gridManager.Init(dotsParent);
     }
 

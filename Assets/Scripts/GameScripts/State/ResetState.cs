@@ -7,7 +7,6 @@ public class ResetState : BaseState
 {
     public override void EnterState(StateManager stateManager)
     {
-        Debug.Log("Enter state");
         this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
         Vector3 newPos = new Vector3(0, 0, -10);
         DOTween.To(() => stateManager.camController.m_Lens.OrthographicSize, x => stateManager.camController.m_Lens.OrthographicSize = x, stateManager.zoomOutMax, .75f).SetEase(Ease.InOutSine);
