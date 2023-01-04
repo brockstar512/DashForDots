@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Unity.VectorGraphics;
 using DG.Tweening;
 using System.Threading.Tasks;
 
 public class GridManager : MonoBehaviour
 {
+    StateManager StateManager;
     [SerializeField] Dot[,] dots;
     int _height, _width;
     public Dot currentDot { get; private set; }
     public Color32 playerColor;
     public Color32 playerOptions;
 
-    public void Init(Transform dotParent)
+    public void Init(Transform dotParent, StateManager StateManager)
     {
+        this.StateManager = StateManager;
         int childIndex = 0;
         _height = _width = (int)Mathf.Sqrt(dotParent.childCount);
         Debug.Log($"grid size :: {_height}, {_width}");
@@ -47,6 +50,7 @@ public class GridManager : MonoBehaviour
             Dot dot = dots[x - 1, y];
             dot.ColorThemeHelper.UnSubscribe();
             dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
 
 
         }
@@ -56,26 +60,24 @@ public class GridManager : MonoBehaviour
             Dot dot = dots[x + 1, y];
             dot.ColorThemeHelper.UnSubscribe();
             dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-
-
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
             Dot dot = dots[x, y + 1];
             dot.ColorThemeHelper.UnSubscribe();
             dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-            //image.DOColor(this.playerOptions, .15f);
-
-
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
         {
             Dot dot = dots[x, y - 1];
             dot.ColorThemeHelper.UnSubscribe();
             dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
         }
     }
-    //it's unsubscribing but not changing color
+
     public async Task UnHighlightNeighbors(int x, int y, bool isResetting)
     {
         await currentDot.ColorThemeHelper.Subscribe(true);
@@ -91,6 +93,10 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
+            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
+            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
+
+
 
         }
         if (!dots[x, y].isConnectedRight && x + 1 < _width)
@@ -104,6 +110,10 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
+            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
+            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
+
+
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
@@ -116,6 +126,9 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
+            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
+            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
+
 
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
@@ -129,6 +142,8 @@ public class GridManager : MonoBehaviour
             {
                 dot.ColorThemeHelper.Subscribe();
             }
+            dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
+            dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
         }
         await Task.Yield();
     }
@@ -145,4 +160,8 @@ public class GridManager : MonoBehaviour
         HighlightNeighbors(x,y);
     }
 
+    public void ChooseNeighbor()
+    {
+
+    }
 }

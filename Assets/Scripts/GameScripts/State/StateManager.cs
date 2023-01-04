@@ -81,7 +81,6 @@ public class StateManager : MonoBehaviour
         currentState.LeaveState();
         currentState = state;
         currentState.EnterState(this);
-
     }
 
     public void Inspect(Transform dot)
@@ -99,7 +98,7 @@ public class StateManager : MonoBehaviour
             dot.onClick.AddListener(delegate { Inspect(dot.transform); });
         }
         gridManager = this.transform.GetComponent<GridManager>();
-        gridManager.Init(dotsParent);
+        gridManager.Init(dotsParent,this);
     }
 
     public void HandleScreenInputs()
@@ -127,12 +126,10 @@ public class StateManager : MonoBehaviour
         #endif
 
     }
-
     void zoom(float increment)
     {
         camController.m_Lens.OrthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);//pass in camera
     }
-
     public void OnSwipeHandler(string id)
     {
         if (Input.touchCount == 2 || currentState == QuitState)

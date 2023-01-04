@@ -49,7 +49,7 @@ public class Dot : MonoBehaviour
         this.GetComponent<Button>().onClick.AddListener(OnSelect);
     }
 
-    void OnSelect()
+    public void OnSelect()
     {
         GridManager.SelectDot(X,Y);
     }
