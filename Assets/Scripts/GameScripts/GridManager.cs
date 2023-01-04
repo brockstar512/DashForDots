@@ -35,89 +35,103 @@ public class GridManager : MonoBehaviour
     }
 
 
-    public void HighlightNeighbors(int x, int y, bool isLeaving)
+    public void HighlightNeighbors(int x, int y)
     {
-        if(!isLeaving)
-            dots[x, y].GetComponent<SVGImage>().color = playerColor;
+
+        currentDot.ColorThemeHelper.UnSubscribe();
+        dots[x, y].GetComponent<SVGImage>().color = playerColor;
 
         if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
         {
-            Dot dot = dots[x - 1, y];
-            if (isLeaving)
-            {
-                dot.ColorThemeHelper.Subscribe();
 
-            }
-            else
-            {
-                dot.ColorThemeHelper.UnSubscribe();
-                ShowColor(dot.GetComponent<SVGImage>());
-            }
+            Dot dot = dots[x - 1, y];
+            dot.ColorThemeHelper.UnSubscribe();
+            dot.GetComponent<SVGImage>().color = this.playerOptions;
+
+
         }
         if (!dots[x, y].isConnectedRight && x + 1 < _width)
         {
+
             Dot dot = dots[x + 1, y];
-            if (isLeaving)
-            {
-                dot.ColorThemeHelper.Subscribe();
-            }
-            else
-            {
-                dot.ColorThemeHelper.UnSubscribe();
-                ShowColor(dot.GetComponent<SVGImage>());
-            }
+            dot.ColorThemeHelper.UnSubscribe();
+            dot.GetComponent<SVGImage>().color = this.playerOptions;
+
+
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
-            Dot dot = dots[x, y + 1];
 
-            if (isLeaving)
-            {
-                dot.ColorThemeHelper.Subscribe();
-            }
-            else
-            {
-                dot.ColorThemeHelper.UnSubscribe();
-                ShowColor(dot.GetComponent<SVGImage>());
-            }
+            Dot dot = dots[x, y + 1];
+            dot.ColorThemeHelper.UnSubscribe();
+            dot.GetComponent<SVGImage>().color = this.playerOptions;
+            //image.DOColor(this.playerOptions, .15f);
+
 
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
         {
             Dot dot = dots[x, y - 1];
-            if (isLeaving)
-            {
-                dot.ColorThemeHelper.Subscribe();
-            }
-            else
-            {
-                dot.ColorThemeHelper.UnSubscribe();
-                ShowColor(dot.GetComponent<SVGImage>());
-            }
+            dot.ColorThemeHelper.UnSubscribe();
+            dot.GetComponent<SVGImage>().color = this.playerOptions;
         }
     }
+    //it's unsubscribing but not changing color
+    public async Task UnHighlightNeighbors(int x, int y)
+    {
+        await currentDot.ColorThemeHelper.Subscribe(true);
 
-    public void SelectDot(int x, int y)
+        if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
+        {
+            Dot dot = dots[x - 1, y];
+            await dot.ColorThemeHelper.Subscribe(true);
+
+        }
+        if (!dots[x, y].isConnectedRight && x + 1 < _width)
+        {
+            Dot dot = dots[x + 1, y];
+            await dot.ColorThemeHelper.Subscribe(true);
+
+        }
+        if (!dots[x, y].isConnectedUp && y + 1 < _height)
+        {
+            Dot dot = dots[x, y + 1];
+            await dot.ColorThemeHelper.Subscribe(true);
+
+
+        }
+        if (!dots[x, y].isConnectedDown && y - 1 >= 0)
+        {
+            Dot dot = dots[x, y - 1];
+            await dot.ColorThemeHelper.Subscribe(true);
+        }
+        await Task.Yield();
+    }
+
+    public async void SelectDot(int x, int y)
     {
         if(currentDot != null && currentDot != dots[x, y])
         {
-            LeaveDot();
+            await UnHighlightNeighbors(currentDot.X, currentDot.Y);
+
+
         }
 
         currentDot = dots[x, y];
         currentDot.GetComponent<SVGImage>().color = playerColor;
-        HighlightNeighbors(x,y,false);
-        currentDot.ColorThemeHelper.UnSubscribe();
+        HighlightNeighbors(x,y);
     }
-
-    public void LeaveDot()
+    //maybe one that doensnt rely on start
+    //on start it forces color
+    public async Task LeaveDot()
     {
-        HighlightNeighbors(currentDot.X, currentDot.Y,true);
-        currentDot.ColorThemeHelper.Subscribe();
+        await UnHighlightNeighbors(currentDot.X, currentDot.Y);
+        await Task.Yield();
     }
 
     void ShowColor(SVGImage image)
     {
-        image.DOColor(this.playerOptions, .15f);
+        image.color = this.playerOptions;
+        //image.DOColor(this.playerOptions, .15f);
     }
 }

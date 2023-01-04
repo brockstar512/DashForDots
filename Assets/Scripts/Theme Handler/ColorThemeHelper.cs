@@ -1,15 +1,16 @@
 using UnityEngine;
 using Unity.VectorGraphics;
 using DG.Tweening;
+using System.Threading.Tasks;
+
 
 
 public class ColorThemeHelper : MonoBehaviour
 {
-    //change to enum
-    //and have another sheet have all the colors
+
     public Color32 lightTheme;
     public Color32 darkTheme;
-    private SVGImage image;
+    protected SVGImage image;
 
 
     public virtual void GetTarget()
@@ -17,34 +18,39 @@ public class ColorThemeHelper : MonoBehaviour
         image = GetComponent<SVGImage>();
 
     }
-    public void Start()
+    public virtual async void Start()
     {
         GetTarget();
-        Subscribe();
+        await Subscribe();
+        //Debug.Log("Hello");
     }
 
     public void ToDarkUI()
     {
         image.DOColor(this.darkTheme, .25f);
     }
+    //if this is taking too long i could try creating a sequence. forcing it to turn then recuringliy call it
     public void ToLightUI()
     {
+
         image.DOColor(this.lightTheme, .25f);   
     }
 
 
     public void OnDestroy()
     {
-        UnSubscribe();
+         UnSubscribe();
     }
-    public void UnSubscribe()
+    public void  UnSubscribe()
     {
         SwitchToggle.Instance.lightMode -= ToLightUI;
         SwitchToggle.Instance.darkMode -= ToDarkUI;
     }
 
-    public void Subscribe()
+    public async Task Subscribe()
     {
+        Debug.Log("STACK");
+
         SwitchToggle.Instance.lightMode += ToLightUI;
         SwitchToggle.Instance.darkMode += ToDarkUI;
 
@@ -54,7 +60,29 @@ public class ColorThemeHelper : MonoBehaviour
         }
         else
         {
-            ToDarkUI();
+            ToDarkUI();//this is causing it to be overrten
         }
+        //await Task.Delay(1000);
+        Debug.Log("SUBSCRIBING");
+        await Task.Yield();
+    }
+    public async Task Subscribe(bool sub)
+    {
+        Debug.Log("STACK");
+
+        SwitchToggle.Instance.lightMode += ToLightUI;
+        SwitchToggle.Instance.darkMode += ToDarkUI;
+
+        if (SwitchToggle.Instance.currentTheme == SwitchToggle.Theme.lightTheme)
+        {
+            image.color = this.lightTheme;
+        }
+        else
+        {
+            image.color = this.darkTheme;
+        }
+        //await Task.Delay(1000);
+        Debug.Log("SUBSCRIBING");
+        await Task.Yield();
     }
 }

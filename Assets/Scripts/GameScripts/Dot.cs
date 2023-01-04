@@ -13,13 +13,13 @@ public class Dot : MonoBehaviour
     public bool isConnectedLeft;
     public bool isConnectedUp;
     public bool isConnectedDown;
-    public ColorThemeHelper ColorThemeHelper { get; private set; }
+    public DotColorHelper ColorThemeHelper { get; private set; }
     Dictionary<Vector2, bool> connectingCompass;//avaiable direction
     GridManager GridManager;
 
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
     {
-        ColorThemeHelper = GetComponent<ColorThemeHelper>();
+        ColorThemeHelper = GetComponent<DotColorHelper>();
         this.GridManager = GridManager;
         this.gameObject.name = $"Node {x},{y}";
         X = x;

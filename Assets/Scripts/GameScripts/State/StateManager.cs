@@ -72,7 +72,7 @@ public class StateManager : MonoBehaviour
     public void SwitchState(BaseState state)
     {
         //return;
-        Debug.Log("State Change :" + state);
+        //Debug.Log("State Change :" + state);
 
         currentState.LeaveState();
         currentState = state;
