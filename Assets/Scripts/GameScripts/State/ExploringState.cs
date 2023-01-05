@@ -30,6 +30,8 @@ public class ExploringState : BaseState
         {
             stateManager.SwitchState(stateManager.NeutralState);
         }
+
+        
     }
     public override void LeaveState()
     {

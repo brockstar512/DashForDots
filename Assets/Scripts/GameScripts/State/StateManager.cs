@@ -13,7 +13,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] Transform dotsParent;
     [SerializeField] Button quitButton;
     public Transform target;
-    GridManager gridManager;
+    public GridManager gridManager;
 
 
     [Header("Camera settings")]
@@ -36,7 +36,7 @@ public class StateManager : MonoBehaviour
     BaseState currentState;
     public NeutralState NeutralState;//looking at everythig/reset
     public ExploringState ExploringState;//scrolling around and zooming
-    public InspectingState InspectingState;//looking at choice. can scroll
+    public InspectingState InspectingState;//zooming in then goes into exploring
     public QuitState QuitState;
     public DecisionState DecisionState;
     public ResetState ResetState;
@@ -72,6 +72,7 @@ public class StateManager : MonoBehaviour
 
     public async void SwitchState(BaseState state)
     {
+        Debug.Log("State: "+ state);
 
         if (state == ResetState && gridManager.currentDot != null)
         {
@@ -95,7 +96,7 @@ public class StateManager : MonoBehaviour
         {
             Button dot = dotsParent.GetChild(i).GetComponent<Button>();
             dot.onClick.RemoveAllListeners();
-            dot.onClick.AddListener(delegate { Inspect(dot.transform); });
+            dot.onClick.AddListener(delegate { Inspect(dot.transform); });// SwitchState(InspectingState);
         }
         gridManager = this.transform.GetComponent<GridManager>();
         gridManager.Init(dotsParent,this);

@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESET
+  m_text: CANCEL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 070b46b9c67db42888f17168caf7089b, type: 2}
   m_sharedMaterial: {fileID: -2618154947658915436, guid: 070b46b9c67db42888f17168caf7089b, type: 2}
@@ -434,7 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685d56cb29eaa4228be1ece6ce97979d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cg: {fileID: 0}
+  confirm: {fileID: 1277505796037700558}
+  cancel: {fileID: 8110428833479581680}
 --- !u!1 &6425493053109994822
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +451,7 @@ GameObject:
   - component: {fileID: 6425493053109994820}
   - component: {fileID: 8110428833479581680}
   m_Layer: 5
-  m_Name: Reset
+  m_Name: Cancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,11 +16,13 @@ public class Dot : MonoBehaviour
     public ColorThemeHelper ColorThemeHelper { get; private set; }
     public Dictionary<Vector2, bool> connectingCompass { get; private set; }//avaiable direction
     GridManager GridManager;
+    Button button;
 
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
     {
         ColorThemeHelper = GetComponent<ColorThemeHelper>();
         this.GridManager = GridManager;
+        button = GetComponent<Button>();
         X = x;
         Y = y;
         this.gameObject.name = $"Dot {X},{Y}";
@@ -54,5 +56,12 @@ public class Dot : MonoBehaviour
     {
         GridManager.SelectDot(X,Y);
     }
+
+    public void NeighboringChoice()
+    {
+        GridManager.SelectNeighbor(X, Y);
+    }
+
+
 
 }
