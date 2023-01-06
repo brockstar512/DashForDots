@@ -11,46 +11,36 @@ public class GridManager : MonoBehaviour
     StateManager StateManager;
     [SerializeField] Dot[,] dots;
     int _height, _width;
-    public Dot currentDot { get; private set; }
-    public Dot neighborDot { get; private set; }
+    private Dot _currentDot = null;
+    private Dot _neighborDot = null;
     public Color32 playerColor;
     public Color32 playerOptions;
-    public RectTransform dot1;
-    public RectTransform dot2;
-    public Transform worldCanvas;
+    public Dot testDot;
 
-
-
-    [ContextMenu("Add line")]
-    public void AddLine()
+    public Dot neighborDot
     {
-        CreateDotConnection(dot1.anchoredPosition, dot2.anchoredPosition);
+        get
+        {
+            return _neighborDot;
+        }
+        set
+        {
+            _neighborDot = value;
+        }
+    }
+    public Dot currentDot
+    {
+        get
+        {
+            return _currentDot;
+        }
+        set
+        {
+            _currentDot = value;
+        }
     }
 
-    private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
-    {
-        GameObject gameObject = new GameObject("dotConnection", typeof(Image));
-        gameObject.transform.SetParent(worldCanvas, true);
-        gameObject.GetComponent<Image>().color = this.playerColor;
-        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
-        Vector2 dir = (dotPositionB - dotPositionA).normalized;
-        float distance = Vector2.Distance(dotPositionA, dotPositionB);
-        rectTransform.anchorMin = new Vector2(.5f, .5f);
-        rectTransform.anchorMax = new Vector2(.5f, .5f);
-        rectTransform.sizeDelta = new Vector2(distance, .25f);
-        rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
-        rectTransform.localPosition = new Vector3(.75f, .75f, 0) * dir;
-        rectTransform.localEulerAngles = new Vector3(0, 0, GetAngleFromVectorFloat(dir));
-    }
 
-    public float GetAngleFromVectorFloat(Vector3 dir)
-    {
-        dir = dir.normalized;
-        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        if (n < 0) n += 360;
-
-        return n;
-    }
 
     public void Init(Transform dotParent, StateManager StateManager)
     {
@@ -72,12 +62,23 @@ public class GridManager : MonoBehaviour
                 childIndex++;
             }
         }
+        testDot = new Dot();
+    }
+
+    private void Update()
+    {
+        //Debug.Log("here is current :" + currentDot != null);
+        //Debug.Log("here is neighbor  :"+neighborDot != null);
+        Debug.Log("here is neighbor  :" + testDot != null);
+
+        Debug.Log("other current :" + _currentDot != null);
+        Debug.Log(" other  neighbor  :" + _neighborDot != null);
     }
 
     public void HighlightNeighbors(int x, int y)
     {
         //Debug.Log("HighlightNeighbors");
-
+        neighborDot = null;
         currentDot.ColorThemeHelper.UnSubscribe();
         dots[x, y].GetComponent<SVGImage>().DOColor(this.playerColor, .15f); ;
 
@@ -169,7 +170,7 @@ public class GridManager : MonoBehaviour
 
     public void SelectNeighbor(int x, int y)
     {
-        StateManager.SwitchState(StateManager.DecisionState);
+
     }
 
     void DotNeighborState(Dot dot)

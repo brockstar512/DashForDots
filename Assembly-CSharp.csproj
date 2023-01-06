@@ -66,6 +66,7 @@
     <Compile Include="Assets/SwipeController/Scripts/SwipesToVectorEvents.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipeDetectionMode.cs" />
     <Compile Include="Assets/Scripts/GameScripts/LocalGameController.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/Dot.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/StateManager.cs" />
     <Compile Include="Assets/SwipeController/Scripts/Errors.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/ColorThemeHelper.cs" />
@@ -73,7 +74,9 @@
     <Compile Include="Assets/Scripts/GameScripts/State/DecisionState.cs" />
     <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_Vector.cs" />
     <Compile Include="Assets/Scripts/UIScripts/NavigationManager.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/GridManager.cs" />
     <Compile Include="Assets/Scripts/UIScripts/PersistentCanvas.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/GameLines.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionId.cs" />
     <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_Hexagonal.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />
@@ -92,9 +95,6 @@
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/GridManager.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/Dot.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/GameLines.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
