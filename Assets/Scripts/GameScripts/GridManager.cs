@@ -42,6 +42,7 @@ public class GridManager : MonoBehaviour
         rectTransform.localPosition = new Vector3(.75f, .75f, 0) * dir;
         rectTransform.localEulerAngles = new Vector3(0, 0, GetAngleFromVectorFloat(dir));
     }
+
     public float GetAngleFromVectorFloat(Vector3 dir)
     {
         dir = dir.normalized;
