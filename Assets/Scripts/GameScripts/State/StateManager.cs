@@ -84,6 +84,12 @@ public class StateManager : MonoBehaviour
         target = dot;
         SwitchState(InspectingState);
     }
+    //resubsribe button
+    void SubscribeButton()
+    {
+
+
+    }
 
     void HandleDots()
     {

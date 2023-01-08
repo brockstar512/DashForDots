@@ -12,6 +12,8 @@ public class Dot : MonoBehaviour
     public Dictionary<Vector2Int, bool> connectingCompass { get; private set; }//avaiable direction
     DotStyling DotStyling;
     GridManager GridManager;
+    Button button;
+
 
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
     {
@@ -41,6 +43,7 @@ public class Dot : MonoBehaviour
 
         Debug.Log($"x,y is {x},{y}");
         this.DotStyling = GetComponentInChildren<DotStyling>();
+        this.button = GetComponent<Button>();
         DotStyling.Init(connectingCompass);
     }
 
@@ -55,35 +58,38 @@ public class Dot : MonoBehaviour
     {
         if (!connectingCompass[Vector2Int.down])
         {
-            GridManager.dots[X + 1, Y].DotStyling.NeighborHighlight();
+            Dot dot = GridManager.dots[X + 1, Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(dot.NeighboringChoice);
         }
 
         if (!connectingCompass[Vector2Int.up])
         {
-            GridManager.dots[X - 1, Y].DotStyling.NeighborHighlight();
+            Dot dot = GridManager.dots[X - 1, Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(dot.NeighboringChoice);
 
         }
 
         if (!connectingCompass[Vector2Int.right])
         {
-            GridManager.dots[X, Y + 1].DotStyling.NeighborHighlight();
+            Dot dot = GridManager.dots[X, Y + 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(dot.NeighboringChoice);
 
         }
         if (!connectingCompass[Vector2Int.left])
         {
-            GridManager.dots[X, Y - 1].DotStyling.NeighborHighlight();
+            Dot dot = GridManager.dots[X, Y - 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(dot.NeighboringChoice);
 
         }
 
-        //foreach (KeyValuePair<Vector2Int, bool> direction in connectingCompass)
-        //{
-
-        //    if (direction.Value == false)
-        //    {
-        //        //Debug.Log($"Direction: {X + (direction.Key.y * -1)},{Y + (direction.Key.x * -1)} ");
-        //        GridManager.dots[X + (direction.Key.y), Y + (direction.Key.x)].DotStyling.NeighborHighlight();
-        //    }
-        //}
     }
     void LeaveNeigbors()
     {

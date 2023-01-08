@@ -15,7 +15,7 @@ public class GridManager : MonoBehaviour
     public Dot currentDot { get; private set; }
     public Dot neighborDot { get; private set; }
 
-
+    //keep delegate
 
 
     public void Init(Transform dotParent)
@@ -39,15 +39,21 @@ public class GridManager : MonoBehaviour
         }
     }
 
- 
+    async Task LeaveDot()
+    {
+        dots[currentDot.X, currentDot.Y].OnDeselect();
+        //pass this to delegate
+        //dots[currentDot.X, currentDot.Y]
+        //and the neighbors
+        //invoke
+        await Task.Yield();
+    }
 
-
-    public void SelectDot(int x, int y)
+    public async void SelectDot(int x, int y)
     {
         if(hasCurrentDot != false && currentDot != dots[x, y])
         {
-            //leave other dot
-            dots[currentDot.X, currentDot.Y].OnDeselect();
+            await LeaveDot();
         }
         hasCurrentDot = true;
         currentDot = dots[x, y];
