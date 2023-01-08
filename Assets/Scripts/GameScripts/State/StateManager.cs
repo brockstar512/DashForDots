@@ -37,9 +37,9 @@ public class StateManager : MonoBehaviour
     public NeutralState NeutralState;//looking at everythig/reset
     public ExploringState ExploringState;//scrolling around and zooming
     public InspectingState InspectingState;//zooming in then goes into exploring
-    public QuitState QuitState;
-    public DecisionState DecisionState;
-    public ResetState ResetState;
+    public QuitState QuitState;//
+    public DecisionState DecisionState;//
+    public ResetState ResetState;//
 
 
 

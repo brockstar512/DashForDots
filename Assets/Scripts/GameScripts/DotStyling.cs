@@ -7,7 +7,6 @@ using Unity.VectorGraphics;
 
 public class DotStyling : MonoBehaviour
 {
-    public Color32 playerColor;
     [SerializeField] Image right;
     [SerializeField] Image up;
     [SerializeField] Image down;
@@ -15,9 +14,9 @@ public class DotStyling : MonoBehaviour
     SVGImage image;
     const float speed = 1.25f;
 
-    public void Init(Dictionary<Vector2, bool> connectingCompass)
+    public void Init(Dictionary<Vector2Int, bool> connectingCompass)
     {
-        if (!connectingCompass[Vector2.right])
+        if (!connectingCompass[Vector2Int.right])
         {
             right.fillAmount = 0;
             right.fillMethod = Image.FillMethod.Horizontal;
@@ -27,7 +26,7 @@ public class DotStyling : MonoBehaviour
         {
             right = null;
         }
-        if (!connectingCompass[Vector2.up])
+        if (!connectingCompass[Vector2Int.up])
         {
             up.fillAmount = 0;
             up.fillMethod = Image.FillMethod.Vertical;
@@ -37,7 +36,7 @@ public class DotStyling : MonoBehaviour
         {
             up = null;
         }
-        if (!connectingCompass[Vector2.down])
+        if (!connectingCompass[Vector2Int.down])
         {
             down.fillAmount = 0;
             down.fillMethod = Image.FillMethod.Vertical;
@@ -47,7 +46,7 @@ public class DotStyling : MonoBehaviour
         {
             down = null;
         }
-        if (!connectingCompass[Vector2.left])
+        if (!connectingCompass[Vector2Int.left])
         {
             left.fillAmount = 0;
             left.fillMethod = Image.FillMethod.Horizontal;
@@ -71,7 +70,7 @@ public class DotStyling : MonoBehaviour
     [ContextMenu("Close")]
     public void Close()
     {
-        this.transform.DOScale(0, 1).SetEase(Ease.InBounce);
+        this.transform.DOScale(0, 0).SetEase(Ease.InBounce);
 
     }
 
@@ -87,14 +86,26 @@ public class DotStyling : MonoBehaviour
 
     public void Select()
     {
-        this.transform.DOScale(.5f, 1).SetEase(Ease.OutSine);
-        image.DOColor(this.playerColor, .15f);
+        this.transform.DOScale(.5f, .25f).SetEase(Ease.OutSine);
+        image.DOColor(PlayerPlaceholder.Instance.playerColor, .15f);
 
     }
     public void Deselect()
     {
-        this.transform.DOScale(0, 1).SetEase(Ease.OutSine);
+        this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
         //image.DOColor(this.playerColor, .15f);
+    }
+
+    public void NeighborHighlight()
+    {
+        image.DOColor(PlayerPlaceholder.Instance.neighborOption, 0);
+        this.transform.DOScale(1f, .25f).SetEase(Ease.OutSine);
+
+    }
+    public void NeighborUnHighlight()
+    {
+        this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
+
     }
 }
 
