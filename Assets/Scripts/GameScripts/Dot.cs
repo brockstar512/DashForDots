@@ -9,10 +9,6 @@ public class Dot : MonoBehaviour
 {
     public int X { get; private set; }
     public int Y { get; private set; }
-    public bool isConnectedRight { get; private set; }
-    public bool isConnectedLeft { get; private set; }
-    public bool isConnectedUp { get; private set; }
-    public bool isConnectedDown { get; private set; }
     public Dictionary<Vector2, bool> connectingCompass { get; private set; }//avaiable direction
     GridManager GridManager;
     DotStyling DotStyling;
@@ -23,7 +19,6 @@ public class Dot : MonoBehaviour
         X = x;
         Y = y;
         this.gameObject.name = $"Dot {X},{Y}";
-
 
         connectingCompass = new Dictionary<Vector2, bool>()
         {
@@ -43,18 +38,17 @@ public class Dot : MonoBehaviour
             connectingCompass[Vector2.left] = true;
         if (y == boundaryLimit)
             connectingCompass[Vector2.right] = true;
-        //connectingCompass[new Vector2(x, 1)];
 
         Debug.Log($"x,y is {x},{y}");
         this.DotStyling = GetComponentInChildren<DotStyling>();
         DotStyling.Init(connectingCompass);
-        DotStyling.DrawLine();
     }
 
+    //when this dot is selected
     public void OnSelect()
     {
         GridManager.SelectDot(X,Y);
-        DotStyling.OnSelect();
+        DotStyling.Select();
     }
 
     public void NeighboringChoice()
@@ -64,7 +58,8 @@ public class Dot : MonoBehaviour
 
     public void OnDeselect()
     {
-
+        //leave neighbors
+        DotStyling.Deselect();
     }
 
 }

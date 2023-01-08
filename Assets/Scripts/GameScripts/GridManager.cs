@@ -67,7 +67,7 @@ public class GridManager : MonoBehaviour
         }
         if (!dots[x, y].connectingCompass[Vector2.down])
         {
-            //Vector2.down
+            //dots[x, y - 1] + Vector2.down
             Dot dot = dots[x, y - 1];
             DotNeighborState(dot);
 
@@ -77,7 +77,7 @@ public class GridManager : MonoBehaviour
     public void UnHighlightNeighbors(int x, int y)
     {
 
-        if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
+        if (!dots[x, y].connectingCompass[Vector2.left])
         {
             Dot dot = dots[x - 1, y];
 
@@ -85,18 +85,18 @@ public class GridManager : MonoBehaviour
             DotDefaultState(dot);
 
         }
-        if (!dots[x, y].isConnectedRight && x + 1 < _width)
+        if (!dots[x, y].connectingCompass[Vector2.right])
         {
             Dot dot = dots[x + 1, y];
             DotDefaultState(dot);
 
         }
-        if (!dots[x, y].isConnectedUp && y + 1 < _height)
+        if (!dots[x, y].connectingCompass[Vector2.up])
         {
             Dot dot = dots[x, y + 1];
             DotDefaultState(dot);
         }
-        if (!dots[x, y].isConnectedDown && y - 1 >= 0)
+        if (!dots[x, y].connectingCompass[Vector2.down])
         {
             Dot dot = dots[x, y - 1];
             DotDefaultState(dot);
@@ -107,13 +107,13 @@ public class GridManager : MonoBehaviour
     {
         if(hasCurrentDot != false && currentDot != dots[x, y])
         {
-            //leave neighbor
             //leave other dot
+            dots[currentDot.X, currentDot.Y].OnDeselect();
         }
         hasCurrentDot = true;
         currentDot = dots[x, y];
-        currentDot.GetComponent<SVGImage>().color = playerColor;
-        HighlightNeighbors(x,y);
+        //currentDot.GetComponent<SVGImage>().color = playerColor;
+        //HighlightNeighbors(x,y);
     }
 
     public void SelectNeighbor(int x, int y)

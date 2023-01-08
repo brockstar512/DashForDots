@@ -59,6 +59,7 @@ public class DotStyling : MonoBehaviour
         }
         //Close();
         image = GetComponent<SVGImage>();
+        Close();
 
     }
     [ContextMenu("Open")]
@@ -84,15 +85,16 @@ public class DotStyling : MonoBehaviour
 
     }
 
-    public void OnSelect()
+    public void Select()
     {
-        this.transform.DOScale(.5f, 1).SetEase(Ease.InBounce);
+        this.transform.DOScale(.5f, 1).SetEase(Ease.OutSine);
         image.DOColor(this.playerColor, .15f);
 
     }
     public void Deselect()
     {
-
+        this.transform.DOScale(0, 1).SetEase(Ease.OutSine);
+        //image.DOColor(this.playerColor, .15f);
     }
 }
 
