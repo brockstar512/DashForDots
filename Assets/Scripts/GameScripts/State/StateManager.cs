@@ -70,14 +70,9 @@ public class StateManager : MonoBehaviour
         currentState.UpdateState(this);
     }
 
-    public async void SwitchState(BaseState state)
+    public void SwitchState(BaseState state)
     {
         Debug.Log("State: "+ state);
-
-        if (state == ResetState && gridManager.currentDot != null)
-        {
-            await gridManager.UnHighlightNeighbors(gridManager.currentDot.X, gridManager.currentDot.Y,true);
-        }
 
         currentState.LeaveState();
         currentState = state;
@@ -99,7 +94,7 @@ public class StateManager : MonoBehaviour
             dot.onClick.AddListener(delegate { Inspect(dot.transform); });// SwitchState(InspectingState);
         }
         gridManager = this.transform.GetComponent<GridManager>();
-        gridManager.Init(dotsParent,this);
+        gridManager.Init(dotsParent);
     }
 
     public void HandleScreenInputs()

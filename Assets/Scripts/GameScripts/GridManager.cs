@@ -8,43 +8,21 @@ using System.Threading.Tasks;
 
 public class GridManager : MonoBehaviour
 {
-    StateManager StateManager;
     [SerializeField] Dot[,] dots;
     int _height, _width;
-    private Dot _currentDot = null;
-    private Dot _neighborDot = null;
+    public bool hasCurrentDot { get; private set; }
+    public bool hasNeighborDot { get; private set; }
+    public Dot currentDot { get; private set; }
+    public Dot neighborDot { get; private set; }
     public Color32 playerColor;
     public Color32 playerOptions;
-    public Dot testDot;
+    public Color32 neighborOption;
 
-    public Dot neighborDot
+
+
+
+    public void Init(Transform dotParent)
     {
-        get
-        {
-            return _neighborDot;
-        }
-        set
-        {
-            _neighborDot = value;
-        }
-    }
-    public Dot currentDot
-    {
-        get
-        {
-            return _currentDot;
-        }
-        set
-        {
-            _currentDot = value;
-        }
-    }
-
-
-
-    public void Init(Transform dotParent, StateManager StateManager)
-    {
-        this.StateManager = StateManager;
         int childIndex = 0;
         _height = _width = (int)Mathf.Sqrt(dotParent.childCount);
         //Debug.Log($"grid size :: {_height}, {_width}");
@@ -56,67 +34,53 @@ public class GridManager : MonoBehaviour
             {
                 //Debug.Log("Child:: " + childIndex);
                 Dot dot = dotParent.GetChild(childIndex).gameObject.AddComponent<Dot>();
-                dot.Init(x, y, _height,this);
+                dot.Init(x, y, _height -1,this);
                 dots[x, y] = dot;
                 DotDefaultState(dot);
                 childIndex++;
             }
         }
-        testDot = new Dot();
     }
 
-    private void Update()
-    {
-        //Debug.Log("here is current :" + currentDot != null);
-        //Debug.Log("here is neighbor  :"+neighborDot != null);
-        Debug.Log("here is neighbor  :" + testDot != null);
-
-        Debug.Log("other current :" + _currentDot != null);
-        Debug.Log(" other  neighbor  :" + _neighborDot != null);
-    }
+ 
 
     public void HighlightNeighbors(int x, int y)
     {
         //Debug.Log("HighlightNeighbors");
-        neighborDot = null;
-        currentDot.ColorThemeHelper.UnSubscribe();
         dots[x, y].GetComponent<SVGImage>().DOColor(this.playerColor, .15f); ;
+        //        if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
 
-        if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
+        if (!dots[x, y].connectingCompass[Vector2.left])
         {
             Dot dot = dots[x - 1, y];
             DotNeighborState(dot);
         }
-        if (!dots[x, y].isConnectedRight && x + 1 < _width)
+        if (!dots[x, y].connectingCompass[Vector2.right])
         {
             Dot dot = dots[x + 1, y];
             DotNeighborState(dot);
         }
-        if (!dots[x, y].isConnectedUp && y + 1 < _height)
+        if (!dots[x, y].connectingCompass[Vector2.up])
         {
             Dot dot = dots[x, y + 1];
             DotNeighborState(dot);
         }
-        if (!dots[x, y].isConnectedDown && y - 1 >= 0)
+        if (!dots[x, y].connectingCompass[Vector2.down])
         {
+            //Vector2.down
             Dot dot = dots[x, y - 1];
             DotNeighborState(dot);
 
         }
     }
 
-    public async Task UnHighlightNeighbors(int x, int y, bool isResetting)
+    public void UnHighlightNeighbors(int x, int y)
     {
-        //Debug.Log("UnHighlightNeighbors");
-        await currentDot.ColorThemeHelper.Subscribe(true);
 
         if (!dots[x, y].isConnectedLeft && x - 1 >= 0)
         {
             Dot dot = dots[x - 1, y];
-            if (!isResetting)
-                await dot.ColorThemeHelper.Subscribe(true);
-            else
-                dot.ColorThemeHelper.Subscribe();
+
 
             DotDefaultState(dot);
 
@@ -124,45 +88,29 @@ public class GridManager : MonoBehaviour
         if (!dots[x, y].isConnectedRight && x + 1 < _width)
         {
             Dot dot = dots[x + 1, y];
-            if (!isResetting)
-                await dot.ColorThemeHelper.Subscribe(true);
-            else
-                dot.ColorThemeHelper.Subscribe();
-
             DotDefaultState(dot);
 
         }
         if (!dots[x, y].isConnectedUp && y + 1 < _height)
         {
             Dot dot = dots[x, y + 1];
-            if (!isResetting)
-                await dot.ColorThemeHelper.Subscribe(true);
-            else
-                dot.ColorThemeHelper.Subscribe();
-
             DotDefaultState(dot);
         }
         if (!dots[x, y].isConnectedDown && y - 1 >= 0)
         {
             Dot dot = dots[x, y - 1];
-            if (!isResetting)
-                await dot.ColorThemeHelper.Subscribe(true);
-            else
-                dot.ColorThemeHelper.Subscribe();
-
             DotDefaultState(dot);
         }
-        currentDot = null;
-        await Task.Yield();
     }
 
-    public async void SelectDot(int x, int y)
+    public void SelectDot(int x, int y)
     {
-        if(currentDot != null && currentDot != dots[x, y])
+        if(hasCurrentDot != false && currentDot != dots[x, y])
         {
-            await UnHighlightNeighbors(currentDot.X, currentDot.Y,false);
+            //leave neighbor
+            //leave other dot
         }
-
+        hasCurrentDot = true;
         currentDot = dots[x, y];
         currentDot.GetComponent<SVGImage>().color = playerColor;
         HighlightNeighbors(x,y);
@@ -170,25 +118,35 @@ public class GridManager : MonoBehaviour
 
     public void SelectNeighbor(int x, int y)
     {
+        hasNeighborDot = true;
+        neighborDot = dots[x, y];
+        neighborDot.GetComponent<SVGImage>().DOColor(this.neighborOption, .15f);
 
     }
 
     void DotNeighborState(Dot dot)
     {
         dot.GetComponent<Button>().onClick.RemoveAllListeners();
-        dot.ColorThemeHelper.UnSubscribe();
         dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
         dot.GetComponent<Button>().onClick.AddListener(dot.NeighboringChoice);
-        neighborDot = dot;
     }
 
     void DotDefaultState(Dot dot)
     {
-        dot.GetComponent<Button>().onClick.RemoveAllListeners();
-        dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
+        //dot.GetComponent<Button>().onClick.RemoveAllListeners();
+        //dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
         dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
     }
 
     
+    public void Reset()
+    {
+        Debug.Log("Reset");
+        hasNeighborDot = false;
 
+    }
+    public void Confirm()
+    {
+        Debug.Log("Confirm");
+    }
 }

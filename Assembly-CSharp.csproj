@@ -76,7 +76,7 @@
     <Compile Include="Assets/Scripts/UIScripts/NavigationManager.cs" />
     <Compile Include="Assets/Scripts/GameScripts/GridManager.cs" />
     <Compile Include="Assets/Scripts/UIScripts/PersistentCanvas.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/GameLines.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/DotStyling.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionId.cs" />
     <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_Hexagonal.cs" />
     <Compile Include="Assets/Scripts/Theme Handler/TextThemeHelper.cs" />

@@ -18,26 +18,11 @@ public class NeutralState : BaseState
     {
         stateManager.HandleScreenInputs();
 
-        //if (Input.touchCount == 2)
-        //{
-        //    Touch touchZero = Input.GetTouch(0);
-        //    Touch touchOne = Input.GetTouch(1);
-
-        //    Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-        //    Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-        //    float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-        //    float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-
-        //    float difference = currentMagnitude - prevMagnitude;
-        //    //Debug.Log($"Here is the difference {difference}  and here is the current mag {currentMagnitude}");
-        //    //Debug.Log("increment::   "+ Input.GetAxis("Mouse ScrollWheel"));
-        //}
         if (stateManager.camController.m_Lens.OrthographicSize < 23)
         {
             stateManager.SwitchState(stateManager.ExploringState);
         }
-        if (stateManager.gridManager.neighborDot != null && stateManager.gridManager.currentDot != null)
+        if (stateManager.gridManager.hasNeighborDot && stateManager.gridManager.hasCurrentDot)
         {
             stateManager.SwitchState(stateManager.DecisionState);
         }

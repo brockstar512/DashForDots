@@ -7,13 +7,16 @@ using DG.Tweening;
 public class DecisionState : BaseState
 {
     [SerializeField] Button confirm;
-    [SerializeField] Button cancel;
+    [SerializeField] Button reset;
     GridManager GridManager;
 
     public override void Initialize(StateManager StateManager)
     {
         this.GridManager = StateManager.gridManager;
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
+        reset.onClick.AddListener(StateManager.gridManager.Reset);
+        confirm.onClick.AddListener(StateManager.gridManager.Confirm);
+
     }
     public override void EnterState(StateManager stateManager)
     {
@@ -22,6 +25,11 @@ public class DecisionState : BaseState
     public override void UpdateState(StateManager stateManager)
     {
         stateManager.HandleScreenInputs();
+
+        if (!GridManager.hasNeighborDot)
+        {
+            stateManager.SwitchState(stateManager.ExploringState);
+        }
     }
     public override void LeaveState()
     {

@@ -31,7 +31,7 @@ public class ExploringState : BaseState
             stateManager.SwitchState(stateManager.NeutralState);
         }
 
-        if (stateManager.gridManager.neighborDot != null && stateManager.gridManager.currentDot != null)
+        if (stateManager.gridManager.hasNeighborDot && stateManager.gridManager.hasCurrentDot)
         {
             stateManager.SwitchState(stateManager.DecisionState);
         }
