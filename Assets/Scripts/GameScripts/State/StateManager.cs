@@ -42,7 +42,6 @@ public class StateManager : MonoBehaviour
     public ResetState ResetState;//
 
 
-
     private void Awake()
     {
         HandleDots();
@@ -68,6 +67,7 @@ public class StateManager : MonoBehaviour
     void Update()
     {
         currentState.UpdateState(this);
+        //Debug.Log(currentState);
     }
 
     public void SwitchState(BaseState state)
@@ -85,10 +85,9 @@ public class StateManager : MonoBehaviour
         SwitchState(InspectingState);
     }
     //resubsribe button
-    void SubscribeButton()
+    public void SubscribeButton(Button dot)
     {
-
-
+       dot.onClick.AddListener(delegate { Inspect(dot.transform); });
     }
 
     void HandleDots()
@@ -96,11 +95,12 @@ public class StateManager : MonoBehaviour
         for(int i = 0; i < dotsParent.childCount; i++)
         {
             Button dot = dotsParent.GetChild(i).GetComponent<Button>();
-            dot.onClick.RemoveAllListeners();
-            dot.onClick.AddListener(delegate { Inspect(dot.transform); });// SwitchState(InspectingState);
+            //dot.onClick.RemoveAllListeners();
+            //dot.onClick.AddListener(delegate { Inspect(dot.transform); });// SwitchState(InspectingState);
+            SubscribeButton(dot);
         }
         gridManager = this.transform.GetComponent<GridManager>();
-        gridManager.Init(dotsParent);
+        gridManager.Init(dotsParent, SubscribeButton);
     }
 
     public void HandleScreenInputs()

@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   confirm: {fileID: 1277505796037700558}
-  reset: {fileID: 8110428833479581680}
+  cancel: {fileID: 8110428833479581680}
 --- !u!1 &6425493053109994822
 GameObject:
   m_ObjectHideFlags: 0

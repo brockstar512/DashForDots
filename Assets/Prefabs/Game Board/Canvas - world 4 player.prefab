@@ -609,9 +609,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 714364568750063584}
   up: {fileID: 606453754748417761}
   down: {fileID: 9210719536668034602}
@@ -2053,9 +2050,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1343398348686320621}
   up: {fileID: 6571315150420588534}
   down: {fileID: 81932597916963950}
@@ -3026,9 +3020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2936413977522959108}
   up: {fileID: 6359532796508871329}
   down: {fileID: 310355534311352587}
@@ -3492,9 +3483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2598265582335130111}
   up: {fileID: 6114662627821213116}
   down: {fileID: 5902234152305313946}
@@ -3733,9 +3721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 45549790924289934}
   up: {fileID: 6706047277391172474}
   down: {fileID: 1168356081432047161}
@@ -4952,9 +4937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5073381473962753022}
   up: {fileID: 5369669237494459287}
   down: {fileID: 3043808001004293013}
@@ -5457,9 +5439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6499992639201403721}
   up: {fileID: 8823161656145234308}
   down: {fileID: 7583441510556064764}
@@ -6073,9 +6052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5078368956722296697}
   up: {fileID: 2785430419226103584}
   down: {fileID: 9190611110697414658}
@@ -6296,9 +6272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6255145401148681210}
   up: {fileID: 4641509405769500465}
   down: {fileID: 6704913053671581667}
@@ -6462,9 +6435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1486939019255043404}
   up: {fileID: 3843495972467028682}
   down: {fileID: 5368886896833893463}
@@ -6685,9 +6655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8859839402628221165}
   up: {fileID: 8223991217120384084}
   down: {fileID: 7422163370828501779}
@@ -7754,9 +7721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2273326300212128147}
   up: {fileID: 8220824974676526699}
   down: {fileID: 6880983481387925366}
@@ -7845,9 +7809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1718812162022618467}
   up: {fileID: 9093042725756096377}
   down: {fileID: 107267069821484117}
@@ -8011,9 +7972,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3886620449792146323}
   up: {fileID: 6651904392653986316}
   down: {fileID: 4004233446925293968}
@@ -8309,9 +8267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3715152984611441355}
   up: {fileID: 8445949739838390823}
   down: {fileID: 7660489469164892874}
@@ -8400,9 +8355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8716194364978433130}
   up: {fileID: 5394912464354843267}
   down: {fileID: 1588100880048243157}
@@ -8566,9 +8518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2896176171162062095}
   up: {fileID: 8036185835747525987}
   down: {fileID: 6662434696425777438}
@@ -9296,9 +9245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5110901272334239406}
   up: {fileID: 5247629312037077698}
   down: {fileID: 8411925566342243207}
@@ -10194,9 +10140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8794649461269503602}
   up: {fileID: 8795803141002792182}
   down: {fileID: 6762933595882742414}
@@ -11092,9 +11035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6279813303373451455}
   up: {fileID: 492988422605479903}
   down: {fileID: 480262040353877396}
@@ -12272,9 +12212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6956522329115539450}
   up: {fileID: 6098422476422955528}
   down: {fileID: 7075659724646612511}
@@ -13284,9 +13221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 34709649788017038}
   up: {fileID: 7128443646192138844}
   down: {fileID: 4635495900438809821}
@@ -13375,9 +13309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6863647026968621969}
   up: {fileID: 1900565087811989135}
   down: {fileID: 5224845008143340546}
@@ -13466,9 +13397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2247628304230151886}
   up: {fileID: 4209952977067109344}
   down: {fileID: 2620286402598462241}
@@ -13782,9 +13710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8380034639940213778}
   up: {fileID: 7303647337013087467}
   down: {fileID: 4235606213267400381}
@@ -14437,9 +14362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8314662933004270568}
   up: {fileID: 5529432007958712664}
   down: {fileID: 5859528941117198160}
@@ -14528,9 +14450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 9004310156169913411}
   up: {fileID: 4950930547199198277}
   down: {fileID: 4438248820892918452}
@@ -15822,9 +15741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1960538935638035729}
   up: {fileID: 4231158799307903041}
   down: {fileID: 4452726345862425971}
@@ -15913,9 +15829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 852372469604594073}
   up: {fileID: 4284501251321702154}
   down: {fileID: 7174039798804054403}
@@ -16586,9 +16499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 356888640916139467}
   up: {fileID: 4505237761964485374}
   down: {fileID: 4587614803782129223}
@@ -16752,9 +16662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 87586408605560078}
   up: {fileID: 8096815489496900115}
   down: {fileID: 182478413357765372}
@@ -16993,9 +16900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 662593167731487222}
   up: {fileID: 8001242382646937951}
   down: {fileID: 5226464499506314967}
@@ -18416,9 +18320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 705657042335591511}
   up: {fileID: 3614290556122578974}
   down: {fileID: 57561228805391460}
@@ -18732,9 +18633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6969218810266232483}
   up: {fileID: 3348736523125494028}
   down: {fileID: 4569859874963069673}
@@ -19480,9 +19378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3192832462123958153}
   up: {fileID: 3399011634953743290}
   down: {fileID: 2390041362885383343}
@@ -19928,9 +19823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1552301112266854824}
   up: {fileID: 8225858267340672505}
   down: {fileID: 8292387740077634605}
@@ -20244,9 +20136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5608859614407465199}
   up: {fileID: 8067005370082282356}
   down: {fileID: 5766253415070815743}
@@ -21349,9 +21238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8639057582991912919}
   up: {fileID: 3417346405786940606}
   down: {fileID: 7611670456169037698}
@@ -21440,9 +21326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 830927026682924452}
   up: {fileID: 8828420484745360924}
   down: {fileID: 3534158772800894427}
@@ -21738,9 +21621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5916498014342808931}
   up: {fileID: 7511240620942568236}
   down: {fileID: 6061805280102426114}
@@ -21829,9 +21709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6343361136436517641}
   up: {fileID: 4010798114885884088}
   down: {fileID: 4251683566022822465}
@@ -22991,9 +22868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4627958163607039494}
   up: {fileID: 3447299010260053059}
   down: {fileID: 6254035117975264200}
@@ -23082,9 +22956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 60390257993577582}
   up: {fileID: 8412061901561588446}
   down: {fileID: 1763156212953790408}
@@ -23123,8 +22994,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.75, y: 0}
-  m_SizeDelta: {x: 1.5, y: 0.25}
+  m_AnchoredPosition: {x: 1.5, y: 0}
+  m_SizeDelta: {x: 3, y: 0.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &520000190709245500
 CanvasRenderer:
@@ -23830,9 +23701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1670923485728457188}
   up: {fileID: 4104446666273269001}
   down: {fileID: 5985598632225181834}
@@ -24335,9 +24203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5456367890317822656}
   up: {fileID: 2668779060269516626}
   down: {fileID: 1438390405039234457}
@@ -25101,9 +24966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6434301236520497626}
   up: {fileID: 5075035054538564933}
   down: {fileID: 5774642115596606447}
@@ -25924,9 +25786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8236156414601583941}
   up: {fileID: 3752423993464586919}
   down: {fileID: 5457952437736723199}
@@ -26636,9 +26495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3589449078697831366}
   up: {fileID: 2891104723396471519}
   down: {fileID: 2326428712854179582}
@@ -27252,9 +27108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8146108310453491692}
   up: {fileID: 7450883745681075108}
   down: {fileID: 5487124366675655310}
@@ -28639,9 +28492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5042546595651016928}
   up: {fileID: 2804951612156634033}
   down: {fileID: 2585922422256377466}
@@ -29594,9 +29444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6846740645334183449}
   up: {fileID: 637066892078857331}
   down: {fileID: 2400325708140817597}
@@ -30060,9 +29907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3116278753566882948}
   up: {fileID: 15963110301580592}
   down: {fileID: 1078560481424772812}
@@ -30772,9 +30616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7869654741794746970}
   up: {fileID: 1212146747904832853}
   down: {fileID: 1793666052687679145}
@@ -30863,9 +30704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3259721576652769759}
   up: {fileID: 600262127321195291}
   down: {fileID: 8661666246560914885}
@@ -31179,9 +31017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8485597901743411227}
   up: {fileID: 6223612693564781044}
   down: {fileID: 4976368938401509028}
@@ -31345,9 +31180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3572654829634220265}
   up: {fileID: 4480181604272496079}
   down: {fileID: 618358956911468411}
@@ -31925,9 +31757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5883422236182543207}
   up: {fileID: 1489606246292141970}
   down: {fileID: 536653275875590722}
@@ -33369,9 +33198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 7144912877531075151}
   up: {fileID: 5503516813462259893}
   down: {fileID: 5603510242262578019}
@@ -34042,9 +33868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 33122008013023829}
   up: {fileID: 2695916898058097709}
   down: {fileID: 3521255357067075940}
@@ -34265,9 +34088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8626290003655755803}
   up: {fileID: 6679656651594082407}
   down: {fileID: 2267528784112435005}
@@ -34506,9 +34326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1760348920115255503}
   up: {fileID: 3666379625551089416}
   down: {fileID: 5642488600783308301}
@@ -34747,9 +34564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7500583006892733595}
   up: {fileID: 4463420112553279302}
   down: {fileID: 7616024045319156931}
@@ -36548,9 +36362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8148945366998151181}
   up: {fileID: 2602380664346899507}
   down: {fileID: 1334602759107669937}
@@ -36939,9 +36750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 4869187757261993979}
   up: {fileID: 1626256119231900273}
   down: {fileID: 9082253911535647685}
@@ -37312,9 +37120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 4001284650773345071}
   up: {fileID: 4436866105378016773}
   down: {fileID: 7492936935287950}
@@ -37478,9 +37283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2849208663553139987}
   up: {fileID: 3187587881298736177}
   down: {fileID: 276225902448762184}
@@ -37794,9 +37596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6782551749274279826}
   up: {fileID: 5766075854303185604}
   down: {fileID: 9083214850233851227}
@@ -37960,9 +37759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2244787682320941790}
   up: {fileID: 2498686744463522286}
   down: {fileID: 5977168344720350118}
@@ -38051,9 +37847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 7001264474805644680}
   up: {fileID: 3792502649631981696}
   down: {fileID: 10478818479346960}
@@ -38274,9 +38067,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2832154421232292405}
   up: {fileID: 3141722510350448644}
   down: {fileID: 7910282094265219130}
@@ -39022,9 +38812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8302400879405464963}
   up: {fileID: 2081793913639703876}
   down: {fileID: 6125137552378213522}
@@ -39188,9 +38975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1287525604885145010}
   up: {fileID: 4076111425816302978}
   down: {fileID: 2783376785267050960}
@@ -39429,9 +39213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7701258405210736646}
   up: {fileID: 7699378213870584952}
   down: {fileID: 8738287649654817765}
@@ -41273,7 +41054,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.75}
+  m_AnchoredPosition: {x: 0, y: 1.5}
   m_SizeDelta: {x: 0.25, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4224362453034982265
@@ -41962,9 +41743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4128974942706225548}
   up: {fileID: 7265306727771760635}
   down: {fileID: 5704321624237665205}
@@ -42317,9 +42095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7017248581258418195}
   up: {fileID: 3259085023438752694}
   down: {fileID: 5928197281792903291}
@@ -42690,9 +42465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3254453866458797361}
   up: {fileID: 329600141995204236}
   down: {fileID: 44916430931549896}
@@ -42781,9 +42553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1732609596080603142}
   up: {fileID: 9220175643274491452}
   down: {fileID: 3862059875325270267}
@@ -43418,9 +43187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7287617611938549875}
   up: {fileID: 1804182203679415198}
   down: {fileID: 458545894089951512}
@@ -45069,9 +44835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1972753654423387942}
   up: {fileID: 725154105446807444}
   down: {fileID: 5766728791121292821}
@@ -45310,9 +45073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5097298096101651991}
   up: {fileID: 7190858316811388640}
   down: {fileID: 569691302108692368}
@@ -45401,9 +45161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6244843142735545749}
   up: {fileID: 6608555752138460514}
   down: {fileID: 1292125514020479095}
@@ -45699,9 +45456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 418431885539638301}
   up: {fileID: 1788444146460083625}
   down: {fileID: 507948828660722731}
@@ -46129,9 +45883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7794270036285107608}
   up: {fileID: 4900544193503409569}
   down: {fileID: 2232694663253701956}
@@ -46520,9 +46271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8779411090304752688}
   up: {fileID: 8528487926739930412}
   down: {fileID: 8552605858838737059}
@@ -46686,9 +46434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4632520863038800108}
   up: {fileID: 5812367988203970141}
   down: {fileID: 6099813093805423867}
@@ -46777,9 +46522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 1819301170426935178}
   up: {fileID: 9091693456866938502}
   down: {fileID: 3699704152412301088}
@@ -46943,9 +46685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7754047061322400298}
   up: {fileID: 3583383309471922591}
   down: {fileID: 5281480963572397983}
@@ -47391,9 +47130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1607837456433415869}
   up: {fileID: 2171338414549726282}
   down: {fileID: 5217106529779436065}
@@ -48007,9 +47743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8572919126808256967}
   up: {fileID: 8179390163458019546}
   down: {fileID: 7562699846738747996}
@@ -49826,9 +49559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1875238434422732262}
   up: {fileID: 7781577248574097377}
   down: {fileID: 5561866373012825403}
@@ -50274,9 +50004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2519506404949672500}
   up: {fileID: 662370187366932065}
   down: {fileID: 2438332324454086811}
@@ -51457,9 +51184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1654893337683108526}
   up: {fileID: 1130284739787188615}
   down: {fileID: 977604008055423693}
@@ -51830,9 +51554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2102977627789057234}
   up: {fileID: 4647954265364325844}
   down: {fileID: 1178597813962337007}
@@ -51996,9 +51717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4141308408699193310}
   up: {fileID: 8398283971332642812}
   down: {fileID: 2881444564875432661}
@@ -52462,9 +52180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5051728466456032342}
   up: {fileID: 658326008810702086}
   down: {fileID: 5214654473076424847}
@@ -54206,9 +53921,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2407365712518610246}
   up: {fileID: 430670714585920021}
   down: {fileID: 7543040919568524590}
@@ -54297,9 +54009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3560091655954884649}
   up: {fileID: 4766889135681351944}
   down: {fileID: 3226437407953528533}
@@ -54877,9 +54586,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 366154954282680021}
   up: {fileID: 3813271928410300104}
   down: {fileID: 8254583984988268372}
@@ -55118,9 +54824,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3590737077447362455}
   up: {fileID: 1207018410867303929}
   down: {fileID: 7718095017689160174}
@@ -55491,9 +55194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4534225194784111455}
   up: {fileID: 5799416448616834440}
   down: {fileID: 961614438524139749}
@@ -55714,9 +55414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1152387632569011715}
   up: {fileID: 9000165751456643323}
   down: {fileID: 8033271524526679412}
@@ -55955,9 +55652,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1222278357625660406}
   up: {fileID: 8188488864223992105}
   down: {fileID: 6887307887979725424}
@@ -56571,9 +56265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8294279834395262389}
   up: {fileID: 3703553341964778736}
   down: {fileID: 8376782243258074609}
@@ -56737,9 +56428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7223252721967337188}
   up: {fileID: 5110341467081534798}
   down: {fileID: 4531127351893131756}
@@ -57203,9 +56891,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5827155681770022356}
   up: {fileID: 1588542017804136580}
   down: {fileID: 897454612190523219}
@@ -58290,9 +57975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7923465886688400458}
   up: {fileID: 2236492291692791991}
   down: {fileID: 8174255920945343872}
@@ -58738,9 +58420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4339112886354764972}
   up: {fileID: 8448044636094060055}
   down: {fileID: 4279179578340622071}
@@ -59411,9 +59090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6877783690724574471}
   up: {fileID: 6116621313986351145}
   down: {fileID: 2818239976243565426}
@@ -59934,9 +59610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5046585419919206916}
   up: {fileID: 388245401571958918}
   down: {fileID: 4780494952783367670}
@@ -60589,9 +60262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4321018196637879127}
   up: {fileID: 7165843765146218221}
   down: {fileID: 7626144976808368479}
@@ -61580,9 +61250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7521105224093693892}
   up: {fileID: 4286353041503776570}
   down: {fileID: 4154941532657095702}
@@ -62310,9 +61977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3552619135373887308}
   up: {fileID: 2737962474824566528}
   down: {fileID: 2233808436209473581}
@@ -62476,9 +62140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8949468897814809321}
   up: {fileID: 9142109501182453086}
   down: {fileID: 52764479797048912}
@@ -63056,9 +62717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7503600468076430590}
   up: {fileID: 3508810661149363807}
   down: {fileID: 886429829268160112}
@@ -63147,9 +62805,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 9139978509248407714}
   up: {fileID: 3423897880324960636}
   down: {fileID: 8536774969379868429}
@@ -63595,9 +63250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 8478043053008037030}
   up: {fileID: 1304225787204605872}
   down: {fileID: 4281834411033889568}
@@ -63893,9 +63545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5455539360250601458}
   up: {fileID: 5371489339489105876}
   down: {fileID: 5226247332534676113}
@@ -64491,9 +64140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1679645540972121959}
   up: {fileID: 8522400113290926227}
   down: {fileID: 4764478243660042490}
@@ -65539,9 +65185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 654094130656541157}
   up: {fileID: 1567048758029153411}
   down: {fileID: 3580337138542144174}
@@ -65705,9 +65348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7994448178556686804}
   up: {fileID: 2948837067329626625}
   down: {fileID: 6453658353415137128}
@@ -66303,9 +65943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 49850069079772820}
   up: {fileID: 4531139992648517114}
   down: {fileID: 4083461878917523175}
@@ -66676,9 +66313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1996011986200292835}
   up: {fileID: 1828504604491607980}
   down: {fileID: 2135647897604959265}
@@ -66842,9 +66476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6351470094762334771}
   up: {fileID: 7639640303881879168}
   down: {fileID: 4649354734245248274}
@@ -67590,9 +67221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1297323991964166816}
   up: {fileID: 4931151973239847354}
   down: {fileID: 1204415762313925896}
@@ -68038,9 +67666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 476020417993473117}
   up: {fileID: 2383945129656592053}
   down: {fileID: 2616130103771437872}
@@ -68336,9 +67961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6949329267996834693}
   up: {fileID: 524239381391772693}
   down: {fileID: 2420661650863108098}
@@ -68427,9 +68049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 2253985839066944434}
   up: {fileID: 5340826606802366414}
   down: {fileID: 3231214845234142575}
@@ -68668,9 +68287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8834838037388981692}
   up: {fileID: 3197018249497971244}
   down: {fileID: 5794108295857682309}
@@ -70073,9 +69689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1809464541501374728}
   up: {fileID: 1470399169397782033}
   down: {fileID: 1837062705175728191}
@@ -70314,9 +69927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2381077238500213321}
   up: {fileID: 5715188357202029009}
   down: {fileID: 842275725987481363}
@@ -70837,9 +70447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1698486688607856297}
   up: {fileID: 3538359408316529712}
   down: {fileID: 8309936107486932124}
@@ -70928,9 +70535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7062291968020254087}
   up: {fileID: 8278732431257582530}
   down: {fileID: 292835029114478203}
@@ -71376,9 +70980,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3216559844550054272}
   up: {fileID: 7902996099369107543}
   down: {fileID: 8391537540602043988}
@@ -71674,9 +71275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5279436646347316382}
   up: {fileID: 6480301934453416116}
   down: {fileID: 4920197829806716219}
@@ -72104,9 +71702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5850033848998467492}
   up: {fileID: 4643792835452657050}
   down: {fileID: 6707930667922011000}
@@ -72795,9 +72390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4300615265755122474}
   up: {fileID: 6200489855827568419}
   down: {fileID: 6197747405697067695}
@@ -72886,9 +72478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5693728198538160763}
   up: {fileID: 1141622679882531088}
   down: {fileID: 3892256990923759077}
@@ -73352,9 +72941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 312265018683444355}
   up: {fileID: 3725699240720482688}
   down: {fileID: 8944044060344974452}
@@ -74589,9 +74175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7409796908399793276}
   up: {fileID: 7179170743227926139}
   down: {fileID: 5268672641507984390}
@@ -74755,9 +74338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8192457677810128855}
   up: {fileID: 6134652377672816798}
   down: {fileID: 4771610229724015974}
@@ -74996,9 +74576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4730805868873272654}
   up: {fileID: 6549461322720639288}
   down: {fileID: 4837263992711215143}
@@ -75462,9 +75039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 472171632907306814}
   up: {fileID: 8520915394755980429}
   down: {fileID: 2024794495738781055}
@@ -75553,9 +75127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4260928549006394977}
   up: {fileID: 2235817385386233098}
   down: {fileID: 8155640919831347796}
@@ -75776,9 +75347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7924001563130780666}
   up: {fileID: 6748161967308512920}
   down: {fileID: 488216748406675434}
@@ -76467,9 +76035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2729392121190356976}
   up: {fileID: 8205296471114927914}
   down: {fileID: 7305103099119032689}
@@ -77440,9 +77005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 6373667684718239299}
   up: {fileID: 5464117947810785775}
   down: {fileID: 7797484648398391899}
@@ -78188,9 +77750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7460035342719035956}
   up: {fileID: 2185613551549134553}
   down: {fileID: 4809564462197994223}
@@ -78354,9 +77913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5120141422260511677}
   up: {fileID: 7879846156917151131}
   down: {fileID: 1517542908218170270}
@@ -80284,9 +79840,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5037381240129913188}
   up: {fileID: 7914158771821509609}
   down: {fileID: 4070940768638448944}
@@ -81635,9 +81188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7126371350771747855}
   up: {fileID: 5900124880606226518}
   down: {fileID: 2539783304132759411}
@@ -82233,9 +81783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3499157724589310325}
   up: {fileID: 1907261236969832898}
   down: {fileID: 5661474141419610233}
@@ -82699,9 +82246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2253832515811572159}
   up: {fileID: 1731689286472424955}
   down: {fileID: 6962061607849296643}
@@ -83465,9 +83009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 961232627583568440}
   up: {fileID: 2779424512240829780}
   down: {fileID: 5684657915196604124}
@@ -84288,9 +83829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 550575307144831519}
   up: {fileID: 7565076927000624340}
   down: {fileID: 7967943488468690589}
@@ -84379,9 +83917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1684554240998762409}
   up: {fileID: 934602211381407778}
   down: {fileID: 6094168929738528161}
@@ -86666,9 +86201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8134810485848951315}
   up: {fileID: 4323919102261671645}
   down: {fileID: 4891411460219941663}
@@ -86757,9 +86289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4653894558748653660}
   up: {fileID: 3849960851612558038}
   down: {fileID: 5785764076461337595}
@@ -86998,9 +86527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6862433743087784120}
   up: {fileID: 2685978855601220527}
   down: {fileID: 962248503100993287}
@@ -88160,9 +87686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6987981039945354550}
   up: {fileID: 6139516114547681501}
   down: {fileID: 1328589202470253591}
@@ -88665,9 +88188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3595161785606612817}
   up: {fileID: 6052686441754840416}
   down: {fileID: 6940612675147252260}
@@ -88756,9 +88276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 6802444305494393549}
   up: {fileID: 5935627293550755672}
   down: {fileID: 6625913839943246483}
@@ -88847,9 +88364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 976650607341529849}
   up: {fileID: 6925907759483671943}
   down: {fileID: 9089325868937466875}
@@ -89013,9 +88527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1695248703625001969}
   up: {fileID: 2827923511361738335}
   down: {fileID: 1957765405834854665}
@@ -89254,9 +88765,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8983875721515325842}
   up: {fileID: 8158711330547542447}
   down: {fileID: 6560510986762415631}
@@ -89627,9 +89135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5900317708764114230}
   up: {fileID: 2744665639406043172}
   down: {fileID: 7199410643959107952}
@@ -89943,9 +89448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3284019951760897542}
   up: {fileID: 5708075577697209423}
   down: {fileID: 5538487571978569890}
@@ -90955,9 +90457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4876445522335473470}
   up: {fileID: 6499460388268107453}
   down: {fileID: 3985478721471298759}
@@ -91046,9 +90545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7447937981257928262}
   up: {fileID: 761757125780458984}
   down: {fileID: 5257987099469389515}
@@ -91137,9 +90633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3386107087046341976}
   up: {fileID: 3737608702983728566}
   down: {fileID: 3621393650170043305}
@@ -91435,9 +90928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 8925169196701421424}
   up: {fileID: 8096267418432691834}
   down: {fileID: 7736680922763759649}
@@ -91601,9 +91091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6649676252565178699}
   up: {fileID: 1174622959546232802}
   down: {fileID: 4959996820618474536}
@@ -92424,9 +91911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2553481189071689466}
   up: {fileID: 1752583250329521289}
   down: {fileID: 4652758843602901026}
@@ -92647,9 +92131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6052189140265533246}
   up: {fileID: 3083648975714425955}
   down: {fileID: 2806276229001816286}
@@ -93002,9 +92483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 5496820191050475980}
   up: {fileID: 4088465917353085125}
   down: {fileID: 1009754451959418040}
@@ -94089,9 +93567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 4739884972244742319}
   up: {fileID: 2242043044511448085}
   down: {fileID: 6269968429958545262}
@@ -94180,9 +93655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2349002132556377424}
   up: {fileID: 3150371507724858526}
   down: {fileID: 9151293539572784961}
@@ -94628,9 +94100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4350351304601373930}
   up: {fileID: 8829056247493192809}
   down: {fileID: 7290440061178180793}
@@ -95658,9 +95127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 5221989086353727018}
   up: {fileID: 2206843733570165440}
   down: {fileID: 3845398402844407626}
@@ -98397,9 +97863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 4708921733110038038}
   up: {fileID: 2085602327182696715}
   down: {fileID: 3691139281374846784}
@@ -98770,9 +98233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4366410553820307622}
   up: {fileID: 1437703023467743727}
   down: {fileID: 7834759920451918658}
@@ -98861,9 +98321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5477743871863825700}
   up: {fileID: 3266064249458930448}
   down: {fileID: 3141958165952131222}
@@ -99027,9 +98484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5926525558503143710}
   up: {fileID: 2652324260502755634}
   down: {fileID: 5877745932014620093}
@@ -99193,9 +98647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1034252624142326872}
   up: {fileID: 1702984328365729766}
   down: {fileID: 1944188573780183366}
@@ -99773,9 +99224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3892241844720051777}
   up: {fileID: 4469058435183047969}
   down: {fileID: 2005585582799579904}
@@ -100992,9 +100440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4611262964503306092}
   up: {fileID: 672402294714327115}
   down: {fileID: 6203125361789056621}
@@ -101158,9 +100603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5922487055979455052}
   up: {fileID: 5776261829822666328}
   down: {fileID: 4847190387917252702}
@@ -102131,9 +101573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 960180495932263868}
   up: {fileID: 4380040597798655939}
   down: {fileID: 4064126752224439108}
@@ -102222,9 +101661,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7298922240002138921}
   up: {fileID: 141227383870503076}
   down: {fileID: 1768103574265529227}
@@ -102313,9 +101749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5827983085106543649}
   up: {fileID: 7669033190926859040}
   down: {fileID: 710486355031747085}
@@ -102629,9 +102062,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5389998046320792891}
   up: {fileID: 2572917848837616785}
   down: {fileID: 3952132843252198760}
@@ -102870,9 +102300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 3180764549645717185}
   up: {fileID: 8570803955540218431}
   down: {fileID: 4133590753495400253}
@@ -103468,9 +102895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 642008493622669294}
   up: {fileID: 7622073095556580058}
   down: {fileID: 1639968604187785560}
@@ -103559,9 +102983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 2365415310318375244}
   up: {fileID: 7955069272172256586}
   down: {fileID: 358333050328743626}
@@ -103650,9 +103071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 3406412261740188834}
   up: {fileID: 2318504006234003902}
   down: {fileID: 7612819171288374916}
@@ -104173,9 +103591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2338608827832970395}
   up: {fileID: 6791351250890838025}
   down: {fileID: 6406838969028932826}
@@ -104339,9 +103754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6851556880268584744}
   up: {fileID: 6812560991929870945}
   down: {fileID: 4290791127673671215}
@@ -104937,9 +104349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 209344774465301516}
   up: {fileID: 8405570768283805700}
   down: {fileID: 2684945817915468186}
@@ -105817,9 +105226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5495909209368465885}
   up: {fileID: 2036574372071094408}
   down: {fileID: 8727671518315508347}
@@ -106208,9 +105614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8664633760135922592}
   up: {fileID: 4751868170982781745}
   down: {fileID: 1558562334573520358}
@@ -106899,9 +106302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4717780050947949206}
   up: {fileID: 1336102999300098308}
   down: {fileID: 3469635499314266217}
@@ -107968,9 +107368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4237581495463416816}
   up: {fileID: 6846372743904194459}
   down: {fileID: 4230470639101490142}
@@ -108209,9 +107606,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3107022770352158178}
   up: {fileID: 7637135428096627062}
   down: {fileID: 5442565066523942713}
@@ -108375,9 +107769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7441174898755140913}
   up: {fileID: 7369768147793700489}
   down: {fileID: 3745451411407264968}
@@ -109105,9 +108496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1332706339410566518}
   up: {fileID: 2326029072359540203}
   down: {fileID: 2599559345460849395}
@@ -109721,9 +109109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2895986030718140924}
   up: {fileID: 1682834241527871899}
   down: {fileID: 471895408355075290}
@@ -110262,9 +109647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3920450017640275055}
   up: {fileID: 2925881567030403463}
   down: {fileID: 1329895506695491198}
@@ -110728,9 +110110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6160050074880477852}
   up: {fileID: 1226199809024518818}
   down: {fileID: 8005662211035041672}
@@ -111308,9 +110687,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4188268536952938063}
   up: {fileID: 4006042274849035748}
   down: {fileID: 5601759778098776090}
@@ -111399,9 +110775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8766639622716156874}
   up: {fileID: 3021288897426295250}
   down: {fileID: 8217246647915556461}
@@ -111847,9 +111220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4070370207280874608}
   up: {fileID: 5995892655608102701}
   down: {fileID: 5965449829463799738}
@@ -112652,9 +112022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6587322772563532906}
   up: {fileID: 838351714573081837}
   down: {fileID: 3829602395195304051}
@@ -112743,9 +112110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7015427601967092333}
   up: {fileID: 7266949140921176547}
   down: {fileID: 5789137599018092045}
@@ -113116,9 +112480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6387036098491082752}
   up: {fileID: 5343288866398608137}
   down: {fileID: 2740716365441855610}
@@ -113828,9 +113189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7217913520365692630}
   up: {fileID: 676016609298575891}
   down: {fileID: 5573188003121605061}
@@ -114633,9 +113991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 2701616419589535072}
   up: {fileID: 1650800522588693710}
   down: {fileID: 2695693436679765169}
@@ -114856,9 +114211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4958456971509481098}
   up: {fileID: 6992112976275805874}
   down: {fileID: 1669479487220992241}
@@ -115322,9 +114674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1604528447249927739}
   up: {fileID: 141441002041088196}
   down: {fileID: 4416800463279412443}
@@ -115902,9 +115251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2077902628152705346}
   up: {fileID: 7744415455958457856}
   down: {fileID: 7379083458598900549}
@@ -116725,9 +116071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3321821300906108587}
   up: {fileID: 4544516107461160354}
   down: {fileID: 704259819027368383}
@@ -117398,9 +116741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 9180870010900417685}
   up: {fileID: 8809827004042961502}
   down: {fileID: 1228254956556233551}
@@ -117714,9 +117054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2336078391912075089}
   up: {fileID: 5637897218166280697}
   down: {fileID: 5052017619667073556}
@@ -118462,9 +117799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6918930683328372199}
   up: {fileID: 447598547403518775}
   down: {fileID: 7714104837348091145}
@@ -118553,9 +117887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7368197899662042704}
   up: {fileID: 6604116566595261964}
   down: {fileID: 808932519274701582}
@@ -118644,9 +117975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7371366211376692531}
   up: {fileID: 9087496793860265419}
   down: {fileID: 8780686002243405782}
@@ -118735,9 +118063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6127477560888763052}
   up: {fileID: 4183696992035576575}
   down: {fileID: 4611174794010216163}
@@ -119051,9 +118376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 315978516088136892}
   up: {fileID: 5192747235431142492}
   down: {fileID: 6846963757664818876}
@@ -119142,9 +118464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2217615133472777461}
   up: {fileID: 1561514897839896735}
   down: {fileID: 1931669600432580397}
@@ -119665,9 +118984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8099376540381760894}
   up: {fileID: 399749945043835146}
   down: {fileID: 9223308885000215646}
@@ -119756,9 +119072,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 4635843215113889059}
   up: {fileID: 740705152869138563}
   down: {fileID: 9022442468106339131}
@@ -120486,9 +119799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2953981427369267848}
   up: {fileID: 7302219402532807842}
   down: {fileID: 8021661319967491974}
@@ -120727,9 +120037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6377712075665770209}
   up: {fileID: 307072421236397540}
   down: {fileID: 4204065443753608176}
@@ -121175,9 +120482,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2245160388399056217}
   up: {fileID: 2076567359732364259}
   down: {fileID: 2661864819114548328}
@@ -121980,9 +121284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2663899180257790073}
   up: {fileID: 3726831900954987602}
   down: {fileID: 3624571652287286200}
@@ -122146,9 +121447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4776657299810382013}
   up: {fileID: 7922761949882197189}
   down: {fileID: 8587382834800062916}
@@ -123158,9 +122456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4873352405551337527}
   up: {fileID: 9051341610478516716}
   down: {fileID: 6434391264487296098}
@@ -123963,9 +123258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 1655386407050209911}
   up: {fileID: 1421260002624360119}
   down: {fileID: 4276851011523457976}
@@ -124486,9 +123778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2258162692541225336}
   up: {fileID: 1858075225540437261}
   down: {fileID: 7479495861697182455}
@@ -124577,9 +123866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 512487199252462408}
   up: {fileID: 7160254949480017913}
   down: {fileID: 8929820706116944786}
@@ -124668,9 +123954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 4278255520
   right: {fileID: 2361142481176992707}
   up: {fileID: 4157358209245171018}
   down: {fileID: 117379665986678199}
@@ -125191,9 +124474,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 346137606037363841}
   up: {fileID: 8627426380559948476}
   down: {fileID: 8798207317878909006}
@@ -126014,9 +125294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4931552889447010717}
   up: {fileID: 4306551363376710425}
   down: {fileID: 5282260947473200720}
@@ -126405,9 +125682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7593472742041741186}
   up: {fileID: 5889820166527861062}
   down: {fileID: 368302804339911451}
@@ -128695,9 +127969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6192696429536910640}
   up: {fileID: 939388950701853998}
   down: {fileID: 2966345642314195318}
@@ -128861,9 +128132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 4058021855354078454}
   up: {fileID: 6489129920968331338}
   down: {fileID: 6481972668772250491}
@@ -129159,9 +128427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8930299964164102128}
   up: {fileID: 7956726871141400733}
   down: {fileID: 2570950672380395509}
@@ -130078,9 +129343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 143779138173183267}
   up: {fileID: 2342013020605858000}
   down: {fileID: 5694730755130508520}
@@ -130526,9 +129788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 5561082481723413122}
   up: {fileID: 558811312734410245}
   down: {fileID: 1929161598910583333}
@@ -130749,9 +130008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2614767335226052701}
   up: {fileID: 7468135826316331685}
   down: {fileID: 2201952196892286597}
@@ -131197,9 +130453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3456169796324562486}
   up: {fileID: 8370156421802510290}
   down: {fileID: 1056135275543193562}
@@ -131663,9 +130916,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 3607837012364467686}
   up: {fileID: 4925931476832961416}
   down: {fileID: 3659756496415803426}
@@ -131754,9 +131004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6219955306931512698}
   up: {fileID: 2643518466474351998}
   down: {fileID: 7970288573497338394}
@@ -131995,9 +131242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7533015121785145771}
   up: {fileID: 6779417991928302818}
   down: {fileID: 6021429113293301997}
@@ -132593,9 +131837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 2111657373063745902}
   up: {fileID: 1026971533462239517}
   down: {fileID: 6269785807966092420}
@@ -132759,9 +132000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 7897022378922677227}
   up: {fileID: 1635681381922272047}
   down: {fileID: 2122536887833818412}
@@ -133207,9 +132445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 6360239222814755195}
   up: {fileID: 1439933151401455085}
   down: {fileID: 7893864733855327218}
@@ -133937,9 +133172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feb9380284aa4c46882cc1862991c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerColor:
-    serializedVersion: 2
-    rgba: 0
   right: {fileID: 8577671015188569210}
   up: {fileID: 1663254652801239885}
   down: {fileID: 6434310822286223734}

@@ -9,10 +9,11 @@ public class Dot : MonoBehaviour
 {
     public int X { get; private set; }
     public int Y { get; private set; }
+    public Button button { get; private set; }
+
     public Dictionary<Vector2Int, bool> connectingCompass { get; private set; }//avaiable direction
     DotStyling DotStyling;
     GridManager GridManager;
-    Button button;
 
 
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
@@ -54,6 +55,7 @@ public class Dot : MonoBehaviour
         DotStyling.Select();
         GetNeigbors();
     }
+
     void GetNeigbors()
     {
         if (!connectingCompass[Vector2Int.down])
@@ -91,25 +93,37 @@ public class Dot : MonoBehaviour
         }
 
     }
+
     void LeaveNeigbors()
     {
         if (!connectingCompass[Vector2Int.down])
         {
-            GridManager.dots[X + 1, Y].DotStyling.NeighborUnHighlight();
+            Dot dot = GridManager.dots[X + 1, Y];
+            dot.DotStyling.NeighborUnHighlight();
+            dot.button.onClick.AddListener(dot.OnSelect);
         }
         if (!connectingCompass[Vector2Int.up])
         {
-            GridManager.dots[X - 1, Y].DotStyling.NeighborUnHighlight();
+            //GridManager.dots[X - 1, Y].DotStyling.NeighborUnHighlight();
+            Dot dot = GridManager.dots[X - 1, Y];
+            dot.DotStyling.NeighborUnHighlight();
+            dot.button.onClick.AddListener(dot.OnSelect);
 
         }
         if (!connectingCompass[Vector2Int.right])
         {
-            GridManager.dots[X, Y + 1].DotStyling.NeighborUnHighlight();
+            //GridManager.dots[X, Y + 1].DotStyling.NeighborUnHighlight();
+            Dot dot = GridManager.dots[X, Y + 1];
+            dot.DotStyling.NeighborUnHighlight();
+            dot.button.onClick.AddListener(dot.OnSelect);
 
         }
         if (!connectingCompass[Vector2Int.left])
         {
-            GridManager.dots[X, Y - 1].DotStyling.NeighborUnHighlight();
+            //GridManager.dots[X, Y - 1].DotStyling.NeighborUnHighlight();
+            Dot dot = GridManager.dots[X, Y - 1];
+            dot.DotStyling.NeighborUnHighlight();
+            dot.button.onClick.AddListener(dot.OnSelect);
 
         }
     }
@@ -121,9 +135,25 @@ public class Dot : MonoBehaviour
 
     public void OnDeselect()
     {
-        //leave neighbors
+        button.onClick.AddListener(OnSelect);
         DotStyling.Deselect();
         LeaveNeigbors();
     }
 
+
+    public void Confirm(Dot neighborDot)
+    {
+        Vector2Int direction = new Vector2Int(X - neighborDot.X, Y - neighborDot.Y);
+        connectingCompass[direction] = true;
+        this.DotStyling.DrawLine(direction);
+        neighborDot.ConfirmAsNeighbor(direction * -1);
+
+    }
+
+    public void ConfirmAsNeighbor(Vector2Int direction)
+    {
+
+        connectingCompass[direction] = true;
+
+    }
 }

@@ -1,17 +1,19 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/PlayerPlaceholder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/State/DecisionState.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameScripts/State/StateManager.cs" Line="94" Column="55" />
-      <File FileName="Assets/Scripts/GameScripts/GridManager.cs" Line="16" Column="49" />
-      <File FileName="Assets/Scripts/GameScripts/Dot.cs" Line="52" Column="20" />
+      <File FileName="Assets/Scripts/GameScripts/State/StateManager.cs" Line="41" Column="25" />
+      <File FileName="Assets/Scripts/GameScripts/GridManager.cs" Line="96" Column="29" />
+      <File FileName="Assets/Scripts/GameScripts/Dot.cs" Line="96" Column="25" />
       <File FileName="Assets/Scripts/GameScripts/DotStyling.cs" Line="108" Column="36" />
       <File FileName="Assets/Scripts/GameScripts/State/InspectingState.cs" Line="9" Column="14" />
       <File FileName="Assets/Scripts/GameScripts/PlayerPlaceholder.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/State/ExploringState.cs" Line="15" Column="94" />
+      <File FileName="Assets/Scripts/GameScripts/State/DecisionState.cs" Line="7" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5322d699-4b24-4950-913c-70c28ac0201f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1255130b-860d-4437-be79-22680866c621" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

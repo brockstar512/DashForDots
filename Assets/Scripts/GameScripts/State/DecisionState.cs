@@ -7,14 +7,14 @@ using DG.Tweening;
 public class DecisionState : BaseState
 {
     [SerializeField] Button confirm;
-    [SerializeField] Button reset;
+    [SerializeField] Button cancel;
     GridManager GridManager;
 
     public override void Initialize(StateManager StateManager)
     {
         this.GridManager = StateManager.gridManager;
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
-        reset.onClick.AddListener(StateManager.gridManager.Reset);
+        cancel.onClick.AddListener(StateManager.gridManager.Cancel);
         confirm.onClick.AddListener(StateManager.gridManager.Confirm);
 
     }

@@ -61,6 +61,7 @@ public class DotStyling : MonoBehaviour
         Close();
 
     }
+
     [ContextMenu("Open")]
     public void Open()
     {
@@ -78,6 +79,36 @@ public class DotStyling : MonoBehaviour
     public void DrawLine()
     {
         left?.DOFillAmount(1,speed).SetEase(Ease.OutSine);
+        right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+        up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+        down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+
+    }
+
+    public void DrawLine(Vector2Int direction)
+    {
+        switch (direction)
+        {
+            case Vector2Int v when v.Equals(Vector2Int.up):
+                up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+                Debug.Log("Up");
+                break;
+            case Vector2Int v when v.Equals(Vector2Int.down):
+                down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+                Debug.Log("Down");
+                break;
+            case Vector2Int v when v.Equals(Vector2Int.right):
+                right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+                Debug.Log("Right");
+                break;
+            case Vector2Int v when v.Equals(Vector2Int.left):
+                left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
+                Debug.Log("Left");
+                break;
+
+        }
+        return;
+        left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
         right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
         up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
         down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);

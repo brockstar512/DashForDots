@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Unity.VectorGraphics;
 using DG.Tweening;
 using System.Threading.Tasks;
+using System;
+
 
 public class GridManager : MonoBehaviour
 {
@@ -14,11 +16,9 @@ public class GridManager : MonoBehaviour
     public bool hasNeighborDot { get; private set; }
     public Dot currentDot { get; private set; }
     public Dot neighborDot { get; private set; }
+    private Action<Button> dotSubscriber;
 
-    //keep delegate
-
-
-    public void Init(Transform dotParent)
+    public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
         int childIndex = 0;
         _height = _width = (int)Mathf.Sqrt(dotParent.childCount);
@@ -33,19 +33,43 @@ public class GridManager : MonoBehaviour
                 Dot dot = dotParent.GetChild(childIndex).gameObject.AddComponent<Dot>();
                 dot.Init(x, y, _height -1,this);
                 dots[x, y] = dot;
-                DotDefaultState(dot);
+                dot.button.onClick.AddListener(dot.OnSelect);
                 childIndex++;
             }
         }
+        dotSubscriber += SubscribeButton;
     }
 
     async Task LeaveDot()
     {
+        dots[currentDot.X, currentDot.Y].button.onClick.RemoveAllListeners();
+
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
+        {
+            Dot dot = dots[currentDot.X + 1, currentDot.Y];
+            dot.button.onClick.RemoveAllListeners();
+            dotSubscriber.Invoke(dot.button);
+        }
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.up])
+        {
+            Dot dot = dots[currentDot.X - 1, currentDot.Y];
+            dot.button.onClick.RemoveAllListeners();
+            dotSubscriber.Invoke(dot.button);
+        }
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.right])
+        {
+            Dot dot = dots[currentDot.X, currentDot.Y + 1];
+            dot.button.onClick.RemoveAllListeners();
+            dotSubscriber.Invoke(dot.button);
+        }
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.left])
+        {
+            Dot dot = dots[currentDot.X, currentDot.Y - 1];
+            dot.button.onClick.RemoveAllListeners();
+            dotSubscriber.Invoke(dot.button);
+        }
         dots[currentDot.X, currentDot.Y].OnDeselect();
-        //pass this to delegate
-        //dots[currentDot.X, currentDot.Y]
-        //and the neighbors
-        //invoke
+        dotSubscriber.Invoke(dots[currentDot.X, currentDot.Y].button);
         await Task.Yield();
     }
 
@@ -57,39 +81,43 @@ public class GridManager : MonoBehaviour
         }
         hasCurrentDot = true;
         currentDot = dots[x, y];
-        //currentDot.GetComponent<SVGImage>().color = playerColor;
-        //HighlightNeighbors(x,y);
     }
 
     public void SelectNeighbor(int x, int y)
     {
         hasNeighborDot = true;
         neighborDot = dots[x, y];
+        Debug.Log($"Direction: {currentDot.X - neighborDot.X},{currentDot.Y - neighborDot.Y}");
     }
 
-    void DotNeighborState(Dot dot)
-    {
-        dot.GetComponent<Button>().onClick.RemoveAllListeners();
-        //dot.GetComponent<SVGImage>().DOColor(this.playerOptions, .15f);
-        dot.GetComponent<Button>().onClick.AddListener(dot.NeighboringChoice);
-    }
-
-    void DotDefaultState(Dot dot)
-    {
-        //dot.GetComponent<Button>().onClick.RemoveAllListeners();
-        //dot.GetComponent<Button>().onClick.AddListener(delegate { StateManager.Inspect(dot.transform); });
-        dot.GetComponent<Button>().onClick.AddListener(dot.OnSelect);
-    }
+ 
+    
 
     
-    public void Reset()
+    public void Cancel()
     {
         Debug.Log("Reset");
-        hasNeighborDot = false;
+        //hasNeighborDot = false;
+        //await LeaveDot();
+        currentDot.OnSelect();
 
     }
+    //public async void Reset()
+    //{
+    //    Debug.Log("Reset");
+    //    hasNeighborDot = false;
+    //    await LeaveDot();
+
+    //}
     public void Confirm()
     {
         Debug.Log("Confirm");
+        currentDot.Confirm(neighborDot);
+    }
+
+    private void OnDestroy()
+    {
+        //dotSubscriber -= SubscribeButton;
+
     }
 }

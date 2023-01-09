@@ -87,6 +87,7 @@
     <Compile Include="Assets/Scripts/GameScripts/State/NeutralState.cs" />
     <Compile Include="Assets/Scripts/UIScripts/LineUI.cs" />
     <Compile Include="Assets/SwipeController/Scripts/VectorToDirection.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/PlayerPlaceholder.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
     <Compile Include="Assets/Scripts/GameScripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CameraControl.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/PlayerPlaceholder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
