@@ -9,7 +9,7 @@ public class Dot : MonoBehaviour
 {
     public int X { get; private set; }
     public int Y { get; private set; }
-    public Button button { get; private set; }
+    [SerializeField] public Button button { get; private set; }
 
     public Dictionary<Vector2Int, bool> connectingCompass { get; private set; }//avaiable direction
     DotStyling DotStyling;
@@ -143,7 +143,10 @@ public class Dot : MonoBehaviour
 
     public void Confirm(Dot neighborDot)
     {
-        Vector2Int direction = new Vector2Int(X - neighborDot.X, Y - neighborDot.Y);
+        int xDifference = neighborDot.X - X;
+        int yDifference = (neighborDot.Y - Y)*-1;
+
+        Vector2Int direction = new Vector2Int(xDifference, yDifference);
         connectingCompass[direction] = true;
         this.DotStyling.DrawLine(direction);
         neighborDot.ConfirmAsNeighbor(direction * -1);
@@ -152,8 +155,7 @@ public class Dot : MonoBehaviour
 
     public void ConfirmAsNeighbor(Vector2Int direction)
     {
-
         connectingCompass[direction] = true;
-
+        Debug.Log($"neighbor {direction} for this dot {X},{Y}");
     }
 }

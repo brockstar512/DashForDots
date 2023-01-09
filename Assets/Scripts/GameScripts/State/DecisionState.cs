@@ -15,7 +15,10 @@ public class DecisionState : BaseState
         this.GridManager = StateManager.gridManager;
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
         cancel.onClick.AddListener(StateManager.gridManager.Cancel);
-        confirm.onClick.AddListener(StateManager.gridManager.Confirm);
+        confirm.onClick.AddListener(delegate {
+            StateManager.gridManager.Confirm();
+            StateManager.SwitchState(StateManager.ResetState);
+        });
 
     }
     public override void EnterState(StateManager stateManager)

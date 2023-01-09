@@ -107,11 +107,6 @@ public class DotStyling : MonoBehaviour
                 break;
 
         }
-        return;
-        left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-        right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-        up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-        down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
 
     }
 
