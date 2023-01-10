@@ -12,12 +12,8 @@ public class GridManager : MonoBehaviour
 {
     public Dot[,] dots { get; private set; }
     int _height, _width;
-    public bool hasCurrentDot { get; private set; }
-    public bool hasNeighborDot { get; private set; }
-    public Dot currentDot { get; private set; }
-    public Dot neighborDot { get; private set; }
-    DotValue curdot;
-    DotValue neighbdot;
+    public DotValue currentDot { get; private set; }
+    public DotValue neighborDot { get; private set; }
 
 
     private Action<Button> dotSubscriber;
@@ -44,6 +40,11 @@ public class GridManager : MonoBehaviour
         dotSubscriber += SubscribeButton;
     }
 
+
+    private void Update()
+    {
+        Debug.Log(neighborDot != null);
+    }
     async Task LeaveDot()
     {
         dots[currentDot.X, currentDot.Y].button.onClick.RemoveAllListeners();
@@ -79,18 +80,17 @@ public class GridManager : MonoBehaviour
 
     public async void SelectDot(int x, int y)
     {
-        if(hasCurrentDot != false && currentDot != dots[x, y])
+        if(currentDot != null && !currentDot.Equals(dots[x, y].coordinates))
         {
             await LeaveDot();
+            //currentDot = null;
         }
-        hasCurrentDot = true;
-        currentDot = dots[x, y];
+        currentDot = dots[x, y].coordinates;
     }
 
     public void SelectNeighbor(int x, int y)
     {
-        hasNeighborDot = true;
-        neighborDot = dots[x, y];
+        neighborDot = dots[x, y].coordinates;
         Debug.Log($"Neighbor  {neighborDot.X},{neighborDot.Y}");
     }
 
@@ -101,9 +101,9 @@ public class GridManager : MonoBehaviour
     public void Cancel()
     {
         Debug.Log("Reset");
-        hasNeighborDot = false;
+        neighborDot = null;
         //await LeaveDot();
-        currentDot.OnSelect();
+        dots[currentDot.X, currentDot.Y].OnSelect();
 
 
     }
@@ -117,10 +117,9 @@ public class GridManager : MonoBehaviour
     public async void Confirm()
     {
         Debug.Log("Confirm");
-
-        hasNeighborDot = false;
-        hasCurrentDot = false;
-        await currentDot.Confirm(neighborDot);
+        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+        currentDot = null;
+        neighborDot = null;
     }
 
     private void OnDestroy()

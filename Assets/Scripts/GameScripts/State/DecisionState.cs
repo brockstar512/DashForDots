@@ -29,7 +29,7 @@ public class DecisionState : BaseState
     {
         stateManager.HandleScreenInputs();
 
-        if (!GridManager.hasNeighborDot)
+        if (GridManager.neighborDot == null)
         {
             stateManager.SwitchState(stateManager.ExploringState);
         }

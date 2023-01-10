@@ -22,7 +22,7 @@ public class NeutralState : BaseState
         {
             stateManager.SwitchState(stateManager.ExploringState);
         }
-        if (stateManager.gridManager.hasNeighborDot && stateManager.gridManager.hasCurrentDot)
+        if (stateManager.gridManager.neighborDot != null && stateManager.gridManager.currentDot != null)
         {
             stateManager.SwitchState(stateManager.DecisionState);
         }
