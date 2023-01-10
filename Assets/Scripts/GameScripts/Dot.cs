@@ -15,6 +15,7 @@ public class Dot : MonoBehaviour
     public Dictionary<Vector2Int, bool> connectingCompass { get; private set; }//avaiable direction
     DotStyling DotStyling;
     GridManager GridManager;
+    public DotValue coordinates { get; private set; }
 
 
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
@@ -46,6 +47,7 @@ public class Dot : MonoBehaviour
         this.DotStyling = GetComponentInChildren<DotStyling>();
         this.button = GetComponent<Button>();
         DotStyling.Init(connectingCompass);
+        coordinates = new DotValue(x,y);
     }
 
     //when this dot is selected
@@ -157,5 +159,17 @@ public class Dot : MonoBehaviour
     public void ConfirmAsNeighbor(Vector2Int direction)
     {
         connectingCompass[direction] = true;
+    }
+}
+
+public class DotValue
+{
+    public int X { get; private set; }
+    public int Y { get; private set; }
+
+    public DotValue(int x, int y)
+    {
+        this.X = x;
+        this.Y = y;
     }
 }

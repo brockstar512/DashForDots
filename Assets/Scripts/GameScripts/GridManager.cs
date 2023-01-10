@@ -16,6 +16,10 @@ public class GridManager : MonoBehaviour
     public bool hasNeighborDot { get; private set; }
     public Dot currentDot { get; private set; }
     public Dot neighborDot { get; private set; }
+    DotValue curdot;
+    DotValue neighbdot;
+
+
     private Action<Button> dotSubscriber;
 
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
