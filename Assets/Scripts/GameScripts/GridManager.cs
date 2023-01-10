@@ -43,7 +43,7 @@ public class GridManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(neighborDot != null);
+        //Debug.Log(neighborDot != null);
     }
     async Task LeaveDot()
     {
@@ -117,6 +117,7 @@ public class GridManager : MonoBehaviour
     public async void Confirm()
     {
         Debug.Log("Confirm");
+        await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;
         neighborDot = null;

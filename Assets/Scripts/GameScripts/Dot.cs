@@ -64,7 +64,7 @@ public class Dot : MonoBehaviour
         {
             Dot dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
             dot.DotStyling.NeighborHighlight();
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.RemoveAllListeners();
             dot.button.onClick.AddListener(dot.NeighboringChoice);
         }
 
@@ -72,7 +72,7 @@ public class Dot : MonoBehaviour
         {
             Dot dot = GridManager.dots[coordinates.X - 1, coordinates.Y];
             dot.DotStyling.NeighborHighlight();
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.RemoveAllListeners();
             dot.button.onClick.AddListener(dot.NeighboringChoice);
 
         }
@@ -81,7 +81,7 @@ public class Dot : MonoBehaviour
         {
             Dot dot = GridManager.dots[coordinates.X, coordinates.Y + 1];
             dot.DotStyling.NeighborHighlight();
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.RemoveAllListeners();
             dot.button.onClick.AddListener(dot.NeighboringChoice);
 
         }
@@ -89,18 +89,20 @@ public class Dot : MonoBehaviour
         {
             Dot dot = GridManager.dots[coordinates.X, coordinates.Y - 1];
             dot.DotStyling.NeighborHighlight();
-            dot.GetComponent<Button>().onClick.RemoveAllListeners();
+            dot.button.onClick.RemoveAllListeners();
             dot.button.onClick.AddListener(dot.NeighboringChoice);
 
         }
 
     }
-
+    //remove listeners?
     void LeaveNeigbors()
     {
         if (!connectingCompass[Vector2Int.down])
         {
+
             Dot dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
+            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
         }
@@ -108,6 +110,7 @@ public class Dot : MonoBehaviour
         {
             //GridManager.dots[X - 1, Y].DotStyling.NeighborUnHighlight();
             Dot dot = GridManager.dots[coordinates.X - 1, coordinates.Y];
+            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
 
@@ -116,6 +119,7 @@ public class Dot : MonoBehaviour
         {
             //GridManager.dots[X, Y + 1].DotStyling.NeighborUnHighlight();
             Dot dot = GridManager.dots[coordinates.X, coordinates.Y + 1];
+            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
 
@@ -124,6 +128,7 @@ public class Dot : MonoBehaviour
         {
             //GridManager.dots[X, Y - 1].DotStyling.NeighborUnHighlight();
             Dot dot = GridManager.dots[coordinates.X, coordinates.Y - 1];
+            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
 
