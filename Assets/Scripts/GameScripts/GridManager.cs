@@ -25,9 +25,9 @@ public class GridManager : MonoBehaviour
         //Debug.Log($"grid size :: {_height}, {_width}");
 
         dots = new Dot[_height, _width];
-        for (int y = 0; y < _height; y++)
+        for (int x = 0; x < _width; x++)
         {
-            for (int x = 0; x < _width; x++)
+            for (int y = 0; y < _height; y++)
             {
                 //Debug.Log("Child:: " + childIndex);
                 Dot dot = dotParent.GetChild(childIndex).gameObject.AddComponent<Dot>();
@@ -87,6 +87,7 @@ public class GridManager : MonoBehaviour
     {
         hasNeighborDot = true;
         neighborDot = dots[x, y];
+        Debug.Log($"Neighbor  {neighborDot.X},{neighborDot.Y}");
     }
 
 
@@ -96,9 +97,10 @@ public class GridManager : MonoBehaviour
     public void Cancel()
     {
         Debug.Log("Reset");
-        //hasNeighborDot = false;
+        hasNeighborDot = false;
         //await LeaveDot();
         currentDot.OnSelect();
+
 
     }
     //public async void Reset()
@@ -108,10 +110,13 @@ public class GridManager : MonoBehaviour
     //    await LeaveDot();
 
     //}
-    public void Confirm()
+    public async void Confirm()
     {
         Debug.Log("Confirm");
-        currentDot.Confirm(neighborDot);
+
+        hasNeighborDot = false;
+        hasCurrentDot = false;
+        await currentDot.Confirm(neighborDot);
     }
 
     private void OnDestroy()

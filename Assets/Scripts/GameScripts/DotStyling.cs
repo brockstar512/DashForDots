@@ -90,18 +90,23 @@ public class DotStyling : MonoBehaviour
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
+                up?.DOColor(PlayerPlaceholder.Instance.playerColor,0);
                 up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
+                down?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 Debug.Log("Down");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.right):
+                right?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+
                 right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 Debug.Log("Right");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.left):
+                left?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 Debug.Log("Left");
                 break;

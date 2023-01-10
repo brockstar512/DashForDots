@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 
 
@@ -31,7 +32,6 @@ public class Dot : MonoBehaviour
             {Vector2Int.left,false },
 
         };
-        //FIGURE OUT IF FALSE IS CAN CONNECT VS CANNOT
         //true means connected or its the end
         if (x == 0)
             connectingCompass[Vector2Int.up] = true;
@@ -140,22 +140,22 @@ public class Dot : MonoBehaviour
         LeaveNeigbors();
     }
 
-
-    public void Confirm(Dot neighborDot)
+    public async Task Confirm(Dot neighborDot)
     {
-        int xDifference = neighborDot.X - X;
-        int yDifference = (neighborDot.Y - Y)*-1;
+        LeaveNeigbors();
+        int yDifference = (neighborDot.X - X) * -1;
+        int xDifference = (neighborDot.Y - Y);
 
         Vector2Int direction = new Vector2Int(xDifference, yDifference);
         connectingCompass[direction] = true;
         this.DotStyling.DrawLine(direction);
         neighborDot.ConfirmAsNeighbor(direction * -1);
 
+        await Task.Yield();
     }
 
     public void ConfirmAsNeighbor(Vector2Int direction)
     {
         connectingCompass[direction] = true;
-        Debug.Log($"neighbor {direction} for this dot {X},{Y}");
     }
 }
