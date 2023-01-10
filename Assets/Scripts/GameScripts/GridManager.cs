@@ -41,10 +41,6 @@ public class GridManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        //Debug.Log(neighborDot != null);
-    }
     async Task LeaveDot()
     {
         dots[currentDot.X, currentDot.Y].button.onClick.RemoveAllListeners();
@@ -83,37 +79,39 @@ public class GridManager : MonoBehaviour
         if(currentDot != null && !currentDot.Equals(dots[x, y].coordinates))
         {
             await LeaveDot();
+
+            if (neighborDot != null)
+            {
+                await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
+                neighborDot = null;
+            }
             //currentDot = null;
         }
         currentDot = dots[x, y].coordinates;
     }
 
-    public void SelectNeighbor(int x, int y)
+    public async void SelectNeighbor(int x, int y)
     {
+        if (neighborDot != null && !neighborDot.Equals(dots[x, y].coordinates))
+        {
+            await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
+        }
         neighborDot = dots[x, y].coordinates;
         Debug.Log($"Neighbor  {neighborDot.X},{neighborDot.Y}");
     }
 
 
-
-
-
-    public void Cancel()
+    public async void Cancel()
     {
+
         Debug.Log("Reset");
+        await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
         neighborDot = null;
-        //await LeaveDot();
         dots[currentDot.X, currentDot.Y].OnSelect();
 
 
     }
-    //public async void Reset()
-    //{
-    //    Debug.Log("Reset");
-    //    hasNeighborDot = false;
-    //    await LeaveDot();
 
-    //}
     public async void Confirm()
     {
         Debug.Log("Confirm");
@@ -123,9 +121,4 @@ public class GridManager : MonoBehaviour
         neighborDot = null;
     }
 
-    private void OnDestroy()
-    {
-        //dotSubscriber -= SubscribeButton;
-
-    }
 }
