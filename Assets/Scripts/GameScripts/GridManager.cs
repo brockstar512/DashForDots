@@ -43,53 +43,161 @@ public class GridManager : MonoBehaviour
 
     async Task LeaveDot()
     {
-        dots[currentDot.X, currentDot.Y].button.onClick.RemoveAllListeners();
 
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
         {
             Dot dot = dots[currentDot.X + 1, currentDot.Y];
+            dot.DotStyling.Deselect();
             dot.button.onClick.RemoveAllListeners();
-            dotSubscriber.Invoke(dot.button);
+            ResetDot(dot);
         }
+
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.up])
         {
             Dot dot = dots[currentDot.X - 1, currentDot.Y];
+            dot.DotStyling.Deselect();
             dot.button.onClick.RemoveAllListeners();
-            dotSubscriber.Invoke(dot.button);
+            ResetDot(dot);
         }
+
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.right])
         {
             Dot dot = dots[currentDot.X, currentDot.Y + 1];
+            dot.DotStyling.Deselect();
             dot.button.onClick.RemoveAllListeners();
-            dotSubscriber.Invoke(dot.button);
+            ResetDot(dot);
         }
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.left])
         {
             Dot dot = dots[currentDot.X, currentDot.Y - 1];
+            dot.DotStyling.Deselect();
             dot.button.onClick.RemoveAllListeners();
-            dotSubscriber.Invoke(dot.button);
+            ResetDot(dot);
         }
-        dots[currentDot.X, currentDot.Y].OnDeselect();
-        dotSubscriber.Invoke(dots[currentDot.X, currentDot.Y].button);
+        dots[currentDot.X, currentDot.Y].DotStyling.Deselect();
+        ResetDot(dots[currentDot.X, currentDot.Y]);
         await Task.Yield();
     }
 
     public async void SelectDot(int x, int y)
     {
-        if(currentDot != null && !currentDot.Equals(dots[x, y].coordinates))
+        if(currentDot != null)
         {
             await LeaveDot();
         }
         currentDot = dots[x, y].coordinates;
+        IntroduceNeighbors();
     }
 
     public void SelectNeighbor(int x, int y)
     {
         neighborDot = dots[x, y].coordinates;
+        LeaveNeighbors();
+        dots[neighborDot.X, neighborDot.Y].DotStyling.NeighborHighlight();
     }
 
+    public void ResetDot(Dot dot)
+    {
+        dot.button.onClick.RemoveAllListeners();
+        dot.button.onClick.AddListener(dot.OnSelect);
+        dotSubscriber.Invoke(dot.button);
 
+    }
+    
+    void IntroduceNeighbors()
+    {
+        neighborDot = null;
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
+        {
+            Dot dot = dots[currentDot.X + 1, currentDot.Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+            });
+        }
 
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.up])
+        {
+            Dot dot = dots[currentDot.X - 1, currentDot.Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+
+            });
+        }
+
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.right])
+        {
+            Dot dot = dots[currentDot.X, currentDot.Y + 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+
+            });
+        }
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.left])
+        {
+            Dot dot = dots[currentDot.X, currentDot.Y - 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+
+            });
+        }
+    }
+
+    void LeaveNeighbors()
+    {
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
+        {
+            Dot dot = dots[currentDot.X + 1, currentDot.Y];
+            if (neighborDot != dot.coordinates)
+            {
+                dot.DotStyling.Deselect();
+                dot.button.onClick.RemoveAllListeners();
+                ResetDot(dot);
+            }
+        }
+
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.up])
+        {
+            Dot dot = dots[currentDot.X - 1, currentDot.Y];
+            if (neighborDot != dot.coordinates)
+            {
+                dot.DotStyling.Deselect();
+                dot.button.onClick.RemoveAllListeners();
+                ResetDot(dot);
+            }
+
+        }
+
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.right])
+        {
+            Dot dot = dots[currentDot.X, currentDot.Y + 1];
+            if (neighborDot != dot.coordinates)
+            {
+                dot.DotStyling.Deselect();
+                dot.button.onClick.RemoveAllListeners();
+                ResetDot(dot);
+            }
+
+        }
+        if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.left])
+        {
+            Dot dot = dots[currentDot.X, currentDot.Y - 1];
+            if (neighborDot != dot.coordinates)
+            {
+                dot.DotStyling.Deselect();
+                dot.button.onClick.RemoveAllListeners();
+                ResetDot(dot);
+            }
+
+        }
+    }
 
     public async void Cancel()
     {
