@@ -69,7 +69,6 @@ public class Dot : MonoBehaviour
             dot.button.onClick.AddListener(delegate {
                 dot.NeighboringChoice();
                 this.DotStyling.DrawLine(direction);
-                
             });
         }
 
@@ -81,7 +80,8 @@ public class Dot : MonoBehaviour
             Vector2Int direction = GetDifference(dot);
             dot.button.onClick.AddListener(delegate {
                 dot.NeighboringChoice();
-                this.DotStyling.DrawLine(direction); });
+                this.DotStyling.DrawLine(direction);
+            });
         }
 
         if (!connectingCompass[Vector2Int.right])
@@ -92,7 +92,8 @@ public class Dot : MonoBehaviour
             Vector2Int direction = GetDifference(dot);
             dot.button.onClick.AddListener(delegate {
                 dot.NeighboringChoice();
-                this.DotStyling.DrawLine(direction); });
+                this.DotStyling.DrawLine(direction);
+            });
 
         }
         if (!connectingCompass[Vector2Int.left])
@@ -104,8 +105,8 @@ public class Dot : MonoBehaviour
             dot.button.onClick.AddListener(delegate {
                 dot.NeighboringChoice();
 
-                this.DotStyling.DrawLine(direction); });
-
+                this.DotStyling.DrawLine(direction);
+            });
         }
 
     }

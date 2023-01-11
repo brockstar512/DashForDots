@@ -92,6 +92,7 @@ public class GridManager : MonoBehaviour
 
     public async void SelectNeighbor(int x, int y)
     {
+        
         if (neighborDot != null && !neighborDot.Equals(dots[x, y].coordinates))
         {
             await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
