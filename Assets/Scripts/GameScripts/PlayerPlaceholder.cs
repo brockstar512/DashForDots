@@ -7,6 +7,8 @@ public class PlayerPlaceholder : MonoBehaviour
 
     public Color32 playerColor;
     public Color32 neighborOption;
+    public Color32 neighborSelected;
+
     public static PlayerPlaceholder Instance { get; private set; }
     private void Awake()
     {

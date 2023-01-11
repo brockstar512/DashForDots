@@ -87,6 +87,7 @@ public class DotStyling : MonoBehaviour
 
     public void DrawLine(Vector2Int direction)
     {
+        
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
@@ -119,6 +120,7 @@ public class DotStyling : MonoBehaviour
                 break;
 
         }
+        PairingSelected();
 
     }
 
@@ -175,6 +177,12 @@ public class DotStyling : MonoBehaviour
         this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
 
     }
+    public void PairingSelected()
+    {
+        image.DOColor(PlayerPlaceholder.Instance.playerColor, .25f);
+        this.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
+    }
+
 }
 
 

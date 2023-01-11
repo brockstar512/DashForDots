@@ -69,6 +69,7 @@ public class Dot : MonoBehaviour
             dot.button.onClick.AddListener(delegate {
                 dot.NeighboringChoice();
                 this.DotStyling.DrawLine(direction);
+                
             });
         }
 
@@ -121,33 +122,26 @@ public class Dot : MonoBehaviour
         {
 
             Dot dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
-            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
         }
         if (!connectingCompass[Vector2Int.up])
         {
-            //GridManager.dots[X - 1, Y].DotStyling.NeighborUnHighlight();
             Dot dot = GridManager.dots[coordinates.X - 1, coordinates.Y];
-            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
 
         }
         if (!connectingCompass[Vector2Int.right])
         {
-            //GridManager.dots[X, Y + 1].DotStyling.NeighborUnHighlight();
             Dot dot = GridManager.dots[coordinates.X, coordinates.Y + 1];
-            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
 
         }
         if (!connectingCompass[Vector2Int.left])
         {
-            //GridManager.dots[X, Y - 1].DotStyling.NeighborUnHighlight();
             Dot dot = GridManager.dots[coordinates.X, coordinates.Y - 1];
-            //dot.button.onClick.RemoveAllListeners();
             dot.DotStyling.NeighborUnHighlight();
             dot.button.onClick.AddListener(dot.OnSelect);
 
@@ -157,6 +151,7 @@ public class Dot : MonoBehaviour
     public void NeighboringChoice()
     {
         GridManager.SelectNeighbor(coordinates.X, coordinates.Y);
+        DotStyling.PairingSelected();
     }
 
     public void OnDeselect()
