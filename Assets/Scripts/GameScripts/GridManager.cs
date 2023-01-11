@@ -79,13 +79,6 @@ public class GridManager : MonoBehaviour
         if(currentDot != null && !currentDot.Equals(dots[x, y].coordinates))
         {
             await LeaveDot();
-
-            if (neighborDot != null)
-            {
-                await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
-                neighborDot = null;
-            }
-            //currentDot = null;
         }
         currentDot = dots[x, y].coordinates;
     }
@@ -98,13 +91,12 @@ public class GridManager : MonoBehaviour
             await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
         }
         neighborDot = dots[x, y].coordinates;
-        Debug.Log($"Neighbor  {neighborDot.X},{neighborDot.Y}");
     }
 
 
     public async void Cancel()
     {
-
+        //hightlight neighbors and null neighbor do
         Debug.Log("Reset");
         await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
         neighborDot = null;
@@ -115,6 +107,7 @@ public class GridManager : MonoBehaviour
 
     public async void Confirm()
     {
+        
         Debug.Log("Confirm");
         await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);

@@ -21,8 +21,6 @@ public class Dot : MonoBehaviour
     public void Init(int x, int y, int boundaryLimit, GridManager GridManager)
     {
         this.GridManager = GridManager;
-        //X = x;
-        //Y = y;
         this.gameObject.name = $"Dot {x},{y}";
 
         connectingCompass = new Dictionary<Vector2Int, bool>()
@@ -55,7 +53,48 @@ public class Dot : MonoBehaviour
     {
         GridManager.SelectDot(coordinates.X, coordinates.Y);
         DotStyling.Select();
-        GetNeigbors();
+        //GetNeigbors();
+
+        if (!connectingCompass[Vector2Int.down])
+        {
+            Dot dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+                LeaveUnselectedNeigbors(dot);
+            });
+        }
+
+        if (!connectingCompass[Vector2Int.up])
+        {
+            Dot dot = GridManager.dots[coordinates.X - 1, coordinates.Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+                LeaveUnselectedNeigbors(dot);
+            });
+        }
+
+        if (!connectingCompass[Vector2Int.right])
+        {
+            Dot dot = GridManager.dots[coordinates.X, coordinates.Y + 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+
+                LeaveUnselectedNeigbors(dot);
+            });
+        }
+        if (!connectingCompass[Vector2Int.left])
+        {
+            Dot dot = GridManager.dots[coordinates.X, coordinates.Y - 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            dot.button.onClick.AddListener(delegate {
+
+                LeaveUnselectedNeigbors(dot);
+            });
+        }
     }
 
     void GetNeigbors()
@@ -94,7 +133,6 @@ public class Dot : MonoBehaviour
                 dot.NeighboringChoice();
                 this.DotStyling.DrawLine(direction);
             });
-
         }
         if (!connectingCompass[Vector2Int.left])
         {
@@ -104,12 +142,156 @@ public class Dot : MonoBehaviour
             Vector2Int direction = GetDifference(dot);
             dot.button.onClick.AddListener(delegate {
                 dot.NeighboringChoice();
-
                 this.DotStyling.DrawLine(direction);
             });
         }
 
     }
+    //depending which dot i select i need to tell this dot i selected it
+
+    //i selected your neighboring direction
+    void LeaveUnselectedNeigbors(Dot selectedNeighbor)
+    {
+        Vector2Int selectedNeighbordirection = GetDifference(selectedNeighbor);
+        if (!connectingCompass[Vector2Int.down] )
+        {
+            Dot dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            Vector2Int direction = GetDifference(dot);
+            if(direction == selectedNeighbordirection)
+            {
+                //
+                //dot.button.onClick.AddListener(delegate {
+                //    //change the UI color
+                //    dot.NeighboringChoice();
+                //    draw line to this
+                //    this.DotStyling.DrawLine(direction);
+                //});
+            }
+            else
+            {
+                //leave and reset
+                //reset UI looking
+                //add onclick subscription
+            }
+                
+            //dot.button.onClick.AddListener(delegate {
+            //    dot.NeighboringChoice();
+            //    this.DotStyling.DrawLine(direction);
+            //});
+        }
+        if (!connectingCompass[Vector2Int.down])
+        {
+            Dot dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
+            dot.button.onClick.RemoveAllListeners();
+            Vector2Int direction = GetDifference(dot);
+            if (direction != selectedNeighbordirection)
+            {
+                //this is what you are selecting
+            }
+            else
+            {
+                if (!connectingCompass[Vector2Int.down])
+                {
+                    dot = GridManager.dots[coordinates.X + 1, coordinates.Y];
+                    dot.button.onClick.RemoveAllListeners();
+                    dot.button.onClick.AddListener(delegate {
+
+
+
+                    });
+                }
+
+                if (!connectingCompass[Vector2Int.up])
+                {
+                    dot = GridManager.dots[coordinates.X - 1, coordinates.Y];
+                    dot.button.onClick.RemoveAllListeners();
+                    dot.button.onClick.AddListener(delegate {
+
+
+
+                    });
+                }
+
+                if (!connectingCompass[Vector2Int.right])
+                {
+                    dot = GridManager.dots[coordinates.X, coordinates.Y + 1];
+                    dot.button.onClick.RemoveAllListeners();
+                    dot.button.onClick.AddListener(delegate {
+
+
+
+                    });
+                }
+                if (!connectingCompass[Vector2Int.left])
+                {
+                    dot = GridManager.dots[coordinates.X, coordinates.Y - 1];
+                    dot.button.onClick.RemoveAllListeners();
+                    dot.button.onClick.AddListener(delegate {
+
+
+                        
+                    });
+                }
+            }
+
+            //dot.button.onClick.AddListener(delegate {
+            //    dot.NeighboringChoice();
+            //    this.DotStyling.DrawLine(direction);
+            //});
+        }
+
+        if (!connectingCompass[Vector2Int.up])
+        {
+            Dot dot = GridManager.dots[coordinates.X - 1, coordinates.Y];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            Vector2Int direction = GetDifference(dot);
+            if (direction == selectedNeighbordirection)
+            {
+                //leave
+            }
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+                this.DotStyling.DrawLine(direction);
+            });
+        }
+
+        if (!connectingCompass[Vector2Int.right])
+        {
+            Dot dot = GridManager.dots[coordinates.X, coordinates.Y + 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            Vector2Int direction = GetDifference(dot);
+            if (direction == selectedNeighbordirection)
+            {
+                //leave
+            }
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+                this.DotStyling.DrawLine(direction);
+            });
+        }
+        if (!connectingCompass[Vector2Int.left])
+        {
+            Dot dot = GridManager.dots[coordinates.X, coordinates.Y - 1];
+            dot.DotStyling.NeighborHighlight();
+            dot.button.onClick.RemoveAllListeners();
+            Vector2Int direction = GetDifference(dot);
+            if (direction == selectedNeighbordirection)
+            {
+                //leave
+            }
+            dot.button.onClick.AddListener(delegate {
+                dot.NeighboringChoice();
+                this.DotStyling.DrawLine(direction);
+            });
+        }
+
+    }
+
+
 
     public async Task ChangeNeighborChoice(Dot oldNeighborChoice)
     {
@@ -164,7 +346,6 @@ public class Dot : MonoBehaviour
 
     public async Task Confirm(Dot neighborDot)
     {
-        LeaveNeigbors();
         Vector2Int direction = GetDifference(neighborDot);
         connectingCompass[direction] = true;
         //this.DotStyling.DrawLine(direction);

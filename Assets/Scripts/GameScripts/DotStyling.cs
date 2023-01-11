@@ -183,6 +183,27 @@ public class DotStyling : MonoBehaviour
         this.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
     }
 
+    public void ResizeLines(Vector2 dotPositionA, Vector2 dotPositionB)
+    {
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        Vector2 dir = (dotPositionB - dotPositionA).normalized;
+        float distance = Vector2.Distance(dotPositionA, dotPositionB);
+        rectTransform.anchorMin = new Vector2(.5f, .5f);
+        rectTransform.anchorMax = new Vector2(.5f, .5f);
+        rectTransform.sizeDelta = new Vector2(distance, .25f);
+        rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
+        rectTransform.localPosition = new Vector3(.75f, .75f, 0) * dir;
+        rectTransform.localEulerAngles = new Vector3(0, 0, GetAngleFromVectorFloat(dir));
+    }
+    float GetAngleFromVectorFloat(Vector3 dir)
+    {
+        dir = dir.normalized;
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+
+        return n;
+    }
+
 }
 
 
