@@ -56,7 +56,15 @@ public class Dot : MonoBehaviour
         button.onClick.RemoveAllListeners();
     }
 
- 
+    public async Task PairWithNeighbor(Dot NeighborChoice)
+    {
+        this.DotStyling.DrawLine(GetDifference(NeighborChoice));
+        NeighborChoice.DotStyling.PairingSelected();
+        await Task.Yield();
+
+    }
+
+
     public async Task ChangeNeighborChoice(Dot oldNeighborChoice)
     {
         DotStyling.EraseLine(GetDifference(oldNeighborChoice));
@@ -74,13 +82,14 @@ public class Dot : MonoBehaviour
         Vector2Int direction = GetDifference(neighborDot);
         connectingCompass[direction] = true;
         neighborDot.ConfirmAsNeighbor(direction * -1);
-
+        DotStyling.Confirm();
         await Task.Yield();
     }
 
     public void ConfirmAsNeighbor(Vector2Int direction)
     {
         connectingCompass[direction] = true;
+        DotStyling.Confirm();
     }
 
     Vector2Int GetDifference(Dot neighborDot)

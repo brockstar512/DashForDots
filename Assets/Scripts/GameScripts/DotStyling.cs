@@ -12,6 +12,9 @@ public class DotStyling : MonoBehaviour
     [SerializeField] Image down;
     [SerializeField] Image left;
     SVGImage image;
+    SVGImage cap;
+
+
     const float speed = .75f;
 
     public void Init(Dictionary<Vector2Int, bool> connectingCompass)
@@ -58,6 +61,7 @@ public class DotStyling : MonoBehaviour
         }
         //Close();
         image = GetComponent<SVGImage>();
+        cap = this.transform.parent.GetChild(this.transform.parent.childCount-1).GetComponent<SVGImage>();
         Close();
 
     }
@@ -72,6 +76,7 @@ public class DotStyling : MonoBehaviour
     public void Close()
     {
         this.transform.DOScale(0, 0).SetEase(Ease.InBounce);
+        //cap.transform.DOScale(0, 0).SetEase(Ease.InBounce);
 
     }
 
@@ -84,6 +89,7 @@ public class DotStyling : MonoBehaviour
         down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
 
     }
+
 
     public void DrawLine(Vector2Int direction)
     {
@@ -168,6 +174,9 @@ public class DotStyling : MonoBehaviour
 
     public void NeighborHighlight()
     {
+        //think about how not to rescale the neighbor thts already selected
+        //if (this.transform.lossyScale == Vector3.one)
+        //    return;
         image.DOColor(PlayerPlaceholder.Instance.neighborOption, 0);
         this.transform.DOScale(1f, .25f).SetEase(Ease.OutSine);
 
@@ -182,7 +191,11 @@ public class DotStyling : MonoBehaviour
         image.DOColor(PlayerPlaceholder.Instance.playerColor, .25f);
         this.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
     }
-
+    public void Confirm()
+    {
+        //cap.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
+        cap.DOColor(PlayerPlaceholder.Instance.capColor, .15f);
+    }
     public void ResizeLines(Vector2 dotPositionA, Vector2 dotPositionB)
     {
         RectTransform rectTransform = GetComponent<RectTransform>();

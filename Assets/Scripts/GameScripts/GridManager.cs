@@ -89,11 +89,11 @@ public class GridManager : MonoBehaviour
         IntroduceNeighbors();
     }
 
-    public void SelectNeighbor(int x, int y)
+    public async void SelectNeighbor(int x, int y)
     {
         neighborDot = dots[x, y].coordinates;
         LeaveNeighbors();
-        dots[neighborDot.X, neighborDot.Y].DotStyling.NeighborHighlight();
+        await dots[currentDot.X, currentDot.Y].PairWithNeighbor(dots[neighborDot.X, neighborDot.Y]);
     }
 
     public void ResetDot(Dot dot)
