@@ -43,6 +43,13 @@ public class GridManager : MonoBehaviour
 
     async Task LeaveDot()
     {
+        if (neighborDot !=null)
+        {
+            //consider cancelling or just fading the line away in this instance
+            //maybe just cance?
+            await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
+            
+        }
 
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
         {
@@ -214,7 +221,7 @@ public class GridManager : MonoBehaviour
     {
         
         Debug.Log("Confirm");
-        await LeaveDot();
+        //await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;
         neighborDot = null;

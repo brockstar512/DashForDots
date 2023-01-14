@@ -194,6 +194,7 @@ public class DotStyling : MonoBehaviour
     public void Confirm()
     {
         //cap.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
+        this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
         cap.DOColor(PlayerPlaceholder.Instance.capColor, .15f);
     }
     public void ResizeLines(Vector2 dotPositionA, Vector2 dotPositionB)

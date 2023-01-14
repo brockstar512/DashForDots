@@ -64,6 +64,7 @@
     <Compile Include="Assets/Scripts/Package Scripts/SwipeDemo.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipeListener.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipesToVectorEvents.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/ScoreKeeper.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipeDetectionMode.cs" />
     <Compile Include="Assets/Scripts/GameScripts/LocalGameController.cs" />
     <Compile Include="Assets/Scripts/GameScripts/Dot.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/ScoreHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
