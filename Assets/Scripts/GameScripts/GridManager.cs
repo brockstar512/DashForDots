@@ -40,6 +40,10 @@ public class GridManager : MonoBehaviour
         dotSubscriber += SubscribeButton;
     }
 
+    private void Update()
+    {
+        Debug.Log("Is dot null?  "+ currentDot ==null);
+    }
 
     async Task LeaveDot()
     {
@@ -159,6 +163,7 @@ public class GridManager : MonoBehaviour
 
     void LeaveNeighbors()
     {
+        //is current dot null?
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
         {
             Dot dot = dots[currentDot.X + 1, currentDot.Y];
@@ -221,8 +226,8 @@ public class GridManager : MonoBehaviour
     {
         
         Debug.Log("Confirm");
-        //await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+        await LeaveDot();
         currentDot = null;
         neighborDot = null;
     }
