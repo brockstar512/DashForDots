@@ -6,10 +6,11 @@ public class ScoreKeeper : MonoBehaviour
 {
     int _height, _width;
     GridManager GridManager;
-    public void Init(GridManager GridManager)
+   
+    public void Init(GridManager GridManager, int limit)
     {
         this.GridManager = GridManager;
-        _height = _width = GridManager.dots.Length;
+        _height = _width = limit;
         //Debug.Log($"grid size :: {_height}, {_width}");
     }
 
@@ -34,22 +35,74 @@ public class ScoreKeeper : MonoBehaviour
             }
         }
     }
+    bool IsInBounds(int index, int limit)
+    {
+        //y == boundaryLimit
+        //y == 0
+        if (index == limit)
+        {
+            return false;
+        }
+        return true;
+    }
+
 
     void PatrolParameter(Dot[,] dots, int x, int y)
     {
+        Debug.Log($"Index:{x},{y}");
+
         Dot currentDot = dots[x, y];
-        if(currentDot.connectingCompass[Vector2Int.right] == true)
+        //IsInBounds() &&
+        //Debug.Log("1");
+        //Debug.Log("2");
+        //0,0 is the 0,1 in bounds?
+        if (!IsInBounds(currentDot.coordinates.Y + 1, _height))
         {
-            currentDot = dots[x, y + 1];
+
+            return;
+        }
+
+        if (currentDot.connectingCompass[Vector2Int.right] == true)
+        {
+            //0,1 is 1,1 in bounds
+            if (!IsInBounds(currentDot.coordinates.X + 1, _height))
+            {
+
+                return;
+            }
+            Debug.Log($"right");
+
+            currentDot = dots[currentDot.coordinates.X, currentDot.coordinates.Y + 1];//check the bounds too
             if(currentDot.connectingCompass[Vector2Int.down] == true)
             {
-                currentDot = dots[x + 1, y];
+
+                //1,1 is 1,0 in boundss?
+                if (!IsInBounds(currentDot.coordinates.Y - 1, -1))
+                {
+
+                    return;
+                }
+                Debug.Log($"down");
+
+                currentDot = dots[currentDot.coordinates.X + 1, currentDot.coordinates.Y];
                 if (currentDot.connectingCompass[Vector2Int.left] == true)
                 {
-                    currentDot = dots[x, y - 1];
+
+                    //1,0 is 0,0 in bounds
+                    if (!IsInBounds(currentDot.coordinates.X - 1, -1))
+                    {
+
+                        return;
+                    }
+                    Debug.Log($"left");
+
+                    currentDot = dots[currentDot.coordinates.X, currentDot.coordinates.Y - 1];
 
                     if (currentDot.connectingCompass[Vector2Int.up] == true)
                     {
+                        Debug.Log($"There is something to fill");
+                        Debug.Log($"up");
+
                         //is a connected square
                         //run a function that handles the ui
                         dots[x, y].GetComponent<ScoreHelper>().ShowFill();

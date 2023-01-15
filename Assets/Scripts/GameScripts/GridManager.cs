@@ -10,6 +10,7 @@ using System;
 
 public class GridManager : MonoBehaviour
 {
+    public ScoreKeeper scoreKeeper;
     public Dot[,] dots { get; private set; }
     int _height, _width;
     public DotValue currentDot { get; private set; }
@@ -38,20 +39,22 @@ public class GridManager : MonoBehaviour
             }
         }
         dotSubscriber += SubscribeButton;
+        scoreKeeper.Init(this, _height);
     }
 
     private void Update()
     {
-        Debug.Log("Is dot null?  "+ currentDot ==null);
+        //Debug.Log("Is dot null?  "+ currentDot ==null);
     }
 
     async Task LeaveDot()
     {
         if (neighborDot !=null)
         {
+            //this should not go here its earzing the line. instead it should go where the function is calling this on select dot
             //consider cancelling or just fading the line away in this instance
             //maybe just cance?
-            await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
+            //await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
             
         }
 
@@ -95,6 +98,14 @@ public class GridManager : MonoBehaviour
         if(currentDot != null)
         {
             await LeaveDot();
+            if (neighborDot != null)
+            {
+                //this should not go here its earzing the line. instead it should go where the function is calling this on select dot
+                //consider cancelling or just fading the line away in this instance
+                //maybe just cance?
+                await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
+
+            }
         }
         currentDot = dots[x, y].coordinates;
         IntroduceNeighbors();
@@ -226,8 +237,8 @@ public class GridManager : MonoBehaviour
     {
         
         Debug.Log("Confirm");
-        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         await LeaveDot();
+        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;
         neighborDot = null;
     }

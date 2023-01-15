@@ -16,7 +16,8 @@ public class ScoreHelper : MonoBehaviour
 
     public void ShowFill()
     {
-        scoreBox.DOColor(PlayerPlaceholder.Instance.neighborOption, 0);
+        Debug.Log("SHOWING FILL");
+        scoreBox.DOColor(PlayerPlaceholder.Instance.capColor, .75f).SetEase(Ease.OutSine);
     }
 
 }
