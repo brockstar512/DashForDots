@@ -225,7 +225,7 @@ public class GridManager : MonoBehaviour
     public async void Cancel()
     {
         //hightlight neighbors and null neighbor do
-        Debug.Log("Reset");
+        //Debug.Log("Reset");
         await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
         neighborDot = null;
         dots[currentDot.X, currentDot.Y].OnSelect();
@@ -236,7 +236,7 @@ public class GridManager : MonoBehaviour
     public async void Confirm()
     {
         
-        Debug.Log("Confirm");
+        //Debug.Log("Confirm");
         await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;

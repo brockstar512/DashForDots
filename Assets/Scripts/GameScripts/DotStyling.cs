@@ -101,28 +101,28 @@ public class DotStyling : MonoBehaviour
                     break;
                 up?.DOColor(PlayerPlaceholder.Instance.playerColor,0);
                 up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-                Debug.Log("Up");
+                //Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
                 if (down?.fillAmount == 1)
                     break;
                 down?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-                Debug.Log("Down");
+                //Debug.Log("Down");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.right):
                 if (right?.fillAmount == 1)
                     break;
                 right?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-                Debug.Log("Right");
+                //Debug.Log("Right");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.left):
                 if (left?.fillAmount == 1)
                     break;
                 left?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
-                Debug.Log("Left");
+                //Debug.Log("Left");
                 break;
 
         }
@@ -132,28 +132,28 @@ public class DotStyling : MonoBehaviour
 
     public void EraseLine(Vector2Int direction)
     {
-        Debug.Log("You cannot click this at this time grid: "+ direction);
+        //Debug.Log("You cannot click this at this time grid: "+ direction);
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
                 up?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 up?.DOFillAmount(0, speed  - .5f).SetEase(Ease.OutSine);
-                Debug.Log("Up");
+                //Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
                 down?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 down?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
-                Debug.Log("Down");
+                //Debug.Log("Down");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.right):
                 right?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 right?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
-                Debug.Log("Right");
+                //Debug.Log("Right");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.left):
                 left?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
                 left?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
-                Debug.Log("Left");
+                //Debug.Log("Left");
                 break;
 
         }

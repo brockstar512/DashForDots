@@ -49,7 +49,7 @@ public class ScoreKeeper : MonoBehaviour
 
     void PatrolParameter(Dot[,] dots, int x, int y)
     {
-        Debug.Log($"Index:{x},{y}");
+        //Debug.Log($"Index:{x},{y}");
 
         Dot currentDot = dots[x, y];
 
