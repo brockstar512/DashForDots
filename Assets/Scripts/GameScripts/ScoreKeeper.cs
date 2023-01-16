@@ -52,37 +52,25 @@ public class ScoreKeeper : MonoBehaviour
         Debug.Log($"Index:{x},{y}");
 
         Dot currentDot = dots[x, y];
-        //IsInBounds() &&
-        //Debug.Log("1");
-        //Debug.Log("2");
+
         //0,0 is the 0,1 in bounds?
         if (!IsInBounds(currentDot.coordinates.Y + 1, _height))
-        {
-
             return;
-        }
+        
 
         if (currentDot.connectingCompass[Vector2Int.right] == true)
         {
             //0,1 is 1,1 in bounds
             if (!IsInBounds(currentDot.coordinates.X + 1, _height))
-            {
-
                 return;
-            }
-            Debug.Log($"right");
-
+            
             currentDot = dots[currentDot.coordinates.X, currentDot.coordinates.Y + 1];//check the bounds too
             if(currentDot.connectingCompass[Vector2Int.down] == true)
             {
 
                 //1,1 is 1,0 in boundss?
                 if (!IsInBounds(currentDot.coordinates.Y - 1, -1))
-                {
-
                     return;
-                }
-                Debug.Log($"down");
 
                 currentDot = dots[currentDot.coordinates.X + 1, currentDot.coordinates.Y];
                 if (currentDot.connectingCompass[Vector2Int.left] == true)
@@ -90,18 +78,13 @@ public class ScoreKeeper : MonoBehaviour
 
                     //1,0 is 0,0 in bounds
                     if (!IsInBounds(currentDot.coordinates.X - 1, -1))
-                    {
-
                         return;
-                    }
-                    Debug.Log($"left");
 
                     currentDot = dots[currentDot.coordinates.X, currentDot.coordinates.Y - 1];
 
                     if (currentDot.connectingCompass[Vector2Int.up] == true)
                     {
-                        Debug.Log($"There is something to fill");
-                        Debug.Log($"up");
+
 
                         //is a connected square
                         //run a function that handles the ui
