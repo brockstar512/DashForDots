@@ -62,19 +62,19 @@ public class ColorThemeHelper : MonoBehaviour
             ToDarkUI();
         }
     }
-    public async Task Subscribe(bool quickSub)
-    {
-        SwitchToggle.Instance.lightMode += ToLightUI;
-        SwitchToggle.Instance.darkMode += ToDarkUI;
+    //public async Task Subscribe(bool quickSub)
+    //{
+    //    SwitchToggle.Instance.lightMode += ToLightUI;
+    //    SwitchToggle.Instance.darkMode += ToDarkUI;
 
-        if (SwitchToggle.Instance.currentTheme == SwitchToggle.Theme.lightTheme)
-        {
-            image.color = this.lightTheme;
-        }
-        else
-        {
-            image.color = this.darkTheme;
-        }
-        await Task.Yield();
-    }
+    //    if (SwitchToggle.Instance.currentTheme == SwitchToggle.Theme.lightTheme)
+    //    {
+    //        image.color = this.lightTheme;
+    //    }
+    //    else
+    //    {
+    //        image.color = this.darkTheme;
+    //    }
+    //    await Task.Yield();
+    //}
 }

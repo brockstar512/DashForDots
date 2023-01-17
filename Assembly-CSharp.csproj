@@ -98,6 +98,7 @@
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
     <Compile Include="Assets/Scripts/GameScripts/ScoreHelper.cs" />
+    <Compile Include="Assets/Scripts/Theme Handler/CanvasGroupThemeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
