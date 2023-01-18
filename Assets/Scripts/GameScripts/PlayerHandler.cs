@@ -15,6 +15,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] Transform scoreDotParent;
     [SerializeField] Transform mainBoardDotParent;
     const int maxPlayerCount = 4;
+    public int maxPlayerScore { get; private set; }
 
     private void Awake()
     {
@@ -28,14 +29,15 @@ public class PlayerHandler : MonoBehaviour
         }
     }
 
-    private async void Start()
-    {
-        Debug.Log($"Here is the player count  {LocalGameController.playerCount}");
-        await Init((PlayerCount)LocalGameController.playerCount);
-    }
+    //private async void Start()
+    //{
+    //    Debug.Log($"Here is the player count  {LocalGameController.playerCount}");
+    //    //await Init((PlayerCount)LocalGameController.playerCount);
+    //}
 
     public async Task Init(PlayerCount playerCount)
     {
+
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
         playerUIDots = new List<Transform>();

@@ -43,8 +43,9 @@ public class StateManager : MonoBehaviour
     public ResetState ResetState;//
 
 
-    public async Task Init()
+    public async Task Init(Transform incomingBoard)
     {
+        this.dotsParent = incomingBoard;
         HandleDots();
         quitButton.onClick.AddListener(delegate { SwitchState(QuitState); });
         NeutralState.Initialize(this);

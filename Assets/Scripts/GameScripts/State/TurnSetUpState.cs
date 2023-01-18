@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class TurnSetUpState : BaseState
 {
-    TimerManager timerManager;
+    [SerializeField]TimerManager timerManager;
+    List<Transform> playerUIDots;
 
     public override void Initialize(StateManager StateManager)
     {
-        
+        playerUIDots = new List<Transform>();
+        //foreach (Transform dot in )
+        //{
+
+        //}
+
     }
     public override void EnterState(StateManager stateManager)
     {
