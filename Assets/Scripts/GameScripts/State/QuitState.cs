@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class QuitState : BaseState
 {
+    [SerializeField] Scenes targetScene;
     [SerializeField] Button cancel;
     [SerializeField] Button confirm;
     public override void Initialize(StateManager StateManager)
@@ -36,6 +37,7 @@ public class QuitState : BaseState
     }
     private void Quit()
     {
-        Debug.Log("Quit");
+        LoadingManager.Instance.LoadScene(targetScene.ToString());
+
     }
 }
