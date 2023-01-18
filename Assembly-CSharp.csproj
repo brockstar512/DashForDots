@@ -68,7 +68,6 @@
     <Compile Include="Assets/Scripts/GameScripts/ScoreKeeper.cs" />
     <Compile Include="Assets/LoadingScreen/LoadingManager.cs" />
     <Compile Include="Assets/Scripts/GameScripts/PlayerHandler.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/State/TurnSetUpState.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipeDetectionMode.cs" />
     <Compile Include="Assets/Scripts/GameScripts/LocalGameController.cs" />
     <Compile Include="Assets/Scripts/GameScripts/Dot.cs" />

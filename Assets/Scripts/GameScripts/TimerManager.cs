@@ -12,8 +12,10 @@ public class TimerManager : MonoBehaviour
 
     public async Task StartTimer()
     {
+        timerIsRunning = false;
         timeRemaining = 20;
-        await Task.Delay(1500);
+        timeText.text = "00:20";
+        await Task.Delay(2000);
 
         // Starts the timer automatically
         timerIsRunning = true;
@@ -39,7 +41,7 @@ public class TimerManager : MonoBehaviour
 
     void DisplayTime(float timeToDisplay)
     {
-        timeToDisplay += 1;
+        //timeToDisplay += 1;
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 

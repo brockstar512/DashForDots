@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
+using DG.Tweening;
 
 public class PlayerHandler : MonoBehaviour
 {
@@ -53,10 +54,14 @@ public class PlayerHandler : MonoBehaviour
                 mainBoardDotParent.GetChild(i).gameObject.SetActive(false);
             }
         }
+        foreach(Transform dot in playerUIDots)
+        {
+            dot.GetChild(0).GetComponent<CanvasGroup>().alpha = 0;
+        }
 
         currentPlayer = 0;
-
         await Task.Yield();
+        ChangePlayerIndicator();
     }
 
     public async void UpdateScore(int incomingPoints)
@@ -68,6 +73,7 @@ public class PlayerHandler : MonoBehaviour
 
     public void NextPlayer()
     {
+        mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
         if (currentPlayer + 1 >= players.Count)
         {
             currentPlayer = 0;
@@ -82,7 +88,7 @@ public class PlayerHandler : MonoBehaviour
 
     async void ChangePlayerIndicator()
     {
-
+        mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(1,.75f);
         await timerManager.StartTimer();
     }
 
