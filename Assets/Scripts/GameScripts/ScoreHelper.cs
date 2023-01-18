@@ -16,7 +16,7 @@ public class ScoreHelper : MonoBehaviour
 
     public void ShowFill()
     {
-        scoreBox.DOColor(PlayerPlaceholder.Instance.capColor, .75f).SetEase(Ease.OutSine);
+        scoreBox.DOColor(PlayerPlaceholder.Instance.capColor, .75f).SetEase(Ease.OutSine).OnComplete(()=> { Destroy(this); });
     }
 
 }

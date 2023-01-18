@@ -10,14 +10,12 @@ using System;
 
 public class GridManager : MonoBehaviour
 {
-    public ScoreKeeper scoreKeeper;
     public Dot[,] dots { get; private set; }
     int _height, _width;
     public DotValue currentDot { get; private set; }
     public DotValue neighborDot { get; private set; }
-
-
-    private Action<Button> dotSubscriber;
+    ScoreKeeper scoreKeeper;
+    Action<Button> dotSubscriber;
 
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -39,13 +37,11 @@ public class GridManager : MonoBehaviour
             }
         }
         dotSubscriber += SubscribeButton;
+        scoreKeeper = GetComponent<ScoreKeeper>();
         scoreKeeper.Init(this, _height);
     }
 
-    private void Update()
-    {
-        //Debug.Log("Is dot null?  "+ currentDot ==null);
-    }
+
 
     async Task LeaveDot()
     {
@@ -241,6 +237,16 @@ public class GridManager : MonoBehaviour
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;
         neighborDot = null;
+        //if not true switch players else do nothing or i gues reset the clock
+        if(await scoreKeeper.Check())
+        {
+            Debug.Log("You are good to go");
+        }
+        else
+        {
+            Debug.Log("You did not score");
+
+        }
     }
 
 }
