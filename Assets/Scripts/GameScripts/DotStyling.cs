@@ -99,28 +99,28 @@ public class DotStyling : MonoBehaviour
             case Vector2Int v when v.Equals(Vector2Int.up):
                 if (up?.fillAmount == 1)
                     break;
-                up?.DOColor(PlayerPlaceholder.Instance.playerColor,0);
+                up?.DOColor(PlayerHandler.Instance.player.playerColor,0);
                 up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
                 if (down?.fillAmount == 1)
                     break;
-                down?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                down?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Down");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.right):
                 if (right?.fillAmount == 1)
                     break;
-                right?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                right?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Right");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.left):
                 if (left?.fillAmount == 1)
                     break;
-                left?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                left?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Left");
                 break;
@@ -136,22 +136,22 @@ public class DotStyling : MonoBehaviour
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
-                up?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                up?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 up?.DOFillAmount(0, speed  - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
-                down?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                down?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 down?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Down");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.right):
-                right?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                right?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 right?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Right");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.left):
-                left?.DOColor(PlayerPlaceholder.Instance.playerColor, 0);
+                left?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 left?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Left");
                 break;
@@ -163,7 +163,7 @@ public class DotStyling : MonoBehaviour
     public void Select()
     {
         this.transform.DOScale(.5f, .25f).SetEase(Ease.OutSine);
-        image.DOColor(PlayerPlaceholder.Instance.playerColor, .15f);
+        image.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
 
     }
     public void Deselect()
@@ -177,7 +177,7 @@ public class DotStyling : MonoBehaviour
         //think about how not to rescale the neighbor thts already selected
         //if (this.transform.lossyScale == Vector3.one)
         //    return;
-        image.DOColor(PlayerPlaceholder.Instance.neighborOption, 0);
+        image.DOColor(PlayerHandler.Instance.player.neighborOption, 0);
         this.transform.DOScale(1f, .25f).SetEase(Ease.OutSine);
 
     }
@@ -188,14 +188,14 @@ public class DotStyling : MonoBehaviour
     }
     public void PairingSelected()
     {
-        image.DOColor(PlayerPlaceholder.Instance.playerColor, .25f);
+        image.DOColor(PlayerHandler.Instance.player.playerColor, .25f);
         this.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
     }
     public void Confirm()
     {
         //cap.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
         this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
-        cap.DOColor(PlayerPlaceholder.Instance.capColor, .15f);
+        cap.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
     }
     public void ResizeLines(Vector2 dotPositionA, Vector2 dotPositionB)
     {

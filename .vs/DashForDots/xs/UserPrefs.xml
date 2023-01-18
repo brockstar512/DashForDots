@@ -1,11 +1,15 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Package Scripts/SwitchToggle.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/PlayerPlaceholder.cs">
     <Files>
       <File FileName="Assets/Scripts/GameScripts/ScoreHelper.cs" Line="19" Column="127" />
       <File FileName="Assets/Scripts/GameScripts/LocalGameController.cs" Line="22" Column="1" />
       <File FileName="Assets/LoadingScreen/LoadingManager.cs" Line="69" Column="42" />
       <File FileName="Assets/Scripts/Package Scripts/SwitchToggle.cs" Line="54" Column="95" />
-      <File FileName="Assets/Scripts/GameScripts/State/QuitState.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/GridManager.cs" Line="254" Column="32" />
+      <File FileName="Assets/Scripts/GameScripts/State/StateManager.cs" Line="231" Column="6" />
+      <File FileName="Assets/Scripts/GameScripts/PlayerHandler.cs" Line="18" Column="6" />
+      <File FileName="Assets/Scripts/GameScripts/PlayerPlaceholder.cs" Line="5" Column="31" />
+      <File FileName="Assets/Scripts/GameScripts/DotStyling.cs" Line="102" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

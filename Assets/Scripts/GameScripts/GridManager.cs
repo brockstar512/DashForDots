@@ -249,4 +249,10 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        dotSubscriber = null; ;
+
+    }
+
 }

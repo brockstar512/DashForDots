@@ -89,7 +89,6 @@
     <Compile Include="Assets/Scripts/Theme Handler/CanvasGroupThemeHelper.cs" />
     <Compile Include="Assets/Scripts/UIScripts/LineUI.cs" />
     <Compile Include="Assets/SwipeController/Scripts/VectorToDirection.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/PlayerPlaceholder.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
     <Compile Include="Assets/Scripts/GameScripts/ScoreHelper.cs" />
     <Compile Include="Assets/Scripts/GameScripts/TimerManager.cs" />
@@ -101,6 +100,7 @@
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
     <Compile Include="Assets/LoadingScreen/LoadingManager.cs" />
     <Compile Include="Assets/LoadingScreen/ChangeSceneButton.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/PlayerHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
