@@ -9,6 +9,7 @@ using System;
 
 public class SwitchToggle : MonoBehaviour
 {
+    //this being in both scene might cause prblems
     [SerializeField] RectTransform uiHandleRectTransform;
     private Toggle toggle;
     private Vector2 handlePosition;
@@ -32,7 +33,7 @@ public class SwitchToggle : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         else
         {
@@ -50,7 +51,7 @@ public class SwitchToggle : MonoBehaviour
     void OnSwitch(bool isOn)
     {
         //Debug.Log($"is On? {isOn}");
-        uiHandleRectTransform.DOAnchorPos(isOn ? handlePosition : handlePosition * -1, .25f);
+        uiHandleRectTransform?.DOAnchorPos(isOn ? handlePosition : handlePosition * -1, .25f);
 
         switch (isOn)
         {

@@ -9,7 +9,7 @@ public class TextThemeHelper : MonoBehaviour
 
     public void GetTarget()
     {
-        Debug.Log("Get text color change");
+        //Debug.Log("Get text color change");
         image = GetComponent<TextMeshProUGUI>();
     }
 

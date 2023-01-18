@@ -18,6 +18,8 @@ public class LocalGameController : MonoBehaviour
     [SerializeField] TextMeshProUGUI botsCountText;
     [SerializeField] CanvasGroup botsSection;
     [SerializeField] CanvasGroup difficultyPage;
+    [SerializeField] Scenes targetScene;
+
     CanvasGroup cg;
 
 
@@ -59,15 +61,23 @@ public class LocalGameController : MonoBehaviour
         switch (isOn)
         {
             case true:
-                botsSection.gameObject.SetActive(isOn);//maybe it's just collapsed? instead of off?
-                botsSection.DOFade(1, .1f);
+                //botsSection.gameObject.SetActive(isOn);
+                botsSection.transform.DOScale(new Vector3(1, 1, 1), .1f);
+                //botsSection.gameObject.SetActive(isOn);//maybe it's just collapsed? instead of off?
+                //botsSection.DOFade(1, .1f);
                 break;
             case false:
-                botsSection.DOFade(0, .1f).OnComplete(() =>
-                {
-                    botsSection.gameObject.SetActive(isOn);
+                botsSection.transform.DOScale(new Vector3(1, 0, 1), .1f);
+                //    .OnComplete(() =>
+                //{
+                //    botsSection.gameObject.SetActive(isOn);
 
-                });
+                //});
+                //botsSection.DOFade(0, .1f).OnComplete(() =>
+                //{
+                //    botsSection.gameObject.SetActive(isOn);
+
+                //});
                 break;
         }
         //turn on object
@@ -121,7 +131,18 @@ public class LocalGameController : MonoBehaviour
             //open difficulty
             return;
         }
+        else
+        {
+            LoadingManager.Instance.LoadScene(targetScene.ToString());
+
+        }
         //else
         //start game
     }
+}
+
+public enum Scenes
+{
+    MainMenu,
+    Game
 }
