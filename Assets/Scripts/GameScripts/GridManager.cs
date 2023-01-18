@@ -238,13 +238,16 @@ public class GridManager : MonoBehaviour
         currentDot = null;
         neighborDot = null;
         //if not true switch players else do nothing or i gues reset the clock
-        if(await scoreKeeper.Check())
+        int scoreCount = await scoreKeeper.Check();
+        if (scoreCount > 0)
         {
             Debug.Log("You are good to go");
+            PlayerHandler.Instance.UpdateScore(scoreCount);
         }
         else
         {
             Debug.Log("You did not score");
+            PlayerHandler.Instance.NextPlayer();
 
         }
     }
@@ -252,7 +255,6 @@ public class GridManager : MonoBehaviour
     private void OnDestroy()
     {
         dotSubscriber = null; ;
-
     }
 
 }

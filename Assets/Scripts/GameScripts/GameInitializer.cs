@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class GameInitializer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    StateManager stateManager;
+    [SerializeField] Transform TwoPersonBoard;
+    [SerializeField] Transform ThreePersonBoard;
+    [SerializeField] Transform FourPersonBoard;
+    Transform currentBoard;
+
+
+
+    private void Awake()
     {
-        
+        stateManager = GetComponent<StateManager>();
+        StartGame();
     }
 
-    // Update is called once per frame
-    void Update()
+    async void StartGame()
     {
-        
+        await PlayerHandler.Instance.Init((PlayerCount)LocalGameController.playerCount);
+        await stateManager.Init();
+        //delay before we actually start the game
     }
+
+    void ConfigBoard()
+    {
+
+    }
+
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Threading.Tasks;
 
 
 public class TimerManager : MonoBehaviour
@@ -8,8 +9,10 @@ public class TimerManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeText;
     public float timeRemaining = 10;
     public bool timerIsRunning = false;
-    private void Start()
+
+    public async Task StartTimer()
     {
+        await Task.Delay(1000);
         timeRemaining = 20;
 
         // Starts the timer automatically

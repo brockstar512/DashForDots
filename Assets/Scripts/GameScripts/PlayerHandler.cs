@@ -121,25 +121,24 @@ public class PlayerData
         {
             case PlayerCount.Green:
                 playerColor = new Color32(56, 210,121, 255);
-                neighborOption = new Color32(56, 210, 121, 120);
+                neighborOption = new Color32(playerColor.r, playerColor.g, playerColor.b, 120);
                 break;
             case PlayerCount.Blue:
                 playerColor = new Color32(60, 168, 229, 255);
-                neighborOption = new Color32(60, 168, 229, 120);
+                neighborOption = new Color32(playerColor.r, playerColor.g, playerColor.b, 120);
                 break;
             case PlayerCount.Yellow:
-                playerColor = new Color32(255, 87, 52, 255);
-                neighborOption = new Color32(255, 87, 52, 120);
+                playerColor = new Color32(255, 187, 52, 255);
+                neighborOption = new Color32(playerColor.r, playerColor.g, playerColor.b, 120);
                 break;
             case PlayerCount.Red:
                 playerColor = new Color32(254, 61, 106, 255);
-                neighborOption = new Color32(254, 61, 106, 120);
+                neighborOption = new Color32(playerColor.r, playerColor.g, playerColor.b, 120);
                 break;
             default:
                 playerColor = new Color32(254, 61, 106, 255);
-                neighborOption = new Color32(254, 61, 106, 120);
+                neighborOption = new Color32(playerColor.r, playerColor.g, playerColor.b, 120);
                 break;
-
 
         }
     }

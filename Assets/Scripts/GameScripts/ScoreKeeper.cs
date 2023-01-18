@@ -15,11 +15,11 @@ public class ScoreKeeper : MonoBehaviour
     }
 
     
-    public async Task<bool> Check()
+    public async Task<int> Check()
     {
         int childIndex = 0;
         //return bool? all we need is one
-        bool hasScored = false;
+        int scoreCount = 0;
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
@@ -30,9 +30,9 @@ public class ScoreKeeper : MonoBehaviour
                    bool _hascored = PatrolParameter(GridManager.dots, x, y);
                     //does this dot have a score hlper? if so run the check, else continue
 
-                    if (!hasScored && _hascored)
+                    if (_hascored)
                     {
-                        hasScored = _hascored;
+                        scoreCount++;
                     }
                     
                 }
@@ -43,7 +43,7 @@ public class ScoreKeeper : MonoBehaviour
         }
         await Task.Yield();
 
-        return hasScored;
+        return scoreCount;
     }
     bool IsInBounds(int index, int limit)
     {

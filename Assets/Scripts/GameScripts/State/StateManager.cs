@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Cinemachine;
 using GG.Infrastructure.Utils.Swipe;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(SwipeListenerEvent))]
 [RequireComponent(typeof(GridManager))]
@@ -42,7 +43,7 @@ public class StateManager : MonoBehaviour
     public ResetState ResetState;//
 
 
-    private void Awake()
+    public async Task Init()
     {
         HandleDots();
         quitButton.onClick.AddListener(delegate { SwitchState(QuitState); });
@@ -53,21 +54,29 @@ public class StateManager : MonoBehaviour
         DecisionState.Initialize(this);
         ResetState.Initialize(this);
         zoomOutMax = camController.m_Lens.OrthographicSize;
+
+        //this part was i nstart
+        currentState = NeutralState;
+        currentState.EnterState(this);
+        ///
+        await Task.Yield();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        currentState = NeutralState;
-        currentState.EnterState(this);
-    }
+    //void Start()
+    //{
+    //    currentState = NeutralState;
+    //    currentState.EnterState(this);
+    //}
 
 
 
     void Update()
     {
+        if (currentState == null)
+            return;
+
         currentState.UpdateState(this);
-        //Debug.Log(currentState);
     }
 
     public void SwitchState(BaseState state)
