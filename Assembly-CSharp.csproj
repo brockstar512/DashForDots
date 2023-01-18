@@ -101,6 +101,7 @@
     <Compile Include="Assets/LoadingScreen/LoadingManager.cs" />
     <Compile Include="Assets/LoadingScreen/ChangeSceneButton.cs" />
     <Compile Include="Assets/Scripts/GameScripts/PlayerHandler.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/GameInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

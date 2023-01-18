@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Threading.Tasks;
 
 public class PlayerHandler : MonoBehaviour
 {
@@ -27,7 +28,13 @@ public class PlayerHandler : MonoBehaviour
         }
     }
 
-    public void Init(PlayerCount playerCount)
+    private async void Start()
+    {
+        Debug.Log($"Here is the player count  {LocalGameController.playerCount}");
+        await Init((PlayerCount)LocalGameController.playerCount);
+    }
+
+    public async Task Init(PlayerCount playerCount)
     {
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
@@ -51,6 +58,13 @@ public class PlayerHandler : MonoBehaviour
         }
 
         currentPlayer = 0;
+
+        await Task.Yield();
+    }
+
+    public void UpdateScore(int incomingPoints)
+    {
+        playerScoreDots[currentPlayer].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
     }
 
     public void NextPlayer()
@@ -94,9 +108,10 @@ public class PlayerData
         GetColor(number, out playerColor,out neighborOption);
     }
 
-    public void Score(int incomingPoint)
+    public int Score(int incomingPoint)
     {
         playerScore += incomingPoint;
+        return playerScore;
     }
 
 
@@ -106,23 +121,23 @@ public class PlayerData
         {
             case PlayerCount.Green:
                 playerColor = new Color32(56, 210,121, 255);
-                neighborOption = new Color32(56, 210, 121, 60);
+                neighborOption = new Color32(56, 210, 121, 120);
                 break;
             case PlayerCount.Blue:
                 playerColor = new Color32(60, 168, 229, 255);
-                neighborOption = new Color32(60, 168, 229, 60);
+                neighborOption = new Color32(60, 168, 229, 120);
                 break;
             case PlayerCount.Yellow:
                 playerColor = new Color32(255, 87, 52, 255);
-                neighborOption = new Color32(255, 87, 52, 60);
+                neighborOption = new Color32(255, 87, 52, 120);
                 break;
             case PlayerCount.Red:
                 playerColor = new Color32(254, 61, 106, 255);
-                neighborOption = new Color32(254, 61, 106, 60);
+                neighborOption = new Color32(254, 61, 106, 120);
                 break;
             default:
                 playerColor = new Color32(254, 61, 106, 255);
-                neighborOption = new Color32(254, 61, 106, 60);
+                neighborOption = new Color32(254, 61, 106, 120);
                 break;
 
 

@@ -19,12 +19,11 @@ public class LocalGameController : MonoBehaviour
     [SerializeField] CanvasGroup botsSection;
     [SerializeField] CanvasGroup difficultyPage;
     [SerializeField] Scenes targetScene;
-
     CanvasGroup cg;
 
 
-    public int playerCount { get; private set; }
-    public int botCount { get; private set; }
+    public static int playerCount { get; private set; }
+    public static int botCount { get; private set; }
 
 
 
