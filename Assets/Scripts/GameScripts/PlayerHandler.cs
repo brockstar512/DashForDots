@@ -14,6 +14,7 @@ public class PlayerHandler : MonoBehaviour
     List<Transform> playerUIDots;
     [SerializeField] Transform scoreDotParent;
     [SerializeField] Transform mainBoardDotParent;
+    [SerializeField] TimerManager timerManager;
     const int maxPlayerCount = 4;
     public int maxPlayerScore { get; private set; }
 
@@ -28,12 +29,6 @@ public class PlayerHandler : MonoBehaviour
             Instance = this;
         }
     }
-
-    //private async void Start()
-    //{
-    //    Debug.Log($"Here is the player count  {LocalGameController.playerCount}");
-    //    //await Init((PlayerCount)LocalGameController.playerCount);
-    //}
 
     public async Task Init(PlayerCount playerCount)
     {
@@ -64,9 +59,11 @@ public class PlayerHandler : MonoBehaviour
         await Task.Yield();
     }
 
-    public void UpdateScore(int incomingPoints)
+    public async void UpdateScore(int incomingPoints)
     {
         playerScoreDots[currentPlayer].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
+        await timerManager.StartTimer();
+
     }
 
     public void NextPlayer()
@@ -79,9 +76,15 @@ public class PlayerHandler : MonoBehaviour
         {
             currentPlayer++;
         }
+        ChangePlayerIndicator();
     }
 
-   
+
+    async void ChangePlayerIndicator()
+    {
+
+        await timerManager.StartTimer();
+    }
 
 
 }

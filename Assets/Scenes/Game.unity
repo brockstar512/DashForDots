@@ -964,6 +964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreDotParent: {fileID: 43630206}
   mainBoardDotParent: {fileID: 2041950507}
+  timerManager: {fileID: 1752860309832548020}
 --- !u!114 &766883406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2120,6 +2121,17 @@ PrefabInstance:
       objectReference: {fileID: 2071274970}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+--- !u!114 &1752860309832548020 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4724382671969785194, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+  m_PrefabInstance: {fileID: 1752860309832548019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e830b040c8b421cbb264f8c14d6a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3648831212451361790
 PrefabInstance:
   m_ObjectHideFlags: 0

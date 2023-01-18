@@ -248,6 +248,7 @@ public class GridManager : MonoBehaviour
         {
             Debug.Log("You did not score");
             PlayerHandler.Instance.NextPlayer();
+            //switch player
 
         }
     }

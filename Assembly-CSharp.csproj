@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/GameScripts/State/BaseState.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CenterPlayerDemo.cs" />
+    <Compile Include="Assets/LoadingScreen/ChangeSceneButton.cs" />
     <Compile Include="Assets/Scripts/UIScripts/BotFactory.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/ResetState.cs" />
     <Compile Include="Assets/Scripts/UIScripts/OnlineSubMenu.cs" />
@@ -65,6 +66,9 @@
     <Compile Include="Assets/SwipeController/Scripts/SwipeListener.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipesToVectorEvents.cs" />
     <Compile Include="Assets/Scripts/GameScripts/ScoreKeeper.cs" />
+    <Compile Include="Assets/LoadingScreen/LoadingManager.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/PlayerHandler.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/State/TurnSetUpState.cs" />
     <Compile Include="Assets/SwipeController/Scripts/SwipeDetectionMode.cs" />
     <Compile Include="Assets/Scripts/GameScripts/LocalGameController.cs" />
     <Compile Include="Assets/Scripts/GameScripts/Dot.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="Assets/SwipeController/Scripts/VectorToDirection.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/LineIllustrator.cs" />
     <Compile Include="Assets/Scripts/GameScripts/ScoreHelper.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/GameInitializer.cs" />
     <Compile Include="Assets/Scripts/GameScripts/TimerManager.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/CameraControl.cs" />
     <Compile Include="Assets/Scripts/GameScripts/State/ExploringState.cs" />
@@ -98,11 +103,6 @@
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/LoadingScreen/LoadingManager.cs" />
-    <Compile Include="Assets/LoadingScreen/ChangeSceneButton.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/PlayerHandler.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/GameInitializer.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/State/TurnSetUpState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

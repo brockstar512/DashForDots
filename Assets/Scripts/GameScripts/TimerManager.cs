@@ -12,8 +12,8 @@ public class TimerManager : MonoBehaviour
 
     public async Task StartTimer()
     {
-        await Task.Delay(1000);
         timeRemaining = 20;
+        await Task.Delay(1500);
 
         // Starts the timer automatically
         timerIsRunning = true;
