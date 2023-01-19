@@ -18,7 +18,7 @@ public class NeutralState : BaseState
     {
         stateManager.HandleScreenInputs();
 
-        if (stateManager.camController.m_Lens.OrthographicSize < 23)
+        if (stateManager.camController.m_Lens.OrthographicSize < (stateManager.zoomOutMax - 1))
         {
             stateManager.SwitchState(stateManager.ExploringState);
         }

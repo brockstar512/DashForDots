@@ -11,10 +11,16 @@ using System.Threading.Tasks;
 [RequireComponent(typeof(GridManager))]
 public class StateManager : MonoBehaviour
 {
-    [SerializeField] Transform dotsParent;
-    [SerializeField] Button quitButton;
+    [Header("Important References")]
+    [HideInInspector]
     public Transform target;
+    [HideInInspector]
     public GridManager gridManager;
+    [SerializeField] Button quitButton;
+    [SerializeField] TimerManager TimerManager;
+    private Transform dotsParent;
+
+
 
 
     [Header("Camera settings")]
@@ -43,7 +49,7 @@ public class StateManager : MonoBehaviour
     public ResetState ResetState;//
 
 
-    public async Task Init(Transform incomingBoard)
+    public async Task Init(Transform incomingBoard, int maxLensZoom)
     {
         this.dotsParent = incomingBoard;
         HandleDots();
@@ -54,7 +60,9 @@ public class StateManager : MonoBehaviour
         QuitState.Initialize(this);
         DecisionState.Initialize(this);
         ResetState.Initialize(this);
-        zoomOutMax = camController.m_Lens.OrthographicSize;
+        zoomOutMax = camController.m_Lens.OrthographicSize = maxLensZoom;
+
+        await TimerManager.GameStartDelay();
 
         //this part was i nstart
         currentState = NeutralState;

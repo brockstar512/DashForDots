@@ -58,10 +58,11 @@ public class PlayerHandler : MonoBehaviour
         {
             dot.GetChild(0).GetComponent<CanvasGroup>().alpha = 0;
         }
-
+        //turn the first one on
+        playerUIDots[0].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
         currentPlayer = 0;
         await Task.Yield();
-        ChangePlayerIndicator();
+        
     }
 
     public async void UpdateScore(int incomingPoints)

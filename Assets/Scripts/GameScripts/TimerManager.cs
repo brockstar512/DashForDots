@@ -9,13 +9,32 @@ public class TimerManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeText;
     public float timeRemaining = 10;
     public bool timerIsRunning = false;
+    Color32 normalColor = new Color32(101, 138, 167, 255);
+    public async Task GameStartDelay()
+    {
+        timeTitle.color = Color.red;
+        //await Task.Delay(2000);
+        timeTitle.text = "Get Ready";
+        await Task.Delay(3000);
+        timeTitle.text = "Go!";
+        await Task.Delay(1000);
+        timeTitle.color = normalColor;
+        PlayerHandler.Instance.UpdateScore(0);
+        await Task.Yield();
+    }
 
     public async Task StartTimer()
     {
-        timerIsRunning = false;
-        timeRemaining = 20;
+        //timerIsRunning = false;
+
+        timeText.color = normalColor;
+        timeTitle.color = normalColor;
+        timeTitle.text = "Time";
         timeText.text = "00:20";
-        await Task.Delay(2000);
+
+
+        timeRemaining = 20;
+        await Task.Delay(1000);
 
         // Starts the timer automatically
         timerIsRunning = true;
@@ -41,7 +60,7 @@ public class TimerManager : MonoBehaviour
 
     void DisplayTime(float timeToDisplay)
     {
-        //timeToDisplay += 1;
+        timeToDisplay += 1;
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
