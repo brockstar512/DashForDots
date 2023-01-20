@@ -58,6 +58,7 @@ public class TimerManager : MonoBehaviour
         }
     }
 
+
     void DisplayTime(float timeToDisplay)
     {
         timeToDisplay += 1;

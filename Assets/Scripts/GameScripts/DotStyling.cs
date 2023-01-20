@@ -162,7 +162,7 @@ public class DotStyling : MonoBehaviour
 
     public void Select()
     {
-        this.transform.DOScale(.5f, .25f).SetEase(Ease.OutSine);
+        this.transform.DOScale(.55f, .25f).SetEase(Ease.OutSine);
         image.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
 
     }
