@@ -13,7 +13,7 @@ public class GameInitializer : MonoBehaviour
     Transform currentBoard;
 
 
-    //6 for 2 
+    //6 for 2 (causing problems for min zoom moving to 7)
     //12 for 3
     //24 for 4  
 

@@ -90,8 +90,6 @@ public class StateManager : MonoBehaviour
 
     public void SwitchState(BaseState state)
     {
-        //Debug.Log("State: "+ state);
-
         currentState.LeaveState();
         currentState = state;
         currentState.EnterState(this);

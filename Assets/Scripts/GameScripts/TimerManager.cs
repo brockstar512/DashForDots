@@ -7,9 +7,12 @@ public class TimerManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeTitle;
     [SerializeField] TextMeshProUGUI timeText;
-    public float timeRemaining = 10;
+    [SerializeField] GameObject screenBlocker;
+    public float timeRemaining = 20;
     public bool timerIsRunning = false;
     Color32 normalColor = new Color32(101, 138, 167, 255);
+
+
     public async Task GameStartDelay()
     {
         timeTitle.color = Color.red;
@@ -21,6 +24,7 @@ public class TimerManager : MonoBehaviour
         timeTitle.color = normalColor;
         PlayerHandler.Instance.UpdateScore(0);
         await Task.Yield();
+        Destroy(screenBlocker);
     }
 
     public async Task StartTimer()
