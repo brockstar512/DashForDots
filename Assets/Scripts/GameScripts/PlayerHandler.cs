@@ -70,6 +70,13 @@ public class PlayerHandler : MonoBehaviour
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
         playerScoreDots[currentPlayer].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
+
+        if (isOver)
+        {
+            Instantiate(gameOverManager,this.transform.parent);
+            timerManager.timerIsRunning = false;
+            return;
+        }
         await timerManager.StartTimer();
 
     }
