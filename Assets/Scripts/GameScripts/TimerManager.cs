@@ -22,7 +22,7 @@ public class TimerManager : MonoBehaviour
         timeTitle.text = "Go!";
         await Task.Delay(1000);
         timeTitle.color = normalColor;
-        PlayerHandler.Instance.UpdateScore(0);
+        PlayerHandler.Instance.UpdateScore(0,false);
         await Task.Yield();
         Destroy(screenBlocker);
     }

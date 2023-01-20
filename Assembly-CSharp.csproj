@@ -102,6 +102,7 @@
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/GameOverManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

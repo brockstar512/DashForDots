@@ -91,6 +91,7 @@ public class Dot : MonoBehaviour
     {
         connectingCompass[direction] = true;
         DotStyling.Confirm();
+        RemoveOption();
     }
 
     Vector2Int GetDifference(Dot neighborDot)
@@ -107,8 +108,7 @@ public class Dot : MonoBehaviour
             if (!direction.Value)
                 return;
         }
-        Destroy(button);
-        //Destroy(this);//this messes up the library aray
+        Destroy(GetComponent<Button>());
     }
 }
 

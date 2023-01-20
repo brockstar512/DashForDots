@@ -34,9 +34,7 @@ public class ScoreKeeper : MonoBehaviour
                     {
                         scoreCount++;
                     }
-                    
                 }
-
                 //Debug.Log("Child:: " + childIndex);
                 childIndex++;
             }

@@ -242,7 +242,7 @@ public class GridManager : MonoBehaviour
         if (scoreCount > 0)
         {
             Debug.Log("You are good to go");
-            PlayerHandler.Instance.UpdateScore(scoreCount);
+            PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
         }
         else
         {
@@ -251,6 +251,19 @@ public class GridManager : MonoBehaviour
             //switch player
 
         }
+
+    }
+
+
+    public bool GameFinished()
+    {
+        foreach (Dot dot in dots)
+        {
+            if (dot.GetComponent<Button>() != null)
+                return false;
+        }
+        return true;
+
     }
 
     private void OnDestroy()

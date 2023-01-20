@@ -16,6 +16,8 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] Transform scoreDotParent;
     [SerializeField] Transform mainBoardDotParent;
     [SerializeField] TimerManager timerManager;
+    [SerializeField] GameOverManager gameOverManager;
+
     const int maxPlayerCount = 4;
     public int maxPlayerScore { get; private set; }
 
@@ -65,7 +67,7 @@ public class PlayerHandler : MonoBehaviour
         
     }
 
-    public async void UpdateScore(int incomingPoints)
+    public async void UpdateScore(int incomingPoints, bool isOver)
     {
         playerScoreDots[currentPlayer].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
         await timerManager.StartTimer();
