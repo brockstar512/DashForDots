@@ -73,7 +73,7 @@ public class PlayerHandler : MonoBehaviour
 
         if (isOver)
         {
-            Instantiate(gameOverManager,this.transform.parent);
+            Instantiate(gameOverManager,this.transform.parent).Init(players);
             timerManager.timerIsRunning = false;
             return;
         }

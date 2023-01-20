@@ -3134,7 +3134,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976369788483089498}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -3180,6 +3180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59dc8c94598f3457482cb9ee2c3226db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replayButton: {fileID: 1976369786963049170}
+  mainMenuButton: {fileID: 1976369787086320421}
+  leaderboardParent: {fileID: 1976369787787554533}
 --- !u!1 &1976369788580738374
 GameObject:
   m_ObjectHideFlags: 0
