@@ -1,12 +1,15 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/GridManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/ScoreKeeper.cs">
     <Files>
       <File FileName="Assets/Scripts/GameScripts/State/StateManager.cs" Line="86" Column="20" />
       <File FileName="Assets/Scripts/GameScripts/PlayerHandler.cs" Line="75" Column="27" />
       <File FileName="Assets/Scripts/GameScripts/GameInitializer.cs" Line="32" Column="42" />
       <File FileName="Assets/Scripts/GameScripts/TimerManager.cs" Line="27" Column="30" />
       <File FileName="Assets/Scripts/GameScripts/DotStyling.cs" Line="165" Column="35" />
-      <File FileName="Assets/Scripts/GameScripts/GridManager.cs" Line="255" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/GridManager.cs" Line="237" Column="55" />
+      <File FileName="Assets/Scripts/GameScripts/Dot.cs" Line="13" Column="42" />
+      <File FileName="Assets/Scripts/GameScripts/ScoreHelper.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/ScoreKeeper.cs" Line="27" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

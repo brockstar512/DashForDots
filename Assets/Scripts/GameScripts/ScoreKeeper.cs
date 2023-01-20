@@ -24,8 +24,8 @@ public class ScoreKeeper : MonoBehaviour
         {
             for (int y = 0; y < _height; y++)
             {
-                ScoreHelper scoreHelper = GridManager.dots[x, y].GetComponent<ScoreHelper>();
-                if (scoreHelper != null)
+                //ScoreHelper scoreHelper = GridManager.dots[x, y]?.GetComponent<ScoreHelper>();
+                if (GridManager.dots[x, y]?.GetComponent<ScoreHelper>() != null)
                 {
                    bool _hascored = PatrolParameter(GridManager.dots, x, y);
                     //does this dot have a score hlper? if so run the check, else continue

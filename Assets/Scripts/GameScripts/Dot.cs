@@ -84,6 +84,7 @@ public class Dot : MonoBehaviour
         neighborDot.ConfirmAsNeighbor(direction * -1);
         DotStyling.Confirm();
         await Task.Yield();
+        RemoveOption();
     }
 
     public void ConfirmAsNeighbor(Vector2Int direction)
@@ -97,6 +98,17 @@ public class Dot : MonoBehaviour
         int yDifference = (neighborDot.coordinates.X - coordinates.X) * -1;
         int xDifference = (neighborDot.coordinates.Y - coordinates.Y);
         return new Vector2Int(xDifference, yDifference);
+    }
+
+    private void RemoveOption()
+    {
+        foreach (var direction in connectingCompass)
+        {
+            if (!direction.Value)
+                return;
+        }
+        Destroy(button);
+        //Destroy(this);//this messes up the library aray
     }
 }
 
