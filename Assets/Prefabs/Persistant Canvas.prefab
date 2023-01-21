@@ -858,20 +858,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 597808140164586700}
     m_Modifications:
+    - target: {fileID: 1209543836153486187, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.9923706
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209543836153486187, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.473816
+      objectReference: {fileID: 0}
     - target: {fileID: 5443531988058199905, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
       propertyPath: m_Name
       value: Loader
       objectReference: {fileID: 0}
-    - target: {fileID: 5443531988058199907, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5443531988058199928, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
-      propertyPath: exitEase
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5443531988058199928, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
-      propertyPath: enterEase
+      propertyPath: showBar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5443531988058199933, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
@@ -966,10 +966,19 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 5443531990039681138, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7.946411
+      objectReference: {fileID: 0}
+    - target: {fileID: 7048121375578176512, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.9600525
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678148145481809169, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 5443531988058199907, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
-    - {fileID: 5443531988058199906, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
-    - {fileID: 5443531988058199932, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
     - {fileID: 5443531988058199935, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
 --- !u!224 &3021365842784673632 stripped

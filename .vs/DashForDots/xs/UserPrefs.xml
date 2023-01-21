@@ -1,12 +1,9 @@
 ﻿<Properties StartupConfiguration="{CF0F45EB-BB95-0081-87DC-233799BB55A0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/GameOverManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameScripts/PlayerHandler.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameScripts/PlayerHandler.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/GameScripts/PlayerHandler.cs" Line="149" Column="64" />
       <File FileName="Assets/Scripts/GameScripts/TimerManager.cs" Line="23" Column="32" />
-      <File FileName="Assets/Scripts/GameScripts/GridManager.cs" Line="245" Column="47" />
-      <File FileName="Assets/Scripts/GameScripts/GameOverManager.cs" Line="26" Column="1" />
-      <File FileName="Assets/LoadingScreen/LoadingManager.cs" Line="41" Column="32" />
-      <File FileName="Assets/Scripts/GameScripts/LocalGameController.cs" Line="136" Column="1" />
+      <File FileName="Assets/LoadingScreen/LoadingManager.cs" Line="22" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

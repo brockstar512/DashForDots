@@ -89,9 +89,11 @@ public class LoadingManager : MonoBehaviour
     [ContextMenu("Exit")]
     async Task Exit()
     {
-        await Task.Delay(1000); ;
+        //_progressBar.fillAmount = 1;
+        await Task.Delay(1000);
+        _progressBar.fillAmount = 1;
         // _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1920), 1f).SetEase(exitEase);
-        _loaderCanvas.transform.GetComponent<CanvasGroup>().DOFade(0, .25f).SetEase(enterEase);
+        _loaderCanvas.transform.GetComponent<CanvasGroup>().DOFade(0, .25f).SetEase(enterEase).OnComplete(() =>  _progressBar.fillAmount = 1f);
 
     }
 
