@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using Unity.VectorGraphics;
+using TMPro;
+
 public class GameOverManager : MonoBehaviour
 {
     const Scenes mainMenu = Scenes.MainMenu;
@@ -25,20 +28,32 @@ public class GameOverManager : MonoBehaviour
         replayButton.onClick.AddListener(delegate { LoadingManager.Instance.LoadScene(replay.ToString()); });
         mainMenuButton.onClick.AddListener(delegate { LoadingManager.Instance.LoadScene(mainMenu.ToString()); });
 
-        //var orderByResult = from player in players
-        //                    orderby player.playerScore
-        //                    select player;
 
+        List<PlayerData> toReturn = players.OrderBy(player => player.playerScore).ToList();
 
-
-
-        List<PlayerData> toReturn = players.OrderByDescending(player => player.playerScore).ToList();
-
-        //PopulateLeaderBoard(players);
+        PopulateLeaderBoard(players);
     }
 
     void PopulateLeaderBoard(List<PlayerData> players)
     {
+        int playerCount = players.Count();
+
+        for(int i = 0; i < leaderboardParent.childCount; i++)
+        {
+            if (playerCount <= 0)
+            {
+                leaderboardParent.GetChild(i).gameObject.SetActive(false);
+                continue;
+            }
+            LeaderBoardEntry(leaderboardParent.GetChild(i), players[i]);
+            playerCount--;
+        }
+    }
+
+    void LeaderBoardEntry(Transform leaderboardSlot, PlayerData player)
+    {
+        leaderboardSlot.GetChild(1).GetComponent<SVGImage>().color = player.playerColor;
+        leaderboardSlot.GetChild(2).GetComponent<TextMeshProUGUI>().text = player.playerName;
 
     }
 }

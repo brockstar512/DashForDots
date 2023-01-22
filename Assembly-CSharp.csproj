@@ -78,6 +78,7 @@
     <Compile Include="Assets/Scripts/GameScripts/State/DecisionState.cs" />
     <Compile Include="Assets/SwipeController/Scripts/Examples/MoveOnSwipe_Vector.cs" />
     <Compile Include="Assets/Scripts/UIScripts/NavigationManager.cs" />
+    <Compile Include="Assets/Scripts/GameScripts/GameOverManager.cs" />
     <Compile Include="Assets/Scripts/GameScripts/GridManager.cs" />
     <Compile Include="Assets/Scripts/UIScripts/PersistentCanvas.cs" />
     <Compile Include="Assets/Scripts/GameScripts/DotStyling.cs" />
@@ -102,7 +103,6 @@
     <Compile Include="Assets/Scripts/UIScripts/HowToPlayController.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
-    <Compile Include="Assets/Scripts/GameScripts/GameOverManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -360,6 +360,12 @@
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>Assets/Plugins/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>/Applications/Unity/Hub/Editor/2020.3.36f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>/Applications/Unity/Hub/Editor/2020.3.36f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Hub/Editor/2020.3.36f1/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
