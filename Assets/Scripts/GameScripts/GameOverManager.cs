@@ -16,6 +16,18 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] Transform leaderboardParent;
     CanvasGroup cg;
 
+    [ContextMenu("test tie")]
+    public void TieTest()
+    {
+        List<PlayerData> players = new List<PlayerData>
+        {
+            new PlayerData(PlayerCount.Red),
+            new PlayerData(PlayerCount.Yellow),
+
+        };
+        Init(players);
+    }
+
     public void Init(List<PlayerData> players)
     {
         cg = GetComponent<CanvasGroup>();
@@ -37,7 +49,7 @@ public class GameOverManager : MonoBehaviour
     void PopulateLeaderBoard(List<PlayerData> players)
     {
         int playerCount = players.Count();
-
+        int rank = 1;
         for(int i = 0; i < leaderboardParent.childCount; i++)
         {
             if (playerCount <= 0)
@@ -45,17 +57,19 @@ public class GameOverManager : MonoBehaviour
                 leaderboardParent.GetChild(i).gameObject.SetActive(false);
                 continue;
             }
-            LeaderBoardEntry(leaderboardParent.GetChild(i), players[i]);
+
+            if(i > 0 && players[i].playerScore == players[i - 1].playerScore)
+            {
+                rank--;
+            }
+
+            leaderboardParent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = (rank).ToString();
+            leaderboardParent.GetChild(i).GetChild(1).GetComponent<SVGImage>().color = players[i].playerColor;
+            leaderboardParent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = players[i].playerName;
+            rank++;
             playerCount--;
         }
     }
 
-    void LeaderBoardEntry(Transform leaderboardSlot, PlayerData player)
-    {
-        Debug.Log($"Here is score {player.playerScore}");
-
-        leaderboardSlot.GetChild(1).GetComponent<SVGImage>().color = player.playerColor;
-        leaderboardSlot.GetChild(2).GetComponent<TextMeshProUGUI>().text = player.playerName;
-
-    }
+    
 }
