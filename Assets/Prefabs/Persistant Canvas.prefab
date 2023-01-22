@@ -870,10 +870,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loader
       objectReference: {fileID: 0}
-    - target: {fileID: 5443531988058199928, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
-      propertyPath: showBar
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5443531988058199933, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -978,8 +974,7 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5443531988058199935, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ab334abc20ed43ac81694006cd5bb7b, type: 3}
 --- !u!224 &3021365842784673632 stripped
 RectTransform:

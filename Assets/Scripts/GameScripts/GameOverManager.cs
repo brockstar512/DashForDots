@@ -29,9 +29,9 @@ public class GameOverManager : MonoBehaviour
         mainMenuButton.onClick.AddListener(delegate { LoadingManager.Instance.LoadScene(mainMenu.ToString()); });
 
 
-        List<PlayerData> toReturn = players.OrderBy(player => player.playerScore).ToList();
+        List<PlayerData> toReturn = players.OrderByDescending(player => player.playerScore).ToList();
 
-        PopulateLeaderBoard(players);
+        PopulateLeaderBoard(toReturn);
     }
 
     void PopulateLeaderBoard(List<PlayerData> players)
@@ -52,6 +52,8 @@ public class GameOverManager : MonoBehaviour
 
     void LeaderBoardEntry(Transform leaderboardSlot, PlayerData player)
     {
+        Debug.Log($"Here is score {player.playerScore}");
+
         leaderboardSlot.GetChild(1).GetComponent<SVGImage>().color = player.playerColor;
         leaderboardSlot.GetChild(2).GetComponent<TextMeshProUGUI>().text = player.playerName;
 
