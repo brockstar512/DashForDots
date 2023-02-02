@@ -171,7 +171,7 @@ public class DotStyling : MonoBehaviour
         this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
         //image.DOColor(this.playerColor, .15f);
     }
-
+    //Check in which neighbor you put line
     public void NeighborHighlight()
     {
         //think about how not to rescale the neighbor thts already selected

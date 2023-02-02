@@ -35,20 +35,27 @@ public class PlayerHandler : MonoBehaviour
 
     public async Task Init(PlayerCount playerCount)
     {
-
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
         playerUIDots = new List<Transform>();
 
         for(int i = 0;i < maxPlayerCount; i++)
         {
-            if(i < (int)playerCount)
+            if (i < (int)playerCount - LocalGameController.botCount )
             {
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
                 players.Add(new PlayerData((PlayerCount)i + 1));
-                playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+                mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.LocalPlayer;
 
+                playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+            }
+            else if(i< LocalGameController.playerCount + LocalGameController.botCount) 
+            {
+                playerScoreDots.Add(scoreDotParent.GetChild(i));
+                playerUIDots.Add(mainBoardDotParent.GetChild(i));
+                mainBoardDotParent.GetChild(i).gameObject.name = "AI"+i;
+                mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.AI;
             }
             else
             {
@@ -118,6 +125,7 @@ public class PlayerData
     public readonly string playerName;
     public readonly Color32 playerColor;
     public readonly Color32 neighborOption;
+    public Enums.PlayerType playerType;
     public int playerScore { get; private set; }
 
 
@@ -127,6 +135,8 @@ public class PlayerData
         this.playerName = $"Player {playerNumber.ToString()}";
         this.playerScore = 0;
         GetColor(number, out playerColor,out neighborOption);
+        playerType = Enums.PlayerType.LocalPlayer;
+
     }
 
     public int Score(int incomingPoint)

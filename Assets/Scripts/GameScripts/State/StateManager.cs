@@ -47,6 +47,8 @@ public class StateManager : MonoBehaviour
     public QuitState QuitState;//
     public DecisionState DecisionState;//
     public ResetState ResetState;//
+    public Enums.GameType gameType;
+
 
 
     public async Task Init(Transform incomingBoard, int maxLensZoom)
@@ -60,6 +62,7 @@ public class StateManager : MonoBehaviour
         QuitState.Initialize(this);
         DecisionState.Initialize(this);
         ResetState.Initialize(this);
+        GetGameType();
         zoomOutMax = camController.m_Lens.OrthographicSize = maxLensZoom;
 
         await TimerManager.GameStartDelay();
@@ -87,7 +90,10 @@ public class StateManager : MonoBehaviour
 
         currentState.UpdateState(this);
     }
-
+    public void GetGameType() 
+    {
+        gameType=(Enums.GameType)Constants.GAME_TYPE;
+    }
     public void SwitchState(BaseState state)
     {
         currentState.LeaveState();

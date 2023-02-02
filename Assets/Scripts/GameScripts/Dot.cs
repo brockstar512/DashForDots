@@ -41,7 +41,7 @@ public class Dot : MonoBehaviour
         if (y == boundaryLimit)
             connectingCompass[Vector2Int.right] = true;
 
-        Debug.Log($"x,y is {x},{y}");
+       // sandeep Debug.Log($"x,y is {x},{y}");
         this.DotStyling = GetComponentInChildren<DotStyling>();
         this.button = GetComponent<Button>();
         DotStyling.Init(connectingCompass);
@@ -52,16 +52,17 @@ public class Dot : MonoBehaviour
     public void OnSelect()
     {
         GridManager.SelectDot(coordinates.X, coordinates.Y);
+        
         DotStyling.Select();
         button.onClick.RemoveAllListeners();
     }
 
+    //Pair with neighbor
     public async Task PairWithNeighbor(Dot NeighborChoice)
     {
         this.DotStyling.DrawLine(GetDifference(NeighborChoice));
         NeighborChoice.DotStyling.PairingSelected();
         await Task.Yield();
-
     }
 
 
@@ -75,6 +76,7 @@ public class Dot : MonoBehaviour
     {
         GridManager.SelectNeighbor(coordinates.X, coordinates.Y);
     }
+
 
 
     public async Task Confirm(Dot neighborDot)

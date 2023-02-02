@@ -127,6 +127,7 @@ public class LocalGameController : MonoBehaviour
         {
             Debug.Log("Caching page");
             NavigationManager.Instance.CachePage(cg, difficultyPage);
+            Constants.GAME_TYPE = (int)Enums.GameType.PlayerVsAI;//AI
             //open difficulty
             return;
         }

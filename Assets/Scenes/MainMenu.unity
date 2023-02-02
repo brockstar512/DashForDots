@@ -273,6 +273,17 @@ CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 1927552346330773241, guid: 12568a2b3400f4ebeba60b63b55be3f0, type: 3}
   m_PrefabInstance: {fileID: 1495799741}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &111858150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8008879292039170555, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+  m_PrefabInstance: {fileID: 2717966929234762789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &402944715
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,6 +3453,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1864835983 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4730348792136088591, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+  m_PrefabInstance: {fileID: 2717966929234762789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2068167402
 GameObject:
   m_ObjectHideFlags: 0
@@ -3509,6 +3531,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068167402}
   m_CullTransparentMesh: 1
+--- !u!114 &2119686025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8008879293768657060, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+  m_PrefabInstance: {fileID: 2717966929234762789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2136880155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3587,6 +3620,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 264224416813954077, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.960083
+      objectReference: {fileID: 0}
     - target: {fileID: 597808140164586696, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
       propertyPath: m_Name
       value: Persistant Canvas
@@ -3675,6 +3712,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2203699137127653869, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021365841544925295, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7.946289
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263096018274587510, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.473877
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cccde22ce88304c65a730aaa0da39314, type: 3}
 --- !u!1001 &2717966929234762789
@@ -3684,6 +3733,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1208105624}
     m_Modifications:
+    - target: {fileID: 441097014008965170, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+      propertyPath: targetScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 441097014008965170, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+      propertyPath: difficultyPage
+      value: 
+      objectReference: {fileID: 760024131}
+    - target: {fileID: 441097014008965170, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+      propertyPath: easyDifficulty
+      value: 
+      objectReference: {fileID: 1864835983}
+    - target: {fileID: 441097014008965170, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+      propertyPath: hardDifficulty
+      value: 
+      objectReference: {fileID: 111858150}
+    - target: {fileID: 441097014008965170, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
+      propertyPath: normalDifficulty
+      value: 
+      objectReference: {fileID: 2119686025}
     - target: {fileID: 2163736643720379279, guid: 71e215698904e4f63bec52aa4c0c12b8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

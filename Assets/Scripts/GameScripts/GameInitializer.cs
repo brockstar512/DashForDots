@@ -29,9 +29,10 @@ public class GameInitializer : MonoBehaviour
     async void StartGame()
     {
         //create all the plyers
-        await PlayerHandler.Instance.Init((PlayerCount)LocalGameController.playerCount);
+        int total_PlayerCount = LocalGameController.playerCount + LocalGameController.botCount;
+        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount);
         int maxLensZoom = 0;
-        switch ((PlayerCount)LocalGameController.playerCount)
+        switch ((PlayerCount)total_PlayerCount)
         {
             case (PlayerCount)2:
                 currentBoard = Instantiate(TwoPersonBoard);

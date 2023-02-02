@@ -17,18 +17,17 @@ public class GridManager : MonoBehaviour
     ScoreKeeper scoreKeeper;
     Action<Button> dotSubscriber;
 
+    //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
         int childIndex = 0;
         _height = _width = (int)Mathf.Sqrt(dotParent.childCount);
-        //Debug.Log($"grid size :: {_height}, {_width}");
 
         dots = new Dot[_height, _width];
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
             {
-                //Debug.Log("Child:: " + childIndex);
                 Dot dot = dotParent.GetChild(childIndex).gameObject.AddComponent<Dot>();
                 dot.Init(x, y, _height -1,this);
                 dots[x, y] = dot;
