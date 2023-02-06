@@ -11,8 +11,8 @@ public class PlayerHandler : MonoBehaviour
     public List<PlayerData> players { get; private set; }
     public PlayerData player { get { return players[currentPlayer]; } }
     public int currentPlayer{ get; private set; }
-    List<Transform> playerScoreDots;
-    List<Transform> playerUIDots;
+    public List<Transform> playerScoreDots;
+    public List<Transform> playerUIDots;
     [SerializeField] Transform scoreDotParent;
     [SerializeField] Transform mainBoardDotParent;
     [SerializeField] TimerManager timerManager;
@@ -44,18 +44,24 @@ public class PlayerHandler : MonoBehaviour
             if (i < (int)playerCount - LocalGameController.botCount )
             {
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
+                playerScoreDots[i].name = "Real player" + 1;
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
                 players.Add(new PlayerData((PlayerCount)i + 1));
-                mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.LocalPlayer;
 
+                mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.LocalPlayer;
+                mainBoardDotParent.GetChild(i).gameObject.name = "Real Player" + i;
                 playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+                player.playerType = Enums.PlayerType.LocalPlayer;
             }
             else if(i< LocalGameController.playerCount + LocalGameController.botCount) 
             {
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
+                playerScoreDots[i].name = "AI" + 1;
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
                 mainBoardDotParent.GetChild(i).gameObject.name = "AI"+i;
                 mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.AI;
+                players.Add(new PlayerData((PlayerCount)i + 1));
+                player.playerType = Enums.PlayerType.AI;
             }
             else
             {
@@ -122,7 +128,7 @@ public enum PlayerCount
 public class PlayerData
 {
     public readonly int playerNumber;
-    public readonly string playerName;
+    public string playerName;
     public readonly Color32 playerColor;
     public readonly Color32 neighborOption;
     public Enums.PlayerType playerType;
