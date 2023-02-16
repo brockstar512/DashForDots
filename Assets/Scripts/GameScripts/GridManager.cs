@@ -11,12 +11,20 @@ using System;
 public class GridManager : MonoBehaviour
 {
     public Dot[,] dots { get; private set; }
-    int _height, _width;
+    public int _height, _width;
     public DotValue currentDot { get; private set; }
     public DotValue neighborDot { get; private set; }
     ScoreKeeper scoreKeeper;
     Action<Button> dotSubscriber;
-
+    public TimerManager timerManager;
+    [Header("Grid Basic Data")]
+    public int numberOfDots = 0;
+    public int numberOfHorizontalLine = 0;
+    public int numberOfVerticalLine = 0;
+    public int numberOfMoves = 0;
+    public int numberOfBoxes = 0;
+    public int numberOfBoxThirdLineComplete = 0;
+    
     //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -24,33 +32,48 @@ public class GridManager : MonoBehaviour
         _height = _width = (int)Mathf.Sqrt(dotParent.childCount);
 
         dots = new Dot[_height, _width];
+        Debug.Log($"H : {_height} & W : {_width}");
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
             {
                 Dot dot = dotParent.GetChild(childIndex).gameObject.AddComponent<Dot>();
-                dot.Init(x, y, _height -1,this);
+                dot.Init(x, y, _height - 1, this);
                 dots[x, y] = dot;
                 dot.button.onClick.AddListener(dot.OnSelect);
                 childIndex++;
             }
         }
+        GetNumberofMovesAndBoxes(_width, _height);
         dotSubscriber += SubscribeButton;
         scoreKeeper = GetComponent<ScoreKeeper>();
         scoreKeeper.Init(this, _height);
+      
     }
 
-
+    public void GetNumberofMovesAndBoxes(int row, int col)
+    {
+        numberOfDots = row * col;
+        Debug.Log($"<color=yellow> Number of Dots: {numberOfDots}</color>");
+        numberOfHorizontalLine = row * (col - 1);
+        Debug.Log($"<color=yellow> Number of Horizontal Line: {numberOfHorizontalLine}</color>");
+        numberOfVerticalLine = col * (row - 1);
+        Debug.Log($"<color=yellow> Number of Vertical Line: {numberOfVerticalLine}</color>");
+        numberOfMoves = 2 * row * col - col - row;
+        numberOfBoxes = (row - 1) * (col - 1);
+        Debug.Log($"<color=yellow> Number of moves: {numberOfMoves} </color>  & <color=pink>Number of Boxes: {numberOfBoxes}</color> ");
+        
+    }
 
     async Task LeaveDot()
     {
-        if (neighborDot !=null)
+        if (neighborDot != null)
         {
             //this should not go here its earzing the line. instead it should go where the function is calling this on select dot
             //consider cancelling or just fading the line away in this instance
             //maybe just cance?
             //await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
-            
+
         }
 
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
@@ -90,12 +113,11 @@ public class GridManager : MonoBehaviour
 
     public async void SelectDot(int x, int y)
     {
-        if(currentDot != null)
+        if (currentDot != null)
         {
             await LeaveDot();
             if (neighborDot != null)
-            {
-                //this should not go here its earzing the line. instead it should go where the function is calling this on select dot
+            { //this should not go here its earzing the line. instead it should go where the function is calling this on select dot
                 //consider cancelling or just fading the line away in this instance
                 //maybe just cance?
                 await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
@@ -139,7 +161,8 @@ public class GridManager : MonoBehaviour
             Dot dot = dots[currentDot.X - 1, currentDot.Y];
             dot.DotStyling.NeighborHighlight();
             dot.button.onClick.RemoveAllListeners();
-            dot.button.onClick.AddListener(delegate {
+            dot.button.onClick.AddListener(delegate
+            {
                 dot.NeighboringChoice();
 
             });
@@ -147,27 +170,30 @@ public class GridManager : MonoBehaviour
 
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.right])
         {
+            Debug.Log($"neighbor dot right : {Vector2Int.right}");
             Dot dot = dots[currentDot.X, currentDot.Y + 1];
             dot.DotStyling.NeighborHighlight();
             dot.button.onClick.RemoveAllListeners();
-            dot.button.onClick.AddListener(delegate {
+            dot.button.onClick.AddListener(delegate
+            {
                 dot.NeighboringChoice();
 
             });
         }
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.left])
         {
+            Debug.Log($"neighbor dot left : {Vector2Int.left}");
             Dot dot = dots[currentDot.X, currentDot.Y - 1];
             dot.DotStyling.NeighborHighlight();
             dot.button.onClick.RemoveAllListeners();
-            dot.button.onClick.AddListener(delegate {
+            dot.button.onClick.AddListener(delegate
+            {
                 dot.NeighboringChoice();
 
             });
         }
     }
-
-    void LeaveNeighbors()
+    public void LeaveNeighbors()
     {
         //is current dot null?
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])

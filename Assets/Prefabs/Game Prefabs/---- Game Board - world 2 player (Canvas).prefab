@@ -9986,6 +9986,7 @@ GameObject:
   - component: {fileID: 5265810175305017627}
   - component: {fileID: 5265810175305017625}
   - component: {fileID: 5265810175305017626}
+  - component: {fileID: 4960756518002869227}
   m_Layer: 5
   m_Name: ---- Game Board - world 2 player (Canvas)
   m_TagString: Untagged
@@ -10090,6 +10091,14 @@ MonoBehaviour:
   m_Spacing: {x: 0.5, y: 0.5}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!222 &4960756518002869227
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265810175305017624}
+  m_CullTransparentMesh: 1
 --- !u!1 &5265810175341641620
 GameObject:
   m_ObjectHideFlags: 0

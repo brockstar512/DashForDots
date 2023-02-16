@@ -27,7 +27,7 @@ public class ScoreKeeper : MonoBehaviour
                 //ScoreHelper scoreHelper = GridManager.dots[x, y]?.GetComponent<ScoreHelper>();
                 if (GridManager.dots[x, y]?.GetComponent<ScoreHelper>() != null)
                 {
-                   bool _hascored = PatrolParameter(GridManager.dots, x, y);
+                    bool _hascored = PatrolParameter(GridManager.dots, x, y,true);
                     //does this dot have a score hlper? if so run the check, else continue
 
                     if (_hascored)
@@ -49,39 +49,36 @@ public class ScoreKeeper : MonoBehaviour
         //y == 0
         if (index == limit)
         {
+            //Debug.Log($"index: {index} == limit {limit} = index==limit {index==limit}");
             return false;
         }
         return true;
     }
 
 
-    bool PatrolParameter(Dot[,] dots, int x, int y)
+   public bool PatrolParameter(Dot[,] dots, int x, int y,bool isSqaure)
     {
-        //Debug.Log($"Index:{x},{y}");
+       // Debug.Log($"Index:{x},{y}");
 
         Dot currentDot = dots[x, y];
-
         //0,0 is the 0,1 in bounds?
         if (!IsInBounds(currentDot.coordinates.Y + 1, _height))
             return false;
-        
 
-        if (currentDot.connectingCompass[Vector2Int.right] == true)
+        if (currentDot.connectingCompass[Vector2Int.right] == isSqaure)
         {
             //0,1 is 1,1 in bounds
             if (!IsInBounds(currentDot.coordinates.X + 1, _height))
                 return false;
-            
             currentDot = dots[currentDot.coordinates.X, currentDot.coordinates.Y + 1];//check the bounds too
-            if(currentDot.connectingCompass[Vector2Int.down] == true)
+            if(currentDot.connectingCompass[Vector2Int.down] == isSqaure)
             {
-
                 //1,1 is 1,0 in boundss?
                 if (!IsInBounds(currentDot.coordinates.Y - 1, -1))
                     return false;
 
                 currentDot = dots[currentDot.coordinates.X + 1, currentDot.coordinates.Y];
-                if (currentDot.connectingCompass[Vector2Int.left] == true)
+                if (currentDot.connectingCompass[Vector2Int.left] == isSqaure)
                 {
 
                     //1,0 is 0,0 in bounds
@@ -90,21 +87,29 @@ public class ScoreKeeper : MonoBehaviour
 
                     currentDot = dots[currentDot.coordinates.X, currentDot.coordinates.Y - 1];
 
-                    if (currentDot.connectingCompass[Vector2Int.up] == true)
+                    if (currentDot.connectingCompass[Vector2Int.up] == isSqaure)
                     {
 
 
                         //is a connected square
                         //run a function that handles the ui
-                        dots[x, y].GetComponent<ScoreHelper>().ShowFill();
+                      //  Debug.Log($"Making Square : {dots[x, y]}");
+                        if (isSqaure)
+                        {
+
+                            dots[x, y].GetComponent<ScoreHelper>().ShowFill();
+                            GridManager.numberOfBoxes -= 1;
+                        }
+                        else 
+                        {
+                          
+                        }
                         //Destroy(dots[x, y].GetComponent<ScoreHelper>());
                         //handle the score
                         //once that is done remove the patrol helper script on the original dot
                         //check if the player scored if so... go again. oyherwie switch
                         //switch players
                         return true;
-
-
                     }
 
                 }

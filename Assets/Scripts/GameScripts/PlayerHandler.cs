@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
 using DG.Tweening;
+using DashForDots.AI;
 
 public class PlayerHandler : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] Transform mainBoardDotParent;
     [SerializeField] TimerManager timerManager;
     [SerializeField] GameOverManager gameOverManager;
+    //StopIntrection with board
+    [SerializeField] GameObject boardIntrection;
 
     const int maxPlayerCount = 4;
     public int maxPlayerScore { get; private set; }
@@ -91,6 +94,11 @@ public class PlayerHandler : MonoBehaviour
             return;
         }
         await timerManager.StartTimer();
+        boardIntrection.SetActive(false);
+        if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI)
+        {
+           StartCoroutine(TakeTurnAI());
+        }
 
     }
 
@@ -106,9 +114,18 @@ public class PlayerHandler : MonoBehaviour
             currentPlayer++;
         }
         ChangePlayerIndicator();
+        boardIntrection.SetActive(false);
+        if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI) 
+        {
+           StartCoroutine(TakeTurnAI());
+        }
     }
-
-
+    IEnumerator TakeTurnAI()
+    {
+        boardIntrection.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
+    }
     async void ChangePlayerIndicator()
     {
         mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(1,.75f);
