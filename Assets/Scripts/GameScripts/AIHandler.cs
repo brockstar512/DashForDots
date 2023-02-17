@@ -45,6 +45,7 @@ namespace DashForDots.AI
         int count = 0;
         int longChainsCount = 0;
         int doubleChainsCount = 0;
+        int countForNormalMoves = 0;
         #endregion
 
         #region MONOBEHAVIOUR METHODS
@@ -85,6 +86,7 @@ namespace DashForDots.AI
         private int GetBestMove()
         {
             GetAllValidMoves();
+            countForNormalMoves = 0;
             thirdLineMoves.Clear();
             visitedThirdLineMoves.Clear();
             doubleSquareMoves.Clear();
@@ -142,7 +144,10 @@ namespace DashForDots.AI
                     mostOptimalMoveIndex = i;
                     mostOptimalMoveValue = moveValue;
                 }
-
+                if (moveValue > 100 && moveValue < 1000)
+                {
+                    countForNormalMoves++;
+                }
                 i++;
             }
             if (mostOptimalMoveValue < 100)
@@ -249,7 +254,7 @@ namespace DashForDots.AI
                     }
                 }
             }
-            else if (mostOptimalMoveValue > 1000)
+            else if (mostOptimalMoveValue > 1000 && countForNormalMoves <= 0)
             {
 
                 CalculateSquareChains();

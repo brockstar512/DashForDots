@@ -127,7 +127,7 @@ public class PlayerHandler : MonoBehaviour
     IEnumerator TakeTurnAI()
     {
         boardIntrection.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Random.Range(0.5f,2.5f));
         this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
     }
     async void ChangePlayerIndicator()
