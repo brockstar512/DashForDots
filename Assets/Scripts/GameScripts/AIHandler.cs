@@ -59,16 +59,29 @@ namespace DashForDots.AI
         {
             int bestIndex = GetBestMove();
             //print(bestIndex);
-
             Vector2Int dot1 = validMoves[bestIndex][0];
             Vector2Int dot2 = validMoves[bestIndex][0] + validMoves[bestIndex][1];
-            //print("The best line will be between " + dot1 + " and " + dot2);
             gridManager.SelectDot(dot1.x, dot1.y);
             gridManager.SelectNeighbor(dot2.x, dot2.y);
             gridManager.Confirm();
         }
+        IEnumerator ConfirmSelectedDot(int dotXCoordinate, int dotYCoordinate)
+        {
+            yield return new WaitForSeconds(0.1f);
+            gridManager.SelectNeighbor(dotXCoordinate, dotYCoordinate);
+            gridManager.Confirm();
+        }
 
-
+        public void GetRandomMove()
+        {
+            GetAllValidMoves();
+            int validMovesCount = validMoves.Count;
+            int randomMoveIndex = Random.Range(0, validMovesCount);
+            Vector2Int dot1 = validMoves[randomMoveIndex][0];
+            Vector2Int dot2 = validMoves[randomMoveIndex][0] + validMoves[randomMoveIndex][1];
+            gridManager.SelectDot(dot1.x, dot1.y);
+            StartCoroutine(ConfirmSelectedDot(dot2.x, dot2.y));
+        }
         private int GetBestMove()
         {
             GetAllValidMoves();
@@ -166,9 +179,12 @@ namespace DashForDots.AI
                         Vector2Int direction = move[1];
                         Vector2Int dCFrom = move[0];
                         Vector2Int dCTo = move[0] + directionAccordingToGrid[move[1]];
+                        //Debug.Log($" the move is dot{move[0]} in the direction {directions[move[1]]}");
                         Vector2 p1 = Vector2.Perpendicular(direction);
                         Vector2Int perpendicular1 = new Vector2Int((int)p1.x, (int)p1.y);
                         Vector2Int perpendicular2 = perpendicular1 * -1;
+                        Vector2Int pDC1 = dCFrom + directionAccordingToGrid[perpendicular1];
+                        Vector2Int pDC2 = dCFrom + directionAccordingToGrid[perpendicular2];
                         if (CheckIfDoubleThirdLine(move))
                         {
                             line = move;
@@ -190,6 +206,14 @@ namespace DashForDots.AI
                             else if (CheckIfContainsDirection(thirdLineMoves, dCTo, perpendicular2))
                             {
                                 line = new List<Vector2Int>() { dCTo, perpendicular2 };
+                            }
+                            else if (CheckIfContainsDirection(thirdLineMoves, pDC1, direction))
+                            {
+                                line = new List<Vector2Int>() { pDC1, direction };
+                            }
+                            else if (CheckIfContainsDirection(thirdLineMoves, pDC2, direction))
+                            {
+                                line = new List<Vector2Int>() { pDC2, direction };
                             }
                         }
                         if (line != null) { break; }

@@ -18,6 +18,10 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] Transform mainBoardDotParent;
     [SerializeField] TimerManager timerManager;
     [SerializeField] GameOverManager gameOverManager;
+
+    public AIHandler aiHandler;
+    public StateManager stateManager;
+    public GridManager gridManager;
     //StopIntrection with board
     [SerializeField] GameObject boardIntrection;
 
@@ -123,7 +127,7 @@ public class PlayerHandler : MonoBehaviour
     IEnumerator TakeTurnAI()
     {
         boardIntrection.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
     }
     async void ChangePlayerIndicator()

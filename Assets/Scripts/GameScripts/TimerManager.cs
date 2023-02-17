@@ -30,7 +30,7 @@ public class TimerManager : MonoBehaviour
     public async Task StartTimer()
     {
         //timerIsRunning = false;
-
+        isOnce = false;
         timeText.color = normalColor;
         timeTitle.color = normalColor;
         timeTitle.text = "Time";
@@ -62,7 +62,7 @@ public class TimerManager : MonoBehaviour
         }
     }
 
-
+    bool isOnce = false;
     void DisplayTime(float timeToDisplay)
     {
         timeToDisplay += 1;
@@ -74,13 +74,15 @@ public class TimerManager : MonoBehaviour
             timeTitle.text = "Hurry up!";
             timeTitle.color = Color.red;
             timeText.color = Color.red;
-           
-        }
-        if (timeRemaining<=0) 
-        {
-            PlayerHandler.Instance.NextPlayer();
 
         }
+        if (timeRemaining <= 0.1f && !isOnce)
+        {
+            isOnce = true;
+            PlayerHandler.Instance.aiHandler.GetRandomMove();
+            PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+        }
+
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }
