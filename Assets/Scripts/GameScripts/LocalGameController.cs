@@ -133,7 +133,10 @@ public class LocalGameController : MonoBehaviour
         }
         else
         {
-            LoadingManager.Instance.LoadScene(targetScene.ToString());
+            if (playerCount >= 2)
+            {
+                LoadingManager.Instance.LoadScene(targetScene.ToString());
+            }
 
         }
         //else

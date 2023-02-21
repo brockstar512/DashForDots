@@ -16,6 +16,7 @@ public class StateManager : MonoBehaviour
     public Transform target;
     [HideInInspector]
     public GridManager gridManager;
+    public PlayerData currentPlayerTurn;
     [SerializeField] Button quitButton;
     [SerializeField] TimerManager TimerManager;
     private Transform dotsParent;
@@ -70,6 +71,7 @@ public class StateManager : MonoBehaviour
         //this part was i nstart
         currentState = NeutralState;
         currentState.EnterState(this);
+       // currentPlayerTurn= PlayerData.
         ///
         await Task.Yield();
     }

@@ -6,6 +6,8 @@ namespace DashForDots.AI
 {
     public class AIHandler : MonoBehaviour
     {
+       // [SerializeField] Enums
+
         #region PRIVATE DICTIONARY & LISTS
         GridManager gridManager;
         Dictionary<List<Vector2Int>, int> squareChainMovesWithCount = new Dictionary<List<Vector2Int>, int>();
@@ -144,13 +146,13 @@ namespace DashForDots.AI
                     mostOptimalMoveIndex = i;
                     mostOptimalMoveValue = moveValue;
                 }
-                if (moveValue > 100 && moveValue < 1000)
+                if (moveValue >Constants.LOWEST_MOVE_VALUE && moveValue < Constants.HIGHEST_MOVE_VALUE)
                 {
                     countForNormalMoves++;
                 }
                 i++;
             }
-            if (mostOptimalMoveValue < 100)
+            if (mostOptimalMoveValue < Constants.LOWEST_MOVE_VALUE)
             {
                 List<Vector2Int> minSquareChain = CalculateSquareChains();
                 if (squareChainMovesWithCount.ContainsValue(1))
@@ -177,7 +179,6 @@ namespace DashForDots.AI
                 }
                 else if (doubleChainsCount > 0)
                 {
-
                     List<Vector2Int> line = null;
                     foreach (var move in doubleSquareMoves)
                     {
@@ -236,9 +237,6 @@ namespace DashForDots.AI
                             j++;
                         }
                     }
-
-
-
                 }
                 else
                 {
@@ -247,14 +245,13 @@ namespace DashForDots.AI
                     {
                         if (line[0] == minSquareChain[0] && line[2] == minSquareChain[1])
                         {
-
                             return j;
                         }
                         j++;
                     }
                 }
             }
-            else if (mostOptimalMoveValue > 1000 && countForNormalMoves <= 0)
+            else if (mostOptimalMoveValue > Constants.HIGHEST_MOVE_VALUE && countForNormalMoves <= 0)
             {
 
                 CalculateSquareChains();
@@ -289,7 +286,6 @@ namespace DashForDots.AI
                         {
                             if (move[0] == line[0] && move[2] == line[1])
                             {
-
                                 return j;
                             }
                             j++;
@@ -312,12 +308,10 @@ namespace DashForDots.AI
                 {
                     GetDirection(dot, Vector2Int.down);
                 }
-
                 if (!dot.connectingCompass[Vector2Int.up])
                 {
                     GetDirection(dot, Vector2Int.up);
                 }
-
                 if (!dot.connectingCompass[Vector2Int.right])
                 {
                     GetDirection(dot, Vector2Int.right);
@@ -325,7 +319,6 @@ namespace DashForDots.AI
                 if (!dot.connectingCompass[Vector2Int.left])
                 {
                     GetDirection(dot, Vector2Int.left);
-
                 }
             }
         }
@@ -389,12 +382,10 @@ namespace DashForDots.AI
                 }
 
                 // this region is to make line that is perpendicular to current direction line
-                //else if ((dotRefFrom.connectingCompass[perpendicularDirection] == true && CheckWithinGrid(dotCoordinateFrom, perpendicularDirection)) || (dotRefTo.connectingCompass[perpendicularDirection] == true && CheckWithinGrid(dotCoordinateTo, perpendicularDirection)))
-                //{
-
-                //    moveValue += 120;
-
-                //}
+                else if ((dotRefFrom.connectingCompass[perpendicularDirection] == true && CheckWithinGrid(dotCoordinateFrom, perpendicularDirection)) || (dotRefTo.connectingCompass[perpendicularDirection] == true && CheckWithinGrid(dotCoordinateTo, perpendicularDirection)))
+                {
+                   moveValue += 120;
+                }
                 else if ((dotRefFrom.connectingCompass[direction * -1] && CheckWithinGrid(dotCoordinateFrom, direction * -1)) || (dotRefTo.connectingCompass[direction] && CheckWithinGrid(dotCoordinateTo, direction)))
                 {
                     int chainCount = 0;
@@ -410,14 +401,13 @@ namespace DashForDots.AI
         #endregion
 
         #region GET OPTIMAL MOVE
-        private int GetOptimalMove(Vector2Int dotCoordinateFrom, Vector2Int dotCoordinateTo, Dot dotRefFrom, Dot dotRefTo, Vector2Int direction, Vector2Int p1, Vector2Int p2)
+        private int GetOptimalMove(Vector2Int dotCoordinateFrom, Vector2Int dotCoordinateTo, Dot dotRefFrom, Dot dotRefTo, Vector2Int direction, Vector2Int lowergridDirection, Vector2Int uppergridDirection)
         {
-
-            int moveValue = 100;
-            Vector2Int dot1lowerdot = dotCoordinateFrom + directionAccordingToGrid[p1];
-            Vector2Int dot1upperdot = dotCoordinateFrom + directionAccordingToGrid[p2];
-            moveValue += CheckParallelLine(dot1lowerdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, p1);
-            moveValue += CheckParallelLine(dot1upperdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, p2);
+            int moveValue = Constants.LOWEST_MOVE_VALUE;
+            Vector2Int dot1lowerdot = dotCoordinateFrom + directionAccordingToGrid[lowergridDirection];
+            Vector2Int dot1upperdot = dotCoordinateFrom + directionAccordingToGrid[uppergridDirection];
+            moveValue += CheckParallelLine(dot1lowerdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, lowergridDirection);
+            moveValue += CheckParallelLine(dot1upperdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, uppergridDirection);
             return moveValue;
         }
         #endregion
@@ -457,7 +447,6 @@ namespace DashForDots.AI
                         }
                         else if (count == 1)
                         {
-
                             Vector2 p1 = Vector2.Perpendicular(dir); Vector2Int perpendicular1 = new Vector2Int((int)p1.x, (int)p1.y);
                             Vector2Int perpendicular2 = perpendicular1 * -1;
                             Vector2Int pDC1 = line.Key + directionAccordingToGrid[perpendicular1];
@@ -473,7 +462,6 @@ namespace DashForDots.AI
                                 }
                                 else if (CheckIfContainsDirection(thirdLineMoves, pDC2, dir))
                                 {
-
                                     //Debug.Log($"Count for square chain for dot {pDC2} in direction{directions[dir]} is {count}");
                                     List<Vector2Int> moveNew = new List<Vector2Int> { pDC2, dir };
                                     singleSquareMoves.Add(moveNew);
@@ -511,7 +499,6 @@ namespace DashForDots.AI
                         }
                         if (count < minSquareChain)
                         {
-
                             minChainPair = new List<Vector2Int>() { line.Key, dir };
                             minSquareChain = count;
                         }
@@ -519,9 +506,8 @@ namespace DashForDots.AI
 
                 }
             }
-
+            SacrificedBoxes();
             return minChainPair;
-
         }
         #endregion
 
@@ -530,8 +516,6 @@ namespace DashForDots.AI
             List<Vector2Int> directions = thirdLineMoves[move[0]];
             int dirAppearCount = 0;
             Vector2Int direction = move[1];
-            Vector2Int dCFrom = move[0];
-            Vector2Int dCTo = move[0] + directionAccordingToGrid[move[1]];
             Vector2 p1 = Vector2.Perpendicular(direction);
             Vector2Int perpendicular1 = new Vector2Int((int)p1.x, (int)p1.y);
             Vector2Int perpendicular2 = perpendicular1 * -1;
@@ -545,7 +529,6 @@ namespace DashForDots.AI
             if (dirAppearCount == 2)
             {
                 return true;
-
             }
             return false;
         }
@@ -654,8 +637,6 @@ namespace DashForDots.AI
             List<Vector2Int> line = new List<Vector2Int>() { dotCoordinate, direction };
             squareChainMovesWithCount.Add(line, count);
         }
-
-
         private void AddToGivenMoveSet(Dictionary<Vector2Int, List<Vector2Int>> moveSet, Vector2Int dotCoordinate, Vector2Int direction)
         {
             if (moveSet.ContainsKey(dotCoordinate))
@@ -717,6 +698,13 @@ namespace DashForDots.AI
             }
             //Debug.Log($"the chain count for dot{dotFrom} in the direction {directions[direction]} is {chainCount}");
             return chainCount;
+        }
+
+        public void SacrificedBoxes() 
+        {
+            Debug.Log($"<color=black>Long Chain Box count </color>: {longChainsCount}");
+            int sacrificedBoxes = 2 * (longChainsCount);
+            Debug.Log($"<color=blue>Sacrificed Boxes </color>: {sacrificedBoxes}");
         }
 
     }

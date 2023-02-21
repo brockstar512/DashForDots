@@ -22,7 +22,6 @@ public class GameInitializer : MonoBehaviour
     {
         stateManager = GetComponent<StateManager>();
         StartGame();
-
     }
 
 

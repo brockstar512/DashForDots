@@ -12,6 +12,7 @@ public class PlayerHandler : MonoBehaviour
     public List<PlayerData> players { get; private set; }
     public PlayerData player { get { return players[currentPlayer]; } }
     public int currentPlayer{ get; private set; }
+    public Enums.CurrentPlayerTurn CurrentPlayerTurn;
     public List<Transform> playerScoreDots;
     public List<Transform> playerUIDots;
     [SerializeField] Transform scoreDotParent;
@@ -108,6 +109,7 @@ public class PlayerHandler : MonoBehaviour
 
     public void NextPlayer()
     {
+       // CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
         mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
         if (currentPlayer + 1 >= players.Count)
         {
@@ -119,9 +121,13 @@ public class PlayerHandler : MonoBehaviour
         }
         ChangePlayerIndicator();
         boardIntrection.SetActive(false);
-        if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI) 
+        if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI)
         {
-           StartCoroutine(TakeTurnAI());
+            CurrentPlayerTurn = Enums.CurrentPlayerTurn.AI_Turn;
+            StartCoroutine(TakeTurnAI());
+        }
+        else {
+            CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
         }
     }
     IEnumerator TakeTurnAI()

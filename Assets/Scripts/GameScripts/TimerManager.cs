@@ -24,7 +24,7 @@ public class TimerManager : MonoBehaviour
         timeTitle.color = normalColor;
         PlayerHandler.Instance.UpdateScore(0,false);
         await Task.Yield();
-        Destroy(screenBlocker);
+        DestroyImmediate(screenBlocker);
     }
 
     public async Task StartTimer()
