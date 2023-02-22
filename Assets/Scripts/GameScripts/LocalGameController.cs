@@ -137,7 +137,6 @@ public class LocalGameController : MonoBehaviour
             {
                 LoadingManager.Instance.LoadScene(targetScene.ToString());
             }
-
         }
         //else
         //start game

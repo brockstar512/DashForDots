@@ -189,7 +189,6 @@ public class GridManager : MonoBehaviour
             dot.button.onClick.AddListener(delegate
             {
                 dot.NeighboringChoice();
-
             });
         }
     }
@@ -242,7 +241,6 @@ public class GridManager : MonoBehaviour
 
         }
     }
-
     public async void Cancel()
     {
         //hightlight neighbors and null neighbor do
@@ -250,13 +248,10 @@ public class GridManager : MonoBehaviour
         await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
         neighborDot = null;
         dots[currentDot.X, currentDot.Y].OnSelect();
-
-
     }
 
     public async void Confirm()
     {
-        
         //Debug.Log("Confirm");
         await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
@@ -274,7 +269,6 @@ public class GridManager : MonoBehaviour
             Debug.Log("You did not score");
             PlayerHandler.Instance.NextPlayer();
             //switch player
-
         }
 
     }
@@ -290,7 +284,6 @@ public class GridManager : MonoBehaviour
         return true;
 
     }
-
     private void OnDestroy()
     {
         dotSubscriber = null; ;

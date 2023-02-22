@@ -40,7 +40,7 @@ public class TimerManager : MonoBehaviour
         timeRemaining = 20;
         await Task.Delay(1000);
 
-        // Starts the timer automatically
+        // Starts the timer automatically   
         timerIsRunning = true;
     }
     void Update()
