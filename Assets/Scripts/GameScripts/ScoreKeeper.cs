@@ -96,9 +96,7 @@ public class ScoreKeeper : MonoBehaviour
                       //  Debug.Log($"Making Square : {dots[x, y]}");
                         if (isSqaure)
                         {
-
                             dots[x, y].GetComponent<ScoreHelper>().ShowFill();
-                            GridManager.numberOfBoxes -= 1;
                         }
                         else 
                         {

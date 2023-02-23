@@ -20,7 +20,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] Button quitButton;
     [SerializeField] TimerManager TimerManager;
     private Transform dotsParent;
-
+    public bool isSwiping= false;
 
 
 
@@ -106,7 +106,7 @@ public class StateManager : MonoBehaviour
     public void Inspect(Transform dot)
     {
         target = dot;
-        SwitchState(InspectingState);
+        SwitchState(InspectingState); // Camera zoom auto when User select Dot
     }
     //resubsribe button
     public void SubscribeButton(Button dot)
@@ -160,7 +160,6 @@ public class StateManager : MonoBehaviour
     {
         if (Input.touchCount == 2 || currentState == QuitState)
             return;
-
         //Debug.Log("abc " + id);
         switch (id)
         {
@@ -196,6 +195,14 @@ public class StateManager : MonoBehaviour
                 MoveDownRight();
                 break;
         }
+    }
+    public void OnDragStart() 
+    {
+        isSwiping = true;
+    }
+    public void onDragEnd() 
+    {
+        isSwiping = false;
     }
     private void MoveDownRight()
     {

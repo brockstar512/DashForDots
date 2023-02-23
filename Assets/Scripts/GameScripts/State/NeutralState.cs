@@ -24,8 +24,8 @@ public class NeutralState : BaseState
         }
         if (stateManager.gridManager.neighborDot != null && stateManager.gridManager.currentDot != null)
         {
-            if (PlayerHandler.Instance.CurrentPlayerTurn == Enums.CurrentPlayerTurn.AI_Turn)
-                return;
+           if (PlayerHandler.Instance.CurrentPlayerTurn == Enums.CurrentPlayerTurn.AI_Turn)
+            return;
             stateManager.SwitchState(stateManager.DecisionState);
         }
 

@@ -13,7 +13,7 @@ public class Dot : MonoBehaviour
     [SerializeField] public Button button { get; private set; }
 
     public Dictionary<Vector2Int, bool> connectingCompass { get; private set; }//avaiable direction
-    public List<NodeData>  nodeDataList= new List<NodeData>();
+    public List<NodeData> nodeDataList = new List<NodeData>();
     public DotStyling DotStyling { get; private set; }
     GridManager GridManager;
     public DotValue coordinates { get; private set; }
@@ -26,9 +26,9 @@ public class Dot : MonoBehaviour
 
 
         foreach (KeyValuePair<Vector2Int, bool> item in connectingCompass)
-        { 
+        {
             Debug.Log($"< color = yellow > check key:  {item.Key} Value: { item.Value}</color>");
-            NodeData nodeData = new NodeData(item.Key,item.Value);
+            NodeData nodeData = new NodeData(item.Key, item.Value);
             nodeDataList.Add(nodeData);
         }
     }
@@ -54,20 +54,23 @@ public class Dot : MonoBehaviour
         if (y == boundaryLimit)
             connectingCompass[Vector2Int.right] = true;
 
-       // sandeep Debug.Log($"x,y is {x},{y}");
+        // sandeep Debug.Log($"x,y is {x},{y}");
         this.DotStyling = GetComponentInChildren<DotStyling>();
         this.button = GetComponent<Button>();
         DotStyling.Init(connectingCompass);
-        coordinates = new DotValue(x,y);
+        coordinates = new DotValue(x, y);
     }
 
     //when this dot is selected
     public void OnSelect()
     {
-        GridManager.SelectDot(coordinates.X, coordinates.Y);
-        
-        DotStyling.Select();
-        button.onClick.RemoveAllListeners();
+        if (!PlayerHandler.Instance.stateManager.isSwiping)
+        {
+            GridManager.SelectDot(coordinates.X, coordinates.Y);
+
+            DotStyling.Select();
+            button.onClick.RemoveAllListeners();
+        }
     }
 
     //Pair with neighbor
@@ -98,7 +101,7 @@ public class Dot : MonoBehaviour
         Vector2Int direction = GetDifference(neighborDot);
         Debug.Log($"direction: {direction}");
         connectingCompass[direction] = true;
-        
+
         //CheckPossibleMove();
         neighborDot.ConfirmAsNeighbor(direction * -1);
         DotStyling.Confirm();
@@ -132,12 +135,12 @@ public class Dot : MonoBehaviour
     }
 }
 [System.Serializable]
-public class NodeData 
+public class NodeData
 {
     public Vector2Int vector2Ints;
     public bool nodeState;
 
-    public NodeData(Vector2Int _vector2Ints, bool _nodeData) 
+    public NodeData(Vector2Int _vector2Ints, bool _nodeData)
     {
         this.vector2Ints = _vector2Ints;
         this.nodeState = _nodeData;

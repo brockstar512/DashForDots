@@ -17,6 +17,8 @@ public class ExploringState : BaseState
 
     public override void EnterState(StateManager stateManager)
     {
+        if (PlayerHandler.Instance.CurrentPlayerTurn == Enums.CurrentPlayerTurn.AI_Turn)
+            return;
         this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
     }
 
@@ -32,6 +34,8 @@ public class ExploringState : BaseState
         }
         if (stateManager.gridManager.neighborDot != null && stateManager.gridManager.currentDot != null)
         {
+            if (PlayerHandler.Instance.CurrentPlayerTurn == Enums.CurrentPlayerTurn.AI_Turn)
+                return;
             stateManager.SwitchState(stateManager.DecisionState);
         }
     }

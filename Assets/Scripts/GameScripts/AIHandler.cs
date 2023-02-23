@@ -16,7 +16,7 @@ namespace DashForDots.AI
         List<List<Vector2Int>> singleSquareMoves = new List<List<Vector2Int>>();
         List<List<Vector2Int>> validMoves = new List<List<Vector2Int>>();
 
-    Dictionary<Vector2Int, Vector2Int> directionAccordingToGrid = new Dictionary<Vector2Int, Vector2Int>()
+        Dictionary<Vector2Int, Vector2Int> directionAccordingToGrid = new Dictionary<Vector2Int, Vector2Int>()
     {
         { Vector2Int.up, Vector2Int.left },
         { Vector2Int.right, Vector2Int.up },
@@ -24,7 +24,7 @@ namespace DashForDots.AI
         { Vector2Int.left, Vector2Int.down },
 
     };
-    Dictionary<Vector2Int, Vector2Int> swasktikaMoves = new Dictionary<Vector2Int, Vector2Int>()
+        Dictionary<Vector2Int, Vector2Int> swasktikaMoves = new Dictionary<Vector2Int, Vector2Int>()
     {
             {new Vector2Int(1, 0),  Vector2Int.right},
             {new Vector2Int(0, 2), Vector2Int.down },
@@ -72,21 +72,23 @@ namespace DashForDots.AI
             int bestIndex = GetBestMove();
             Vector2Int dot1 = validMoves[bestIndex][0];
             Vector2Int dot2 = validMoves[bestIndex][0] + validMoves[bestIndex][1];
+            PlayerHandler.Instance.stateManager.Inspect(gridManager.dots[dot1.x, dot1.y].transform);
             gridManager.SelectDot(dot1.x, dot1.y);
-           // StartCoroutine(ConfirmSelectedDot(dot2.x, dot2.y));
-             gridManager.SelectNeighbor(dot2.x, dot2.y);
-             gridManager.Confirm();
+            StartCoroutine(ConfirmSelectedDot(dot2.x, dot2.y));
+
         }
         IEnumerator ConfirmSelectedDot(int dotXCoordinate, int dotYCoordinate)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(Random.Range(0.4f, 0.6f));
             gridManager.SelectNeighbor(dotXCoordinate, dotYCoordinate);
-            //yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(Random.Range(0.9f, 1.3f));
             gridManager.Confirm();
+            PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
         }
 
         public void GetRandomMove()
-        { 
+        {
+
             GetAllValidMoves();
             int validMovesCount = validMoves.Count;
             int randomMoveIndex = Random.Range(0, validMovesCount);
@@ -95,12 +97,40 @@ namespace DashForDots.AI
             gridManager.SelectDot(dot1.x, dot1.y);
             StartCoroutine(ConfirmSelectedDot(dot2.x, dot2.y));
         }
+        IEnumerator SelectRandomDot(Vector2Int dot1, Vector2Int dot2)
+        {
+            int xCoordinate = Random.Range(0, gridManager._width);
+            int yCoordinate = Random.Range(0, gridManager._width);
+            Vector2Int neighbourDot = new Vector2Int(-1, -1);
+            if (gridManager.dots[xCoordinate, yCoordinate].connectingCompass.ContainsValue(false))
+            {
+                foreach (var line in gridManager.dots[xCoordinate, yCoordinate].connectingCompass)
+                {
+                    if (line.Value == false)
+                    {
+                        neighbourDot = new Vector2Int(xCoordinate, yCoordinate) + directionAccordingToGrid[line.Key];
+                        gridManager.SelectDot(xCoordinate, yCoordinate);
+                        yield return new WaitForSeconds(1f);
+                        gridManager.SelectNeighbor(neighbourDot.x, neighbourDot.y);
+                        yield return new WaitForSeconds(2f);
+                        gridManager.Cancel();
+                        yield return new WaitForSeconds(2f);
+                        gridManager.ResetDot(gridManager.dots[xCoordinate, yCoordinate]);
+                        break;
+
+                    }
+                }
+            }
+
+            gridManager.SelectDot(dot1.x, dot1.y);
+            StartCoroutine(ConfirmSelectedDot(dot2.x, dot2.y));
+        }
 
         private bool SwastikaMoveProbability()
         {
             int num = Random.Range(1, 11);
             textMeshText.text = num.ToString();
-            if (num == 1  || num == 2)
+            if (num == 1 || num == 2)
             {
                 return false;
             }
@@ -398,7 +428,7 @@ namespace DashForDots.AI
                 // this region is to make line that is perpendicular to current direction line
                 else if ((dotRefFrom.connectingCompass[perpendicularDirection] == true && CheckWithinGrid(dotCoordinateFrom, perpendicularDirection)) || (dotRefTo.connectingCompass[perpendicularDirection] == true && CheckWithinGrid(dotCoordinateTo, perpendicularDirection)))
                 {
-                   moveValue += 120;
+                    moveValue += 120;
                 }
                 else if ((dotRefFrom.connectingCompass[direction * -1] && CheckWithinGrid(dotCoordinateFrom, direction * -1)) || (dotRefTo.connectingCompass[direction] && CheckWithinGrid(dotCoordinateTo, direction)))
                 {

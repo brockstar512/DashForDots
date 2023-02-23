@@ -17,14 +17,6 @@ public class GridManager : MonoBehaviour
     ScoreKeeper scoreKeeper;
     Action<Button> dotSubscriber;
     public TimerManager timerManager;
-    [Header("Grid Basic Data")]
-    public int numberOfDots = 0;
-    public int numberOfHorizontalLine = 0;
-    public int numberOfVerticalLine = 0;
-    public int numberOfMoves = 0;
-    public int numberOfBoxes = 0;
-    public int numberOfBoxThirdLineComplete = 0;
-    
     //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -44,27 +36,11 @@ public class GridManager : MonoBehaviour
                 childIndex++;
             }
         }
-        GetNumberofMovesAndBoxes(_width, _height);
         dotSubscriber += SubscribeButton;
         scoreKeeper = GetComponent<ScoreKeeper>();
         scoreKeeper.Init(this, _height);
       
     }
-
-    public void GetNumberofMovesAndBoxes(int row, int col)
-    {
-        numberOfDots = row * col;
-        Debug.Log($"<color=yellow> Number of Dots: {numberOfDots}</color>");
-        numberOfHorizontalLine = row * (col - 1);
-        Debug.Log($"<color=yellow> Number of Horizontal Line: {numberOfHorizontalLine}</color>");
-        numberOfVerticalLine = col * (row - 1);
-        Debug.Log($"<color=yellow> Number of Vertical Line: {numberOfVerticalLine}</color>");
-        numberOfMoves = 2 * row * col - col - row;
-        numberOfBoxes = (row - 1) * (col - 1);
-        Debug.Log($"<color=yellow> Number of moves: {numberOfMoves} </color>  & <color=pink>Number of Boxes: {numberOfBoxes}</color> ");
-        
-    }
-
     async Task LeaveDot()
     {
         if (neighborDot != null)
@@ -140,7 +116,6 @@ public class GridManager : MonoBehaviour
         dot.button.onClick.RemoveAllListeners();
         dot.button.onClick.AddListener(dot.OnSelect);
         dotSubscriber.Invoke(dot.button);
-
     }
     
     void IntroduceNeighbors()
@@ -272,8 +247,6 @@ public class GridManager : MonoBehaviour
         }
 
     }
-
-
     public bool GameFinished()
     {
         foreach (Dot dot in dots)
