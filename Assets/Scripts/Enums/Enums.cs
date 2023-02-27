@@ -29,5 +29,11 @@ public class Enums
         Normal,
         Hard
     }
+    public enum PlayerCount
+    {
+        TowPlayer,
+        ThreePlayer,
+        FourPlayer
+    }
 
 }

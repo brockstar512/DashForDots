@@ -107,6 +107,7 @@ public class StateManager : MonoBehaviour
     {
         target = dot;
         SwitchState(InspectingState); // Camera zoom auto when User select Dot
+       
     }
     //resubsribe button
     public void SubscribeButton(Button dot)
@@ -152,6 +153,20 @@ public class StateManager : MonoBehaviour
         #endif
 
     }
+    public GameObject FourConfiner;
+    public GameObject TwoConfiner;
+    public GameObject ThreeConfiner;
+    public GameObject selectedBoard;
+    public void ResetConfiner(GameObject currentObject)
+    {
+        TwoConfiner.SetActive(false);
+        ThreeConfiner.SetActive(false);
+        FourConfiner.SetActive(false);
+        currentObject.SetActive(true);
+        selectedBoard = currentObject;
+        camController.GetComponent<CinemachineConfiner>().m_BoundingVolume = currentObject.GetComponent<BoxCollider>();
+    }
+
     void zoom(float increment)
     {
         camController.m_Lens.OrthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);//pass in camera

@@ -26,12 +26,9 @@ public class BotFactory : MonoBehaviour
         back.onClick.AddListener(NavigationManager.Instance.Back);
         difficulty = Constants.EASY_GAME;
     }
-    
     public void LoadGame(string difficultyName) 
     {
         difficulty = difficultyName;
         LoadingManager.Instance.LoadScene(targetScene.ToString());
     }
-
-
 }

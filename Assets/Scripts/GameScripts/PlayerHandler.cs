@@ -13,6 +13,7 @@ public class PlayerHandler : MonoBehaviour
     public PlayerData player { get { return players[currentPlayer]; } }
     public int currentPlayer{ get; private set; }
     public Enums.CurrentPlayerTurn CurrentPlayerTurn;
+    public Enums.PlayerCount GetPlayerCount;
     public List<Transform> playerScoreDots;
     public List<Transform> playerUIDots;
     [SerializeField] Transform scoreDotParent;
