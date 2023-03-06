@@ -67,6 +67,7 @@ public class PlayerHandler : MonoBehaviour
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
                 playerScoreDots[i].name = "AI" + 1;
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
+                playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = "0";
                 mainBoardDotParent.GetChild(i).gameObject.name = "AI"+i;
                 mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.AI;
                 players.Add(new PlayerData((PlayerCount)i + 1));

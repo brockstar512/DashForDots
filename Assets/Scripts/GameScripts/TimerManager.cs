@@ -76,7 +76,7 @@ public class TimerManager : MonoBehaviour
             timeText.color = Color.red;
 
         }
-        if (timeRemaining <= 0.1f && !isOnce)
+        if (timeRemaining <= 0.05f && !isOnce)
         {
             isOnce = true;
             PlayerHandler.Instance.aiHandler.GetRandomMove();
