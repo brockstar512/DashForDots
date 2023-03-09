@@ -140,20 +140,6 @@ namespace DashForDots.AI
             }
             return true;
         }
-        private int CheckForProbability() 
-        {
-            Debug.Log("Aya h bahi");
-            int num = Random.Range(1,100);
-            if (num % 3 == 0 && num % 5 == 0)
-            {
-                Debug.Log($"numberis dvidable by 3 and 5 ==0 ---{num}");
-                return 0;
-            }
-            else 
-            {
-                return 1;
-            } 
-        }
         private int GetBestMove()
         {
             
