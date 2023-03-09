@@ -62,7 +62,11 @@ namespace DashForDots.AI
         private void Start()
         {
             gridManager = FindObjectOfType<GridManager>();
-            isSwastikaMove = SwastikaMoveProbability();
+            Debug.Log($"Difficulty : {BotFactory.difficulty}");
+            if (BotFactory.difficulty == Constants.VERY_HARD_GAME)
+            {
+                isSwastikaMove = SwastikaMoveProbability();
+            }
         }
         #endregion
 
@@ -136,9 +140,23 @@ namespace DashForDots.AI
             }
             return true;
         }
-
+        private int CheckForProbability() 
+        {
+            Debug.Log("Aya h bahi");
+            int num = Random.Range(1,100);
+            if (num % 3 == 0 && num % 5 == 0)
+            {
+                Debug.Log($"numberis dvidable by 3 and 5 ==0 ---{num}");
+                return 0;
+            }
+            else 
+            {
+                return 1;
+            } 
+        }
         private int GetBestMove()
         {
+            
             GetAllValidMoves();
             countForNormalMoves = 0;
             thirdLineMoves.Clear();
@@ -159,7 +177,7 @@ namespace DashForDots.AI
                 Dot dotRefFrom = gridManager.dots[dotCoordinateFrom.x, dotCoordinateFrom.y];
                 Dot dotRefTo = gridManager.dots[dotCoordinateTo.x, dotCoordinateTo.y];
                 //if the grid is 4x4 then check of swastika moves
-                if (gridManager._width == 4 && BotFactory.difficulty == Constants.HARD_GAME && isSwastikaMove)
+                if (gridManager._width == 4 && BotFactory.difficulty == Constants.VERY_HARD_GAME && isSwastikaMove)
                 {
                     if (CheckIfSwastikaMove(dotCoordinateFrom, direction))
                     {
@@ -193,7 +211,7 @@ namespace DashForDots.AI
                 }
                 i++;
             }
-            if (BotFactory.difficulty == Constants.EASY_GAME && mostOptimalMoveValue < 1000)
+            if (BotFactory.difficulty == Constants.EASY_GAME || BotFactory.difficulty == Constants.NORMAL_GAME && mostOptimalMoveValue < 1000)
             {
                 int randomIndex = Random.Range(0, validMoves.Count);
                 return randomIndex;
@@ -449,17 +467,17 @@ namespace DashForDots.AI
             int moveValue = Constants.LOWEST_MOVE_VALUE;
             Vector2Int dot1lowerdot = dotCoordinateFrom + directionAccordingToGrid[lowergridDirection];
             Vector2Int dot1upperdot = dotCoordinateFrom + directionAccordingToGrid[uppergridDirection];
-            if (BotFactory.difficulty == Constants.EASY_GAME)
+            if (BotFactory.difficulty == Constants.NORMAL_GAME) //here is change easy to normal
             {
                 moveValue += CheckParallelLineForEasyMode(dot1lowerdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, lowergridDirection);
                 moveValue += CheckParallelLineForEasyMode(dot1upperdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, uppergridDirection);
             }
-            else
+            else if (BotFactory.difficulty == Constants.HARD_GAME) //Added here check for only work on hard AI not in Normal AI
             {
                 moveValue += CheckParallelLine(dot1lowerdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, lowergridDirection);
                 moveValue += CheckParallelLine(dot1upperdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, uppergridDirection);
             }
-            return moveValue;
+                return moveValue;
         }
         #endregion
 

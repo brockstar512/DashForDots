@@ -22,13 +22,6 @@ public class Enums
         AI_Turn,
         LocalPlayer_Turn
     }
-
-    public enum GameDifficulty 
-    {
-        Easy,
-        Normal,
-        Hard
-    }
     public enum PlayerCount
     {
         TowPlayer,
