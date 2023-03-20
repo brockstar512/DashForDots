@@ -5,8 +5,9 @@ using TMPro;
 using System.Threading.Tasks;
 using DG.Tweening;
 using DashForDots.AI;
+using Unity.Netcode;
 
-public class PlayerHandler : MonoBehaviour
+public class PlayerHandler : NetworkBehaviour
 {
     public static PlayerHandler Instance { get; private set; }
     public List<PlayerData> players { get; private set; }

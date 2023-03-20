@@ -20,7 +20,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] Button quitButton;
     [SerializeField] TimerManager TimerManager;
     private Transform dotsParent;
-    public bool isSwiping= false;
+    public bool isSwiping = false;
 
 
 
@@ -71,7 +71,7 @@ public class StateManager : MonoBehaviour
         //this part was i nstart
         currentState = NeutralState;
         currentState.EnterState(this);
-       // currentPlayerTurn= PlayerData.
+        // currentPlayerTurn= PlayerData.
         ///
         await Task.Yield();
     }
@@ -92,9 +92,10 @@ public class StateManager : MonoBehaviour
 
         currentState.UpdateState(this);
     }
-    public void GetGameType() 
+    public Enums.GameType GetGameType()
     {
-        gameType=(Enums.GameType)Constants.GAME_TYPE;
+        gameType = (Enums.GameType)Constants.GAME_TYPE;
+        return gameType;
     }
     public void SwitchState(BaseState state)
     {
@@ -107,17 +108,17 @@ public class StateManager : MonoBehaviour
     {
         target = dot;
         SwitchState(InspectingState); // Camera zoom auto when User select Dot
-       
+
     }
     //resubsribe button
     public void SubscribeButton(Button dot)
     {
-       dot.onClick.AddListener(delegate { Inspect(dot.transform); });
+        dot.onClick.AddListener(delegate { Inspect(dot.transform); });
     }
 
     void HandleDots()
     {
-        for(int i = 0; i < dotsParent.childCount; i++)
+        for (int i = 0; i < dotsParent.childCount; i++)
         {
             Button dot = dotsParent.GetChild(i).GetComponent<Button>();
             //dot.onClick.RemoveAllListeners();
@@ -147,10 +148,10 @@ public class StateManager : MonoBehaviour
 
             zoom(difference * 0.01f);
         }
-  
-        #if UNITY_EDITOR
-            zoom(Input.GetAxis("Mouse ScrollWheel"));
-        #endif
+
+#if UNITY_EDITOR
+        zoom(Input.GetAxis("Mouse ScrollWheel"));
+#endif
 
     }
     public GameObject FourConfiner;
@@ -211,11 +212,11 @@ public class StateManager : MonoBehaviour
                 break;
         }
     }
-    public void OnDragStart() 
+    public void OnDragStart()
     {
         isSwiping = true;
     }
-    public void onDragEnd() 
+    public void onDragEnd()
     {
         isSwiping = false;
     }

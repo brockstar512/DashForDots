@@ -10,6 +10,11 @@ using DG.Tweening;
 
 public class LoadingManager : MonoBehaviour
 {
+    public enum Scene
+    {
+        MainMenu,
+        Game
+    }
     public static LoadingManager Instance;
 
     [SerializeField] private GameObject _loaderCanvas;

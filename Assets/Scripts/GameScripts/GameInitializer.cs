@@ -27,8 +27,17 @@ public class GameInitializer : MonoBehaviour
 
     async void StartGame()
     {
-        //create all the plyers
-        int total_PlayerCount = LocalGameController.playerCount + LocalGameController.botCount;
+        int total_PlayerCount;
+        //VTChanges need to check current game play is multiplayer or not 
+        if (stateManager.GetGameType() == Enums.GameType.Multiplayer)
+        {
+            total_PlayerCount = MultiplayerController.Instance.PlayerCount;
+        }
+        else
+        {
+            //create all the plyers
+            total_PlayerCount = LocalGameController.playerCount + LocalGameController.botCount;
+        }
         await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount);
         int maxLensZoom = 0;
         switch ((PlayerCount)total_PlayerCount)
@@ -40,7 +49,7 @@ public class GameInitializer : MonoBehaviour
                 PlayerHandler.Instance.stateManager.ResetConfiner(PlayerHandler.Instance.stateManager.TwoConfiner);
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().size = new Vector3(14f, 20f, 7.22f);
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().center = new Vector3(0f, 0f, -1.08f);
-                
+
                 break;
             case (PlayerCount)3:
                 currentBoard = Instantiate(ThreePersonBoard);
