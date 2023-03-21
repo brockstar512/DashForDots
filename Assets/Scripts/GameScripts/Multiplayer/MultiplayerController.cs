@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
@@ -9,7 +8,7 @@ public class MultiplayerController : NetworkBehaviour
     #region  refrences
     private static MultiplayerController instance;
     public int PlayerCount { get; private set; } = 2;//minimum plyer count 2 for multiplayer
-    public static int MAX_PLAYER_AMOUNT { get; private set; } = 4;
+    public static int MAX_PLAYER_AMOUNT { get; private set; } = 2;//Default set 2 player 
     public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;
     public class OnPlayerConnectedEventArgs : EventArgs
     {
@@ -57,7 +56,7 @@ public class MultiplayerController : NetworkBehaviour
     #region Player Count
     public void SetPlayerCount(int count)
     {
-        PlayerCount = count;
+        MAX_PLAYER_AMOUNT = PlayerCount = count;
         Debug.Log($"Total multiplayer count : {PlayerCount}");
     }
     #endregion
@@ -121,11 +120,12 @@ public class MultiplayerController : NetworkBehaviour
         connectionApprovalResponse.Approved = true;
     }
 
-    private void NetworkManager_Client_OnClientConnectedCallback(ulong obj)
+    private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
     {
+        Debug.LogError($"Client Connect id {clientId} IsServer {IsServer} IsHost {IsHost} IsConnectedClient {NetworkManager.IsConnectedClient}");
         SetPlayerNameServerRpc("Player_" + NetworkManager.Singleton.LocalClientId);
         SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
-        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = obj, isClientJoined = true });
+        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });
     }
     [ServerRpc(RequireOwnership = false)]
     private void SetPlayerNameServerRpc(string playerName, ServerRpcParams serverRpcParams = default)
@@ -152,16 +152,34 @@ public class MultiplayerController : NetworkBehaviour
     }
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
     {
-        Debug.LogError($"Client_OnClientDisconnectCallback client id {clientId} IsServer {IsServer} IsHost {IsHost}");
-        for (int i = 0; i < playerNetworkList.Count; i++)
+        //VT This is a risky approach that must be corrected.
+        if (clientId == 0)
         {
-            MultiplayerData multiplayerData = playerNetworkList[i];
-            if (multiplayerData.clientId == clientId)
-            {
-                playerNetworkList.RemoveAt(i);
-            }
+            OnHostShutDown?.Invoke(this, EventArgs.Empty);
         }
-        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false });
+        else
+        {
+            if (clientId == NetworkManager.LocalClientId)
+            {
+                if (NetworkManager.Singleton.DisconnectReason == "")
+                {
+                    Debug.Log($"Client Disconnect id {clientId} Reason for Disconnect Failed to connect -{NetworkManager.Singleton.DisconnectReason}");
+                }
+                else
+                {
+                    Debug.Log($"Client Disconnect id {clientId} Reason for Disconnect {NetworkManager.Singleton.DisconnectReason}");
+                }
+            }
+            for (int i = 0; i < playerNetworkList.Count; i++)
+            {
+                MultiplayerData multiplayerData = playerNetworkList[i];
+                if (multiplayerData.clientId == clientId)
+                {
+                    playerNetworkList.RemoveAt(i);
+                }
+            }
+            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false });
+        }
     }
     private void PlayerNetworkList_OnListUpdate(NetworkListEvent<MultiplayerData> changeEvent)
     {
@@ -217,7 +235,13 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Server_OnClientDisconnectCallback;
         OnServerDisconnect();
     }
-
+    public override void OnNetworkDespawn()
+    {
+        if (IsServer)
+        {
+            ShutDown();
+        }
+    }
     private void OnServerDisconnect()
     {
         if (IsClient && !IsServer)
@@ -242,7 +266,6 @@ public class MultiplayerController : NetworkBehaviour
     private void ChangeClientRpc()
     {
         NetworkManager.Singleton.Shutdown(true);
-        OnHostShutDown?.Invoke(this, EventArgs.Empty);
     }
 
     public NetworkList<MultiplayerData> GetPlayerList()
