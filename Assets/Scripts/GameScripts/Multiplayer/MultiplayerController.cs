@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MultiplayerController : NetworkBehaviour
 {
@@ -20,7 +19,7 @@ public class MultiplayerController : NetworkBehaviour
 
     private NetworkList<MultiplayerData> playerNetworkList;
     public event EventHandler OnTryingToJoinGame;
-    public event EventHandler OnFailedToJoinGame;
+    public event EventHandler OnHostShutDown;
     public event EventHandler OnPlayerDataNetworkListChanged;
     #endregion
     public static MultiplayerController Instance
@@ -73,7 +72,9 @@ public class MultiplayerController : NetworkBehaviour
     }
     public void StartClient()
     {
+        NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Client_OnClientDisconnectCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
         NetworkManager.Singleton.StartClient();
@@ -81,7 +82,7 @@ public class MultiplayerController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        //LoadingManager.Instance.LoadScene(LoadingManager.Scene.Game.ToString());
+
     }
     private void NetworkManager_OnClientConnectedCallback(ulong clientId)
     {
@@ -96,7 +97,7 @@ public class MultiplayerController : NetworkBehaviour
     }
     private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
     {
-        Debug.LogError($"Server_OnClientDisconnectCallback client id {clientId} IsServer {IsServer} IsHost {IsHost}");
+        Debug.Log($"Server_OnClientDisconnectCallback client id {clientId} IsServer {IsServer} IsHost {IsHost}");
         for (int i = 0; i < playerNetworkList.Count; i++)
         {
             MultiplayerData playerData = playerNetworkList[i];
@@ -114,10 +115,9 @@ public class MultiplayerController : NetworkBehaviour
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "No Room Avaliable";
-            Debug.Log($"NetworkManager_ConnectionApprovalCallback false");
+
             return;
         }
-        Debug.Log($"NetworkManager_ConnectionApprovalCallback true");
         connectionApprovalResponse.Approved = true;
     }
 
@@ -212,52 +212,38 @@ public class MultiplayerController : NetworkBehaviour
     public void ShutDown()
     {
         Constants.GAME_TYPE = (int)Enums.GameType.None;
-        OnServerDisconnect();
         NetworkManager.Singleton.ConnectionApprovalCallback -= NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Server_OnClientDisconnectCallback;
+        OnServerDisconnect();
     }
 
     private void OnServerDisconnect()
     {
-        if (!IsServer)
+        if (IsClient && !IsServer)
         {
             NetworkManager.Singleton.Shutdown(true);
             NetworkManager_Server_OnClientDisconnectCallback(NetworkManager.Singleton.LocalClientId);
         }
-        else
+        else if (IsServer)
         {
-            List<NetworkClient> connectedPlayers = (List<NetworkClient>)NetworkManager.Singleton.ConnectedClientsList;
-
-            MultiplayerData multiplayerHost = new MultiplayerData();
-            for (int i = 0; i < connectedPlayers.Count; i++)
-            {
-                NetworkClient player = connectedPlayers[i];
-                if (player.ClientId == NetworkManager.ServerClientId)
-                {
-                    multiplayerHost = playerNetworkList[i];
-                }
-                else
-                {
-                    MultiplayerData multiplayerData = playerNetworkList[i];
-                    playerNetworkList.Remove(multiplayerData);
-                    ChangeClietSceneServerRpc(multiplayerData.clientId);
-                }
-            }
-
-
-            playerNetworkList.Remove(multiplayerHost);
+            ChangeClietSceneServerRpc();
+            playerNetworkList.Clear();
             NetworkManager.Singleton.Shutdown(true);
         }
     }
 
     [ServerRpc]
-    private void ChangeClietSceneServerRpc(ulong clientId)
-    {      
-        NetworkManager.Singleton.DisconnectClient(clientId);
-        // NetworkManager.Singleton.Shutdown(true);
+    private void ChangeClietSceneServerRpc()
+    {
+        ChangeClientRpc();
     }
-
+    [ClientRpc]
+    private void ChangeClientRpc()
+    {
+        NetworkManager.Singleton.Shutdown(true);
+        OnHostShutDown?.Invoke(this, EventArgs.Empty);
+    }
 
     public NetworkList<MultiplayerData> GetPlayerList()
     {

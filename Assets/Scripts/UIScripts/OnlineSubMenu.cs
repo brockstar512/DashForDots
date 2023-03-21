@@ -38,12 +38,12 @@ public class OnlineSubMenu : MonoBehaviour
         back.onClick.RemoveAllListeners();
         back.onClick.AddListener(NavigationManager.Instance.Back);
 
-        InitializePage();
+        //InitializePage();
         currentPage = landingPage;
         playerCount = MultiplayerController.Instance.PlayerCount;
     }
 
-    void InitializePage()
+    void OnEnable()
     {
         createGame.onClick.AddListener(delegate { OpenPage(creatGamePanel); });
         joinGame.onClick.AddListener(delegate { OpenPage(joinGamePanel); });
@@ -55,7 +55,8 @@ public class OnlineSubMenu : MonoBehaviour
         DecreasePlayers.onClick.AddListener(delegate { WrapPlayer(-1); });
         MultiplayerController.Instance.OnPlayerConnected += Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged += Multiplayer_OnPlayerDataNetworkListChanged;
-    }
+        MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
+    }  
 
     private void OnDisable()
     {
@@ -66,6 +67,7 @@ public class OnlineSubMenu : MonoBehaviour
         shareCode.onClick.RemoveAllListeners();
         MultiplayerController.Instance.OnPlayerConnected -= Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged -= Multiplayer_OnPlayerDataNetworkListChanged;
+        MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
     }
 
     private void Multiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
@@ -74,11 +76,15 @@ public class OnlineSubMenu : MonoBehaviour
         {
             item.SetActive(false);
         }
-        foreach (var item in MultiplayerController.Instance.GetPlayerList())
+        for (int i = 0; i < MultiplayerController.Instance.GetPlayerList().Count; i++)
         {
-            waitingViewRefrences.playerList[(int)item.clientId].SetActive(true);
+            waitingViewRefrences.playerList[i].SetActive(true);
         }
         Canvas.ForceUpdateCanvases();
+    }
+    private void Multiplayer_OnHostShutDown(object sender, EventArgs e)
+    {       
+        Back();
     }
 
     void Back()
@@ -170,13 +176,13 @@ public class OnlineSubMenu : MonoBehaviour
             OpenPage(waitingViewRefrences.waitingPanel);
             waitingViewRefrences.gameCodeText.text = string.Format("Game Code :{0}", GameLobby.Instance.GetGameCode());
         }
-        else if(!e.isClientJoined && e.clientId == NetworkManager.Singleton.LocalClientId)
-        {
-            Back();
+        else if (!e.isClientJoined && e.clientId == NetworkManager.Singleton.LocalClientId)
+        {           
+            Debug.Log($"e.isClientJoined {e.isClientJoined} e.clientId {e.clientId}LocalClientId {NetworkManager.Singleton.LocalClientId}");
         }
     }
     private void Reset()
-    {       
+    {
         waitingViewRefrences.gameCodeText.text = string.Empty;
         MultiplayerController.Instance.ShutDown();
     }
