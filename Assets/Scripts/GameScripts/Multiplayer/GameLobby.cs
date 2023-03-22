@@ -17,7 +17,7 @@ public class GameLobby : NetworkBehaviour
     public event EventHandler OnJoinStarted;
     public event EventHandler OnQuickJoinFailed;
     public event EventHandler OnJoinFailed;
-    private NetworkVariable<FixedString64Bytes> gameCode=new NetworkVariable<FixedString64Bytes>();
+    private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
 
     private static GameLobby instance;
     public static GameLobby Instance
@@ -48,12 +48,12 @@ public class GameLobby : NetworkBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
     }
-       
+
     public async void HostGame()
     {
         try
         {
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MultiplayerController.MAX_PLAYER_AMOUNT - 1);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MultiplayerController.Instance.PlayerCount.Value - 1);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             gameCode = new NetworkVariable<FixedString64Bytes>();
             gameCode.Value = joinCode;
@@ -71,7 +71,7 @@ public class GameLobby : NetworkBehaviour
     {
         try
         {
-            Debug.Log("Joining Relay with " + roomCode );
+            Debug.Log("Joining Relay with " + roomCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(roomCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
             MultiplayerController.Instance.StartClient();
@@ -86,5 +86,5 @@ public class GameLobby : NetworkBehaviour
     {
         return gameCode.Value.ToString();
     }
-      
+
 }

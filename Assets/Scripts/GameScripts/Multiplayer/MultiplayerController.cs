@@ -9,8 +9,7 @@ public class MultiplayerController : NetworkBehaviour
     #region  refrences
     private static MultiplayerController instance;
     private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
-    public NetworkVariable<int> PlayerCount;//minimum plyer count 2 for multiplayer
-    public static int MAX_PLAYER_AMOUNT { get; private set; } = 2;//Default set 2 player 
+    public NetworkVariable<int> PlayerCount;//minimum plyer count 2 for multiplayer  
     public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;
     public class OnPlayerConnectedEventArgs : EventArgs
     {
@@ -70,12 +69,12 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
-        Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;       
+        Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
         NetworkManager.Singleton.StartHost();
     }
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
-        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
+        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= PlayerCount.Value)
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "No Room Avaliable";
@@ -259,7 +258,7 @@ public class MultiplayerController : NetworkBehaviour
     #region Getter
     public void SetPlayerCount(int count)
     {
-        MAX_PLAYER_AMOUNT = PlayerCount.Value = count;
+        PlayerCount.Value = count;
         Debug.Log($"Total multiplayer count : {PlayerCount.Value}");
     }
     public NetworkList<MultiplayerData> GetPlayerList()
@@ -268,7 +267,7 @@ public class MultiplayerController : NetworkBehaviour
     }
     public bool CanHostStartTheGame()
     {
-        return playerNetworkList.Count == MAX_PLAYER_AMOUNT;
+        return playerNetworkList.Count == PlayerCount.Value;
     }
     public MultiplayerData GetPlayerData()
     {
