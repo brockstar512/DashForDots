@@ -29,16 +29,9 @@ public class GameInitializer : MonoBehaviour
     {
         int total_PlayerCount;
         //VTChanges need to check current game play is multiplayer or not 
-        if (stateManager.GetGameType() == Enums.GameType.Multiplayer)
-        {
-            total_PlayerCount = MultiplayerController.Instance.PlayerCount;
-        }
-        else
-        {
-            //create all the plyers
-            total_PlayerCount = LocalGameController.playerCount + LocalGameController.botCount;
-        }
-        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount);
+        bool isMultiplayer = stateManager.GetGameType() == Enums.GameType.Multiplayer;
+        total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.PlayerCount.Value : LocalGameController.playerCount + LocalGameController.botCount;        
+        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount, isMultiplayer);
         int maxLensZoom = 0;
         switch ((PlayerCount)total_PlayerCount)
         {

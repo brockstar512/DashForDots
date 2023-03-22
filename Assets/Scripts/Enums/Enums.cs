@@ -15,12 +15,14 @@ public class Enums
     public enum PlayerType 
     {
         AI, 
-        LocalPlayer
+        LocalPlayer,
+        OpponentPlayer
     }
     public enum CurrentPlayerTurn
     {
         AI_Turn,
-        LocalPlayer_Turn
+        LocalPlayer_Turn,
+        OpponentPlayer_Turn
     }
     public enum PlayerCount
     {

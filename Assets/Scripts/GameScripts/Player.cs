@@ -7,12 +7,24 @@ public class Player : MonoBehaviour
 {
     public Enums.PlayerType playerType;
     [SerializeField] TextMeshProUGUI playerNameText;
+    private string playerName = string.Empty;
     private void Start()
     {
         UpdatePlayerData();
     }
     public void UpdatePlayerData()
     {
-        playerNameText.text = playerType.ToString();
+        if (string.IsNullOrEmpty(playerName))
+        {
+            playerNameText.text = playerType.ToString();
+        }
+        else
+        {
+            playerNameText.text = playerName;
+        }
+    }
+    public void UpdatePlayerName(string name)
+    {
+        playerName = name;
     }
 }

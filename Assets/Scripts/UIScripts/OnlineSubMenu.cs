@@ -9,6 +9,7 @@ using Unity.Netcode;
 using System;
 using JetBrains.Annotations;
 using System.Linq;
+using static OnlineSubMenu;
 
 public class OnlineSubMenu : MonoBehaviour
 {
@@ -39,16 +40,21 @@ public class OnlineSubMenu : MonoBehaviour
         back.onClick.AddListener(NavigationManager.Instance.Back);
 
         //InitializePage();
-        currentPage = landingPage;
-        playerCount = MultiplayerController.Instance.PlayerCount;
+        currentPage = landingPage;        
     }
-
+    private void Start()
+    {
+        playerCount = MultiplayerController.Instance.PlayerCount.Value;
+        WrapPlayer(0);
+        StartCoroutine(LoadingAnimation());
+    }
     void OnEnable()
     {
         createGame.onClick.AddListener(delegate { OpenPage(creatGamePanel); });
         joinGame.onClick.AddListener(delegate { OpenPage(joinGamePanel); });
         shareCode.onClick.AddListener(delegate { StartHost(); });
         play.onClick.AddListener(delegate { StartClient(); });
+        waitingViewRefrences.playGame.onClick.AddListener(delegate { StartGame(); });
         IncreasePlayers.onClick.RemoveAllListeners();
         DecreasePlayers.onClick.RemoveAllListeners();
         IncreasePlayers.onClick.AddListener(delegate { WrapPlayer(1); });
@@ -56,7 +62,7 @@ public class OnlineSubMenu : MonoBehaviour
         MultiplayerController.Instance.OnPlayerConnected += Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged += Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
-    }  
+    }
 
     private void OnDisable()
     {
@@ -65,6 +71,7 @@ public class OnlineSubMenu : MonoBehaviour
         createGame.onClick.RemoveAllListeners();
         joinGame.onClick.RemoveAllListeners();
         shareCode.onClick.RemoveAllListeners();
+        waitingViewRefrences.playGame.onClick.RemoveAllListeners();
         MultiplayerController.Instance.OnPlayerConnected -= Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged -= Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
@@ -80,10 +87,14 @@ public class OnlineSubMenu : MonoBehaviour
         {
             waitingViewRefrences.playerList[i].SetActive(true);
         }
+        if (NetworkManager.Singleton.IsHost)
+        {
+            waitingViewRefrences.playGame.gameObject.SetActive(MultiplayerController.Instance.CanHostStartTheGame());
+        }
         Canvas.ForceUpdateCanvases();
     }
     private void Multiplayer_OnHostShutDown(object sender, EventArgs e)
-    {       
+    {
         Back();
     }
 
@@ -152,6 +163,11 @@ public class OnlineSubMenu : MonoBehaviour
             GameLobby.Instance.JoinGame(code);
         }
     }
+
+    private void StartGame()
+    {
+        MultiplayerController.Instance.StartGame();
+    }
     void OpenPage(CanvasGroup screen)
     {
         back.onClick.RemoveAllListeners();
@@ -177,7 +193,7 @@ public class OnlineSubMenu : MonoBehaviour
             waitingViewRefrences.gameCodeText.text = string.Format("Game Code :{0}", GameLobby.Instance.GetGameCode());
         }
         else if (!e.isClientJoined && e.clientId == NetworkManager.Singleton.LocalClientId)
-        {           
+        {
             Debug.Log($"e.isClientJoined {e.isClientJoined} e.clientId {e.clientId}LocalClientId {NetworkManager.Singleton.LocalClientId}");
         }
     }
@@ -186,12 +202,37 @@ public class OnlineSubMenu : MonoBehaviour
         waitingViewRefrences.gameCodeText.text = string.Empty;
         MultiplayerController.Instance.ShutDown();
     }
+    private IEnumerator LoadingAnimation()
+    {
+        int index = 0;
+        while(true)
+        {
+            yield return new WaitForSeconds(0.5f);            
+            index = (index + 1) % waitingViewRefrences.loadingView.Count;
+            for (int i = 0; i < waitingViewRefrences.loadingView.Count; i++)
+            {
+                Graphic graphic = waitingViewRefrences.loadingView[i].GetComponent<Graphic>();
+                if(graphic != null)
+                {
+                    if (index == i)
+                    {
+                        graphic.color = Color.black;
+                    }
+                    else
+                    {
+                        graphic.color = Color.white;
+                    }
+                }
+            }
+        }
+    }
 
     [System.Serializable]
     public struct WaitingViewRefrences
     {
         public CanvasGroup waitingPanel;
         public TMP_Text gameCodeText;
+        public Button playGame;
         public List<GameObject> playerList;
         public List<GameObject> loadingView;
     }

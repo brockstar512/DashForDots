@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using DashForDots.AI;
 using Unity.Netcode;
+using System;
 
 public class PlayerHandler : NetworkBehaviour
 {
     public static PlayerHandler Instance { get; private set; }
     public List<PlayerData> players { get; private set; }
     public PlayerData player { get { return players[currentPlayer]; } }
-    public int currentPlayer{ get; private set; }
+    public int currentPlayer { get; private set; }
     public Enums.CurrentPlayerTurn CurrentPlayerTurn;
     public Enums.PlayerCount GetPlayerCount;
     public List<Transform> playerScoreDots;
@@ -43,33 +44,52 @@ public class PlayerHandler : NetworkBehaviour
         }
     }
 
-    public async Task Init(PlayerCount playerCount)
+    public async Task Init(PlayerCount playerCount, bool isMutiplayer = false)
     {
+        int playerIndex;
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
         playerUIDots = new List<Transform>();
-
-        for(int i = 0;i < maxPlayerCount; i++)
+        playerIndex = isMutiplayer ? MultiplayerController.Instance.GetPlayerDataIndexFromClientId(NetworkManager.Singleton.LocalClientId) : -1;
+        for (int i = 0; i < maxPlayerCount; i++)
         {
-            if (i < (int)playerCount - LocalGameController.botCount )
+            if (i < (int)playerCount - LocalGameController.botCount)
             {
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
-                playerScoreDots[i].name = "Real player" + 1;
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
-                players.Add(new PlayerData((PlayerCount)i + 1));
-
-                mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.LocalPlayer;
-                mainBoardDotParent.GetChild(i).gameObject.name = "Real Player" + i;
-                playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
-                player.playerType = Enums.PlayerType.LocalPlayer;
+                if (!isMutiplayer)
+                {
+                    playerScoreDots[i].name = "Real player" + 1;
+                    players.Add(new PlayerData((PlayerCount)i + 1));
+                    mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.LocalPlayer;
+                    playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+                    mainBoardDotParent.GetChild(i).gameObject.name = "Real Player" + i;
+                    player.playerType = Enums.PlayerType.LocalPlayer;
+                }
+                else
+                {
+                    int index = (playerIndex + i) % (int)playerCount;
+                    MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
+                    multiplayerData.colorId = i + 1;
+                    PlayerData playerData = new PlayerData(multiplayerData);
+                    playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
+                    playerScoreDots[i].name = playerData.playerName;
+                    Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
+                    playerObject.playerType = playerData.playerType;
+                    playerObject.gameObject.name = playerData.playerName;
+                    playerObject.UpdatePlayerName(playerData.playerName);
+                    players.Add(playerData);
+                    playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+                }
+                
             }
-            else if(i< LocalGameController.playerCount + LocalGameController.botCount) 
+            else if (i < LocalGameController.playerCount + LocalGameController.botCount)
             {
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
                 playerScoreDots[i].name = "AI" + 1;
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
                 playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = "0";
-                mainBoardDotParent.GetChild(i).gameObject.name = "AI"+i;
+                mainBoardDotParent.GetChild(i).gameObject.name = "AI" + i;
                 mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>().playerType = Enums.PlayerType.AI;
                 players.Add(new PlayerData((PlayerCount)i + 1));
                 player.playerType = Enums.PlayerType.AI;
@@ -80,7 +100,7 @@ public class PlayerHandler : NetworkBehaviour
                 mainBoardDotParent.GetChild(i).gameObject.SetActive(false);
             }
         }
-        foreach(Transform dot in playerUIDots)
+        foreach (Transform dot in playerUIDots)
         {
             dot.GetChild(0).GetComponent<CanvasGroup>().alpha = 0;
         }
@@ -88,16 +108,15 @@ public class PlayerHandler : NetworkBehaviour
         playerUIDots[0].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
         currentPlayer = 0;
         await Task.Yield();
-        
-    }
 
+    }
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
         playerScoreDots[currentPlayer].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
 
         if (isOver)
         {
-            Instantiate(gameOverManager,this.transform.parent).Init(players);
+            Instantiate(gameOverManager, this.transform.parent).Init(players);
             timerManager.timerIsRunning = false;
             return;
         }
@@ -105,14 +124,14 @@ public class PlayerHandler : NetworkBehaviour
         boardIntrection.SetActive(false);
         if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI)
         {
-           StartCoroutine(TakeTurnAI());
+            StartCoroutine(TakeTurnAI());
         }
 
     }
 
     public void NextPlayer()
     {
-       // CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
+        // CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
         mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
         if (currentPlayer + 1 >= players.Count)
         {
@@ -129,19 +148,20 @@ public class PlayerHandler : NetworkBehaviour
             CurrentPlayerTurn = Enums.CurrentPlayerTurn.AI_Turn;
             StartCoroutine(TakeTurnAI());
         }
-        else {
+        else
+        {
             CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
         }
     }
     IEnumerator TakeTurnAI()
     {
         boardIntrection.SetActive(true);
-        yield return new WaitForSeconds(Random.Range(1.1f,2.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
     }
     async void ChangePlayerIndicator()
     {
-        mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(1,.75f);
+        mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(1, .75f);
         await timerManager.StartTimer();
     }
 
@@ -170,11 +190,18 @@ public class PlayerData
         this.playerNumber = (int)number;
         this.playerName = $"Player {playerNumber.ToString()}";
         this.playerScore = 0;
-        GetColor(number, out playerColor,out neighborOption);
+        GetColor(number, out playerColor, out neighborOption);
         playerType = Enums.PlayerType.LocalPlayer;
 
     }
-
+    public PlayerData(MultiplayerData multiplayerData)
+    {
+        this.playerNumber = (int)multiplayerData.clientId;
+        this.playerName = multiplayerData.playerName.ToString();
+        this.playerScore = 0;
+        GetColor((PlayerCount)multiplayerData.colorId, out playerColor, out neighborOption);
+        playerType = (Enums.PlayerType)multiplayerData.playerType;
+    }
     public int Score(int incomingPoint)
     {
         playerScore += incomingPoint;
@@ -187,7 +214,7 @@ public class PlayerData
         switch (number)
         {
             case PlayerCount.Green:
-                playerColor = new Color32(56, 210,121, 255);
+                playerColor = new Color32(56, 210, 121, 255);
                 neighborOption = new Color32(playerColor.r, playerColor.g, playerColor.b, 120);
                 break;
             case PlayerCount.Blue:
