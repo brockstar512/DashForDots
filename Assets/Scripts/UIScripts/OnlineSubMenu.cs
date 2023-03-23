@@ -10,6 +10,7 @@ using System;
 using JetBrains.Annotations;
 using System.Linq;
 using static OnlineSubMenu;
+using System.Threading.Tasks;
 
 public class OnlineSubMenu : MonoBehaviour
 {
@@ -40,13 +41,13 @@ public class OnlineSubMenu : MonoBehaviour
         back.onClick.AddListener(NavigationManager.Instance.Back);
 
         //InitializePage();
-        currentPage = landingPage;        
+        currentPage = landingPage;
     }
     private void Start()
     {
         playerCount = MultiplayerController.Instance.PlayerCount.Value;
         WrapPlayer(0);
-        StartCoroutine(LoadingAnimation());
+        LoadingAnimation(true);
     }
     void OnEnable()
     {
@@ -91,7 +92,15 @@ public class OnlineSubMenu : MonoBehaviour
         {
             waitingViewRefrences.playGame.gameObject.SetActive(MultiplayerController.Instance.CanHostStartTheGame());
         }
+        LoadingAnimation(!MultiplayerController.Instance.CanHostStartTheGame());
+        _ = ForceUpdateCanvases();
+    }
+    async Task ForceUpdateCanvases()
+    {
+        await Task.Delay(50);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(waitingViewRefrences.waitingPanel.GetComponent<RectTransform>());
         Canvas.ForceUpdateCanvases();
+        await Task.Yield();
     }
     private void Multiplayer_OnHostShutDown(object sender, EventArgs e)
     {
@@ -202,29 +211,10 @@ public class OnlineSubMenu : MonoBehaviour
         waitingViewRefrences.gameCodeText.text = string.Empty;
         MultiplayerController.Instance.ShutDown();
     }
-    private IEnumerator LoadingAnimation()
+    private void LoadingAnimation(bool flag)
     {
-        int index = 0;
-        while(true)
-        {
-            yield return new WaitForSeconds(0.5f);            
-            index = (index + 1) % waitingViewRefrences.loadingView.Count;
-            for (int i = 0; i < waitingViewRefrences.loadingView.Count; i++)
-            {
-                Graphic graphic = waitingViewRefrences.loadingView[i].GetComponent<Graphic>();
-                if(graphic != null)
-                {
-                    if (index == i)
-                    {
-                        graphic.color = Color.black;
-                    }
-                    else
-                    {
-                        graphic.color = Color.white;
-                    }
-                }
-            }
-        }
+        waitingViewRefrences.loadingView.gameObject.SetActive(flag);
+        waitingViewRefrences.waitingForUser.gameObject.SetActive(flag);
     }
 
     [System.Serializable]
@@ -234,7 +224,8 @@ public class OnlineSubMenu : MonoBehaviour
         public TMP_Text gameCodeText;
         public Button playGame;
         public List<GameObject> playerList;
-        public List<GameObject> loadingView;
+        public DotLoadingAnimation loadingView;
+        public GameObject waitingForUser;
     }
 
 }

@@ -355,17 +355,14 @@ MonoBehaviour:
   waitingViewRefrences:
     waitingPanel: {fileID: 191172811093319321}
     gameCodeText: {fileID: 7446050483725254344}
-    playGame: {fileID: 7446050484169723074}
+    playGame: {fileID: 7446050484177973858}
     playerList:
     - {fileID: 7446050482957316235}
     - {fileID: 7446050484001793854}
     - {fileID: 7446050482689953510}
     - {fileID: 7446050484319920934}
-    loadingView:
-    - {fileID: 7446050483427855377}
-    - {fileID: 7446050483787584556}
-    - {fileID: 7446050484066781700}
-    - {fileID: 7446050483963613431}
+    loadingView: {fileID: 1739415601}
+    waitingForUser: {fileID: 7446050483721560519}
   targetScene: 1
 --- !u!114 &506322028
 MonoBehaviour:
@@ -1781,9 +1778,9 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!114 &7446050482689953505
 MonoBehaviour:
@@ -1818,7 +1815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
-  m_VerticalFit: 1
+  m_VerticalFit: 2
 --- !u!1 &7446050482730872364
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,9 +3407,9 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!114 &7446050482957316470
 MonoBehaviour:
@@ -3447,7 +3444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
-  m_VerticalFit: 1
+  m_VerticalFit: 2
 --- !u!1 &7446050482969960313
 GameObject:
   m_ObjectHideFlags: 0
@@ -8929,10 +8926,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 40
+    m_Bottom: 40
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 40
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -9675,10 +9672,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 20
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 40
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -11643,9 +11640,9 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!114 &7446050484001793849
 MonoBehaviour:
@@ -11680,7 +11677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
-  m_VerticalFit: 1
+  m_VerticalFit: 2
 --- !u!1 &7446050484012530913
 GameObject:
   m_ObjectHideFlags: 0
@@ -12880,6 +12877,7 @@ GameObject:
   - component: {fileID: 7446050484234232115}
   - component: {fileID: 7446050484234232114}
   - component: {fileID: 7446050484234232113}
+  - component: {fileID: 1739415601}
   m_Layer: 5
   m_Name: Loading
   m_TagString: Untagged
@@ -12970,6 +12968,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &1739415601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446050484234232119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51626626d7dd844a8763a4cca9d592e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingView:
+  - {fileID: 7446050483427855377}
+  - {fileID: 7446050483787584556}
+  - {fileID: 7446050484066781700}
+  - {fileID: 7446050483963613431}
 --- !u!1 &7446050484251110901
 GameObject:
   m_ObjectHideFlags: 0
@@ -13133,9 +13148,9 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!114 &7446050484319920929
 MonoBehaviour:
@@ -13170,7 +13185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
-  m_VerticalFit: 1
+  m_VerticalFit: 2
 --- !u!1 &7446050484329519032
 GameObject:
   m_ObjectHideFlags: 0
@@ -14038,9 +14053,9 @@ MonoBehaviour:
   m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
+  m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!114 &7446050484479956425
