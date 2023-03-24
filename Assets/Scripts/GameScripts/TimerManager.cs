@@ -1,10 +1,17 @@
 using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
+using Unity.Netcode;
+using Unity.Collections;
 
-
-public class TimerManager : MonoBehaviour
+public class TimerManager : NetworkBehaviour
 {
+    public enum GameStartSequence
+    {
+        Get = 1,
+        Set,
+        Go
+    }
     [SerializeField] TextMeshProUGUI timeTitle;
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject screenBlocker;
@@ -12,20 +19,67 @@ public class TimerManager : MonoBehaviour
     public bool timerIsRunning = false;
     Color32 normalColor = new Color32(101, 138, 167, 255);
 
-
-    public async Task GameStartDelay()
+    public async Task GameStartDelay(bool isMutiplayer)
     {
+        var data = NetworkManager.Singleton;
+        if (IsClient && isMutiplayer)
+        {
+            Debug.LogError("GameStartDelay Return");
+            return;
+        }
         timeTitle.color = Color.red;
-        //await Task.Delay(2000);
         timeTitle.text = "Get Ready";
+        if (isMutiplayer)
+        {
+            GameStartDelayServerRpc(GameStartSequence.Get);
+        }
         await Task.Delay(3000);
         timeTitle.text = "Go!";
+        if (isMutiplayer)
+        {
+            GameStartDelayServerRpc(GameStartSequence.Set);
+        }
         await Task.Delay(1000);
         timeTitle.color = normalColor;
-        PlayerHandler.Instance.UpdateScore(0,false);
+        if (isMutiplayer)
+        {
+            GameStartDelayServerRpc(GameStartSequence.Go);
+        }
+        PlayerHandler.Instance.UpdateScore(0, false);
         await Task.Yield();
         DestroyImmediate(screenBlocker);
     }
+
+    [ServerRpc]
+    public void GameStartDelayServerRpc(GameStartSequence gameStartSequence)
+    {
+        GameStartDelayClientRpc(gameStartSequence);
+    }
+
+    [ClientRpc]
+    public void GameStartDelayClientRpc(GameStartSequence gameStartSequence)
+    {
+        if (IsServer)
+        {
+            return;
+        }
+        switch (gameStartSequence)
+        {
+            case GameStartSequence.Get:
+                timeTitle.color = Color.red;
+                timeTitle.text = "Get Ready";
+                break;
+            case GameStartSequence.Set:
+                timeTitle.text = "Go!";
+                break;
+            case GameStartSequence.Go:
+                timeTitle.color = normalColor;
+                DestroyImmediate(screenBlocker);
+                break;
+        }
+    }
+
+
 
     public async Task StartTimer()
     {

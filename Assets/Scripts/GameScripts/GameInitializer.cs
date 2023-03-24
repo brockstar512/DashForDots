@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using Cinemachine;
+using Unity.Netcode;
 
-public class GameInitializer : MonoBehaviour
+public class GameInitializer : NetworkBehaviour
 {
     StateManager stateManager;
     [SerializeField] Transform TwoPersonBoard;
     [SerializeField] Transform ThreePersonBoard;
     [SerializeField] Transform FourPersonBoard;
     Transform currentBoard;
-
+    bool isMultiplayer = false;
 
     //6 for 2 (causing problems for min zoom moving to 7)
     //12 for 3
@@ -21,16 +22,42 @@ public class GameInitializer : MonoBehaviour
     private void Awake()
     {
         stateManager = GetComponent<StateManager>();
-        StartGame();
+        isMultiplayer = stateManager.GetGameType() == Enums.GameType.Multiplayer;
+        if (!isMultiplayer)
+        {
+            StartGame(isMultiplayer);
+        }
+        else if (NetworkManager.Singleton.IsServer && isMultiplayer)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+        }
+    }
+    public override void OnNetworkSpawn()
+    {   
+        if (IsServer)
+        {
+            StartGameServerRpc(true);
+        }
+    }
+    private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+      //  StartGameServerRpc(true);
     }
 
-
-    async void StartGame()
+    [ServerRpc]
+    private void StartGameServerRpc(bool isMultiplayer)
+    {
+        StartGameClientRpc(isMultiplayer);
+    }
+    [ClientRpc]
+    private void StartGameClientRpc(bool isMultiplayer)
+    {
+        StartGame(isMultiplayer);
+    }
+    async void StartGame(bool isMultiplayer)
     {
         int total_PlayerCount;
-        //VTChanges need to check current game play is multiplayer or not 
-        bool isMultiplayer = stateManager.GetGameType() == Enums.GameType.Multiplayer;
-        total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.PlayerCount.Value : LocalGameController.playerCount + LocalGameController.botCount;        
+        total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.PlayerCount.Value : LocalGameController.playerCount + LocalGameController.botCount;
         await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount, isMultiplayer);
         int maxLensZoom = 0;
         switch ((PlayerCount)total_PlayerCount)
@@ -62,7 +89,7 @@ public class GameInitializer : MonoBehaviour
                 break;
         }
 
-        await stateManager.Init(currentBoard, maxLensZoom);
+        await stateManager.Init(currentBoard, maxLensZoom,isMultiplayer);
         //delay before we actually start the game
     }
 

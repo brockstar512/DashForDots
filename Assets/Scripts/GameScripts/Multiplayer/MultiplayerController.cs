@@ -249,7 +249,8 @@ public class MultiplayerController : NetworkBehaviour
     [ClientRpc]
     private void StartGameClientRpc()
     {
-        LoadingManager.Instance.LoadScene(LoadingManager.Scene.Game.ToString());
+       // LoadingManager.Instance.LoadScene(LoadingManager.Scene.Game.ToString());
+       NetworkManager.Singleton.SceneManager.LoadScene(LoadingManager.Scene.Game.ToString(),UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
 
