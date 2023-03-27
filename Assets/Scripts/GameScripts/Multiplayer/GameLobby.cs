@@ -12,11 +12,6 @@ using UnityEngine;
 
 public class GameLobby : NetworkBehaviour
 {
-    public event EventHandler OnCreateLobbyStarted;
-    public event EventHandler OnCreateLobbyFailed;
-    public event EventHandler OnJoinStarted;
-    public event EventHandler OnQuickJoinFailed;
-    public event EventHandler OnJoinFailed;
     private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
 
     private static GameLobby instance;

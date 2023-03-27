@@ -5,6 +5,8 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
 {
     public ulong clientId;
     public int colorId;
+    public int currentIndex;
+    public int serverIndex;
     public int playerType;//  AI=0,LocalPlayer=1,OpponentPlayer=2
     public FixedString64Bytes playerName;
     public FixedString64Bytes playerId;
@@ -16,7 +18,9 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
             colorId == other.colorId &&
             playerName == other.playerName &&
             playerId == other.playerId &&
-            playerType == other.playerType;
+            playerType == other.playerType &&
+            currentIndex == other.currentIndex &&
+            serverIndex == other.serverIndex;
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
@@ -26,6 +30,8 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
         serializer.SerializeValue(ref playerName);
         serializer.SerializeValue(ref playerId);
         serializer.SerializeValue(ref playerType);
+        serializer.SerializeValue(ref currentIndex);
+        serializer.SerializeValue(ref serverIndex);
     }
 
 }

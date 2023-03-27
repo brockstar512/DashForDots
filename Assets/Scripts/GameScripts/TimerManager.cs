@@ -3,6 +3,7 @@ using TMPro;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Collections;
+using System;
 
 public class TimerManager : NetworkBehaviour
 {
@@ -15,20 +16,37 @@ public class TimerManager : NetworkBehaviour
     [SerializeField] TextMeshProUGUI timeTitle;
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject screenBlocker;
-    public float timeRemaining = 20;
-    public bool timerIsRunning = false;
+    public NetworkVariable<float> timeRemaining = new NetworkVariable<float>();
+    public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
     Color32 normalColor = new Color32(101, 138, 167, 255);
 
-    public async Task GameStartDelay(bool isMutiplayer)
+    public override void OnNetworkSpawn()
     {
+        if (IsServer)
+        {
+            return;
+        }
+        DisplayTime(timeRemaining.Value);
+        timeRemaining.OnValueChanged += TimerManager_UpdateTimeUI;
+    }
+
+    private void TimerManager_UpdateTimeUI(float previousValue, float newValue)
+    {
+        DisplayTime(timeRemaining.Value);
+    }
+
+    public async Task GameStartDelay()
+    {
+        bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
         var data = NetworkManager.Singleton;
-        if (IsClient && isMutiplayer)
+        if (IsClient && isMutiplayer && !IsServer)
         {
             Debug.LogError("GameStartDelay Return");
             return;
         }
         timeTitle.color = Color.red;
         timeTitle.text = "Get Ready";
+        timeRemaining.Value = 20;
         if (isMutiplayer)
         {
             GameStartDelayServerRpc(GameStartSequence.Get);
@@ -74,6 +92,7 @@ public class TimerManager : NetworkBehaviour
                 break;
             case GameStartSequence.Go:
                 timeTitle.color = normalColor;
+                PlayerHandler.Instance.UpdateScore(0, false);
                 DestroyImmediate(screenBlocker);
                 break;
         }
@@ -90,28 +109,32 @@ public class TimerManager : NetworkBehaviour
         timeTitle.text = "Time";
         timeText.text = "00:20";
 
-
-        timeRemaining = 20;
         await Task.Delay(1000);
-
+        if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+        {
+            timeRemaining.Value = 20;
+            timerIsRunning.Value = true;
+        }
         // Starts the timer automatically   
-        timerIsRunning = true;
     }
     void Update()
     {
-        if (timerIsRunning)
+        if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
         {
-            if (timeRemaining > 0)
+            if (timerIsRunning.Value)
             {
-                timeRemaining -= Time.deltaTime;
-                DisplayTime(timeRemaining);
+                if (timeRemaining.Value > 0)
+                {
+                    timeRemaining.Value -= Time.deltaTime;
+                    DisplayTime(timeRemaining.Value);
 
-            }
-            else
-            {
-                Debug.Log("Time has run out!");
-                timeRemaining = 0;
-                timerIsRunning = false;
+                }
+                else
+                {
+                    Debug.Log("Time has run out!");
+                    timeRemaining.Value = 0;
+                    timerIsRunning.Value = false;
+                }
             }
         }
     }
@@ -130,11 +153,18 @@ public class TimerManager : NetworkBehaviour
             timeText.color = Color.red;
 
         }
-        if (timeRemaining <= 0.05f && !isOnce)
+        if (timeRemaining.Value <= 0.05f && !isOnce)
         {
             isOnce = true;
-            PlayerHandler.Instance.aiHandler.GetRandomMove();
-            PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+            if (IsServer)
+            {
+                PlayerHandler.Instance.NextTurnServerRpc();
+            }
+            else if (!MultiplayerController.Instance.IsMutiplayer)
+            {
+                PlayerHandler.Instance.aiHandler.GetRandomMove();
+                PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+            }
         }
 
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);

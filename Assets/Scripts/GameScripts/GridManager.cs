@@ -17,6 +17,9 @@ public class GridManager : MonoBehaviour
     ScoreKeeper scoreKeeper;
     Action<Button> dotSubscriber;
     public TimerManager timerManager;
+    public Action<int, int> OnSelectedDot;
+    public Action<int, int> OnSelectedNeighbor;
+    public Action OnSelectedCancel;
     //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -39,7 +42,7 @@ public class GridManager : MonoBehaviour
         dotSubscriber += SubscribeButton;
         scoreKeeper = GetComponent<ScoreKeeper>();
         scoreKeeper.Init(this, _height);
-      
+
     }
     async Task LeaveDot()
     {
@@ -89,6 +92,12 @@ public class GridManager : MonoBehaviour
 
     public async void SelectDot(int x, int y)
     {
+        OnSelectedDot?.Invoke(x, y);
+        await SelectDotLocal(x, y);
+    }
+
+    public async Task SelectDotLocal(int x, int y)
+    {
         if (currentDot != null)
         {
             await LeaveDot();
@@ -106,6 +115,12 @@ public class GridManager : MonoBehaviour
 
     public async void SelectNeighbor(int x, int y)
     {
+        OnSelectedNeighbor?.Invoke(x, y);
+        await SelectedNeighbor(x, y);
+    }
+
+    public async Task SelectedNeighbor(int x, int y)
+    {     var data =currentDot;
         neighborDot = dots[x, y].coordinates;
         LeaveNeighbors();
         await dots[currentDot.X, currentDot.Y].PairWithNeighbor(dots[neighborDot.X, neighborDot.Y]);
@@ -117,7 +132,7 @@ public class GridManager : MonoBehaviour
         dot.button.onClick.AddListener(dot.OnSelect);
         dotSubscriber.Invoke(dot.button);
     }
-    
+
     void IntroduceNeighbors()
     {
         neighborDot = null;
@@ -126,7 +141,8 @@ public class GridManager : MonoBehaviour
             Dot dot = dots[currentDot.X + 1, currentDot.Y];
             dot.DotStyling.NeighborHighlight();
             dot.button.onClick.RemoveAllListeners();
-            dot.button.onClick.AddListener(delegate {
+            dot.button.onClick.AddListener(delegate
+            {
                 dot.NeighboringChoice();
             });
         }
@@ -168,7 +184,7 @@ public class GridManager : MonoBehaviour
         }
     }
     public void LeaveNeighbors()
-    {
+    {    
         //is current dot null?
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
         {
@@ -220,6 +236,12 @@ public class GridManager : MonoBehaviour
     {
         //hightlight neighbors and null neighbor do
         //Debug.Log("Reset");
+        OnSelectedCancel?.Invoke();
+        await OnCancel();
+    }
+
+    public async Task OnCancel()
+    {
         await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
         neighborDot = null;
         dots[currentDot.X, currentDot.Y].OnSelect();
@@ -228,25 +250,46 @@ public class GridManager : MonoBehaviour
     public async void Confirm()
     {
         //Debug.Log("Confirm");
-        await LeaveDot();
-        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
-        currentDot = null;
-        neighborDot = null;
+        await OnConfirm();
         //if not true switch players else do nothing or i gues reset the clock
         int scoreCount = await scoreKeeper.Check();
         if (scoreCount > 0)
         {
-            Debug.Log("You are good to go");
-            PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
+            if (MultiplayerController.Instance.IsMutiplayer)
+            {
+                PlayerHandler.Instance.UpdateScoreServerRpc(scoreCount, GameFinished());
+            }
+            else
+            {
+                Debug.Log("You are good to go");
+                PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
+
+            }
         }
         else
         {
             Debug.Log("You did not score");
-            PlayerHandler.Instance.NextPlayer();
+            if (MultiplayerController.Instance.IsMutiplayer)
+            {
+                PlayerHandler.Instance.NextTurnServerRpc();
+            }
+            else
+            {
+                PlayerHandler.Instance.NextPlayer();
+            }
             //switch player
         }
 
     }
+
+    public async Task OnConfirm()
+    {
+        await LeaveDot();
+        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+        currentDot = null;
+        neighborDot = null;
+    }
+
     public bool GameFinished()
     {
         foreach (Dot dot in dots)

@@ -11,6 +11,13 @@ public class MultiplayerController : NetworkBehaviour
     private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
     public NetworkVariable<int> PlayerCount;//minimum plyer count 2 for multiplayer  
     public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;
+    public bool IsMutiplayer
+    {
+        get
+        {
+            return Constants.GAME_TYPE == (int)Enums.GameType.Multiplayer; ;
+        }
+    }
     public class OnPlayerConnectedEventArgs : EventArgs
     {
         public ulong clientId;
@@ -88,6 +95,8 @@ public class MultiplayerController : NetworkBehaviour
         playerNetworkList.Add(new MultiplayerData
         {
             clientId = clientId,
+            currentIndex = playerNetworkList.Count - 1,
+            serverIndex = playerNetworkList.Count - 1,
             colorId = 1,
         });
         SetPlayerNameServerRpc(GetPlayerName.PlayerName);
@@ -244,19 +253,12 @@ public class MultiplayerController : NetworkBehaviour
     [ServerRpc]
     private void StartGameServerRpc()
     {
-        StartGameClientRpc();
+        NetworkManager.Singleton.SceneManager.LoadScene(LoadingManager.Scene.Game.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
-    [ClientRpc]
-    private void StartGameClientRpc()
-    {
-       // LoadingManager.Instance.LoadScene(LoadingManager.Scene.Game.ToString());
-       NetworkManager.Singleton.SceneManager.LoadScene(LoadingManager.Scene.Game.ToString(),UnityEngine.SceneManagement.LoadSceneMode.Single);
-    }
-
-
+   
     #endregion
 
-    #region Getter
+    #region Getter    
     public void SetPlayerCount(int count)
     {
         PlayerCount.Value = count;

@@ -33,7 +33,7 @@ public class GameInitializer : NetworkBehaviour
         }
     }
     public override void OnNetworkSpawn()
-    {   
+    {
         if (IsServer)
         {
             StartGameServerRpc(true);
@@ -41,7 +41,7 @@ public class GameInitializer : NetworkBehaviour
     }
     private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-      //  StartGameServerRpc(true);
+        //  StartGameServerRpc(true);
     }
 
     [ServerRpc]
@@ -58,7 +58,7 @@ public class GameInitializer : NetworkBehaviour
     {
         int total_PlayerCount;
         total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.PlayerCount.Value : LocalGameController.playerCount + LocalGameController.botCount;
-        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount, isMultiplayer);
+        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount);
         int maxLensZoom = 0;
         switch ((PlayerCount)total_PlayerCount)
         {
@@ -89,7 +89,7 @@ public class GameInitializer : NetworkBehaviour
                 break;
         }
 
-        await stateManager.Init(currentBoard, maxLensZoom,isMultiplayer);
+        await stateManager.Init(currentBoard, maxLensZoom);
         //delay before we actually start the game
     }
 

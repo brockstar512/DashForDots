@@ -22,7 +22,7 @@ public class DecisionState : BaseState
 
     }
     public override void EnterState(StateManager stateManager)
-    {
+    {      
         this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
     }
     public override void UpdateState(StateManager stateManager)

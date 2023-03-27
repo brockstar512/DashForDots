@@ -52,7 +52,7 @@ public class StateManager : MonoBehaviour
 
 
 
-    public async Task Init(Transform incomingBoard, int maxLensZoom,bool isMultiplayer)
+    public async Task Init(Transform incomingBoard, int maxLensZoom)
     {
         this.dotsParent = incomingBoard;
         HandleDots();
@@ -66,7 +66,7 @@ public class StateManager : MonoBehaviour
         GetGameType();
         zoomOutMax = camController.m_Lens.OrthographicSize = maxLensZoom;
 
-        await TimerManager.GameStartDelay(isMultiplayer);
+        await TimerManager.GameStartDelay();
 
         //this part was i nstart
         currentState = NeutralState;

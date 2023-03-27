@@ -7,13 +7,14 @@ using DG.Tweening;
 using DashForDots.AI;
 using Unity.Netcode;
 using System;
+using System.Linq;
 
 public class PlayerHandler : NetworkBehaviour
 {
     public static PlayerHandler Instance { get; private set; }
     public List<PlayerData> players { get; private set; }
-    public PlayerData player { get { return players[currentPlayer]; } }
-    public int currentPlayer { get; private set; }
+    public PlayerData player { get { return players[currentPlayer.Value]; } }
+    public NetworkVariable<int> currentPlayer = new NetworkVariable<int>();
     public Enums.CurrentPlayerTurn CurrentPlayerTurn;
     public Enums.PlayerCount GetPlayerCount;
     public List<Transform> playerScoreDots;
@@ -43,9 +44,22 @@ public class PlayerHandler : NetworkBehaviour
             Instance = this;
         }
     }
-
-    public async Task Init(PlayerCount playerCount, bool isMutiplayer = false)
+    private void OnEnable()
     {
+        gridManager.OnSelectedDot += OnSelectedDot;
+        gridManager.OnSelectedNeighbor += OnSelectedNeighbor;
+        gridManager.OnSelectedCancel += OnSelectedCancel;
+    }
+    private void OnDisable()
+    {
+        gridManager.OnSelectedDot -= OnSelectedDot;
+        gridManager.OnSelectedNeighbor -= OnSelectedNeighbor;
+        gridManager.OnSelectedCancel -= OnSelectedCancel;
+    }
+
+    public async Task Init(PlayerCount playerCount)
+    {
+        bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
         int playerIndex;
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
@@ -70,18 +84,19 @@ public class PlayerHandler : NetworkBehaviour
                 {
                     int index = (playerIndex + i) % (int)playerCount;
                     MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
-                    multiplayerData.colorId = i + 1;
+                    multiplayerData.colorId = i+1;
+                    multiplayerData.currentIndex = index;
                     PlayerData playerData = new PlayerData(multiplayerData);
                     playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
                     playerScoreDots[i].name = playerData.playerName;
                     Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
                     playerObject.playerType = playerData.playerType;
                     playerObject.gameObject.name = playerData.playerName;
-                    playerObject.UpdatePlayerName(playerData.playerName);
+                    playerObject.UpdatePlayerName(playerData);
                     players.Add(playerData);
                     playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
                 }
-                
+
             }
             else if (i < LocalGameController.playerCount + LocalGameController.botCount)
             {
@@ -105,52 +120,98 @@ public class PlayerHandler : NetworkBehaviour
             dot.GetChild(0).GetComponent<CanvasGroup>().alpha = 0;
         }
         //turn the first one on
-        playerUIDots[0].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
-        currentPlayer = 0;
+        if (isMutiplayer)
+        {
+            playerUIDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
+        }
+        else
+        {
+            playerUIDots[0].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
+        }
+        if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+        {
+            currentPlayer.Value = 0;
+        }
         await Task.Yield();
 
     }
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
-        playerScoreDots[currentPlayer].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
-
+        bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
+        if (isMutiplayer)
+        {
+            int currentIndex = players.FindIndex(t => t.playerNumber == incomingPoints);
+            incomingPoints = currentIndex;
+        }
+        playerScoreDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
         if (isOver)
         {
             Instantiate(gameOverManager, this.transform.parent).Init(players);
-            timerManager.timerIsRunning = false;
+            if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+            {
+                timerManager.timerIsRunning.Value = false;
+            }
             return;
         }
         await timerManager.StartTimer();
-        boardIntrection.SetActive(false);
-        if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI)
+        CheckMyTurn();
+        if (mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetComponent<Player>().playerType == Enums.PlayerType.AI)
         {
             StartCoroutine(TakeTurnAI());
         }
 
     }
 
+    private void CheckMyTurn()
+    {
+        if (MultiplayerController.Instance.IsMutiplayer)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+            boardIntrection.SetActive(!(multiplayerData.clientId == NetworkManager.LocalClientId));
+            Debug.LogError($"CheckMyTurn {multiplayerData.clientId == NetworkManager.LocalClientId}");
+        }
+        else
+        {
+            boardIntrection.SetActive(false);
+        }
+    }
+
     public void NextPlayer()
     {
-        // CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
-        mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
-        if (currentPlayer + 1 >= players.Count)
+        if (!MultiplayerController.Instance.IsMutiplayer)
         {
-            currentPlayer = 0;
+            mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
+            IncrementCounter();
         }
-        else
-        {
-            currentPlayer++;
-        }
+
         ChangePlayerIndicator();
-        boardIntrection.SetActive(false);
-        if (mainBoardDotParent.GetChild(currentPlayer).GetComponent<Player>().playerType == Enums.PlayerType.AI)
+        CheckMyTurn();
+        Enums.PlayerType playerType = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetComponent<Player>().playerType;
+        switch (playerType)
         {
-            CurrentPlayerTurn = Enums.CurrentPlayerTurn.AI_Turn;
-            StartCoroutine(TakeTurnAI());
+            case Enums.PlayerType.AI:
+                CurrentPlayerTurn = Enums.CurrentPlayerTurn.AI_Turn;
+                StartCoroutine(TakeTurnAI());
+                break;
+            case Enums.PlayerType.LocalPlayer:
+                CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
+                break;
+            case Enums.PlayerType.OpponentPlayer:
+                CurrentPlayerTurn = Enums.CurrentPlayerTurn.OpponentPlayer_Turn;
+                break;
+        }
+
+    }
+
+    private void IncrementCounter()
+    {
+        if (currentPlayer.Value + 1 >= players.Count)
+        {
+            currentPlayer.Value = 0;
         }
         else
         {
-            CurrentPlayerTurn = Enums.CurrentPlayerTurn.LocalPlayer_Turn;
+            currentPlayer.Value++;
         }
     }
     IEnumerator TakeTurnAI()
@@ -161,9 +222,121 @@ public class PlayerHandler : NetworkBehaviour
     }
     async void ChangePlayerIndicator()
     {
-        mainBoardDotParent.GetChild(currentPlayer).GetChild(0).GetComponent<CanvasGroup>().DOFade(1, .75f);
+        mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(1, .75f);
         await timerManager.StartTimer();
     }
+
+    public int GetPlayerIndex(int value)
+    {
+        if (MultiplayerController.Instance.IsMutiplayer)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(value);
+            int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);
+            Debug.LogError($"Get player index {index} isMultiplayer{true}");
+            return index;
+        }
+        else
+        {
+            Debug.LogError($"Get player index {currentPlayer.Value} isMultiplayer{false}");
+            return currentPlayer.Value;
+        }
+    }
+    #region Multiplayer RPC & NetworkMethods
+    public override void OnNetworkSpawn()
+    {
+        currentPlayer.OnValueChanged += OnCurrentPlayerValueChanged;
+    }
+    private void OnSelectedCancel()
+    {
+        OnCancelSelectedServerRpc();
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void OnCancelSelectedServerRpc()
+    {
+        OnCancelSelectedClientRpc();
+    }
+    [ClientRpc]
+    private void OnCancelSelectedClientRpc()
+    {
+        if (!IsOwner)
+        {
+            _ = gridManager.OnCancel();
+        }
+    }
+
+    private void OnSelectedDot(int x, int y)
+    {
+        OnDotSelectedServerRpc(x, y);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void OnDotSelectedServerRpc(int x, int y)
+    {
+        OnDotSelectedClientRpc(x, y);
+    }
+    [ClientRpc]
+    private void OnDotSelectedClientRpc(int x, int y)
+    {
+        if (!IsOwner)
+        {
+            stateManager.Inspect(gridManager.dots[x, y].transform);
+            _ = gridManager.SelectDotLocal(x, y);
+        }
+    }
+    private void OnSelectedNeighbor(int x, int y)
+    {
+        OnNeighborSelectedServerRpc(x, y);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void OnNeighborSelectedServerRpc(int x, int y)
+    {
+        OnNeighborSelectedClientRpc(x, y);
+    }
+    [ClientRpc]
+    private void OnNeighborSelectedClientRpc(int x, int y)
+    {
+        if (!IsOwner)
+        {
+            gridManager.SelectNeighbor(x, y);
+        }
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void NextTurnServerRpc()
+    {
+        NextTurnClientRpc();
+    }
+    [ClientRpc]
+    private void NextTurnClientRpc()
+    {
+        if (IsServer)
+        {
+            IncrementCounter();
+        }
+        if (!IsOwner)
+        {
+            _ = gridManager.OnConfirm();
+            stateManager.SwitchState(stateManager.ResetState);
+        }
+    }
+    private void OnCurrentPlayerValueChanged(int previous, int current)
+    {
+        mainBoardDotParent.GetChild(GetPlayerIndex(previous)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
+        NextPlayer();
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateScoreServerRpc(int incomingPoints, bool isOver)
+    {
+        UpdateScoreClientRpc(incomingPoints, isOver);
+    }
+    [ClientRpc]
+    private void UpdateScoreClientRpc(int incomingPoints, bool isOver)
+    {      
+        UpdateScore(incomingPoints, isOver);
+    }
+    #endregion
+
 
 
 }
@@ -178,6 +351,8 @@ public enum PlayerCount
 public class PlayerData
 {
     public readonly int playerNumber;
+    public int currentIndex;
+    public int serverIndex;
     public string playerName;
     public readonly Color32 playerColor;
     public readonly Color32 neighborOption;
@@ -199,6 +374,8 @@ public class PlayerData
         this.playerNumber = (int)multiplayerData.clientId;
         this.playerName = multiplayerData.playerName.ToString();
         this.playerScore = 0;
+        this.currentIndex = multiplayerData.currentIndex;
+        this.serverIndex = multiplayerData.serverIndex;
         GetColor((PlayerCount)multiplayerData.colorId, out playerColor, out neighborOption);
         playerType = (Enums.PlayerType)multiplayerData.playerType;
     }
