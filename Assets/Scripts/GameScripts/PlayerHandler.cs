@@ -84,7 +84,7 @@ public class PlayerHandler : NetworkBehaviour
                 {
                     int index = (playerIndex + i) % (int)playerCount;
                     MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
-                    multiplayerData.colorId = i+1;
+                    multiplayerData.colorId = i + 1;
                     multiplayerData.currentIndex = index;
                     PlayerData playerData = new PlayerData(multiplayerData);
                     playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
@@ -167,8 +167,7 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance.IsMutiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
-            boardIntrection.SetActive(!(multiplayerData.clientId == NetworkManager.LocalClientId));
-            Debug.LogError($"CheckMyTurn {multiplayerData.clientId == NetworkManager.LocalClientId}");
+            boardIntrection.SetActive(!(multiplayerData.clientId == NetworkManager.LocalClientId));           
         }
         else
         {
@@ -231,13 +230,11 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance.IsMutiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(value);
-            int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);
-            Debug.LogError($"Get player index {index} isMultiplayer{true}");
+            int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);          
             return index;
         }
         else
-        {
-            Debug.LogError($"Get player index {currentPlayer.Value} isMultiplayer{false}");
+        {          
             return currentPlayer.Value;
         }
     }
@@ -251,14 +248,15 @@ public class PlayerHandler : NetworkBehaviour
         OnCancelSelectedServerRpc();
     }
     [ServerRpc(RequireOwnership = false)]
-    private void OnCancelSelectedServerRpc()
+    private void OnCancelSelectedServerRpc(ServerRpcParams serverRpcParams = default)
     {
-        OnCancelSelectedClientRpc();
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        OnCancelSelectedClientRpc(clientId);
     }
     [ClientRpc]
-    private void OnCancelSelectedClientRpc()
+    private void OnCancelSelectedClientRpc(ulong senderId)
     {
-        if (!IsOwner)
+        if (!senderId.Equals(NetworkManager.LocalClientId))
         {
             _ = gridManager.OnCancel();
         }
@@ -270,14 +268,15 @@ public class PlayerHandler : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void OnDotSelectedServerRpc(int x, int y)
+    private void OnDotSelectedServerRpc(int x, int y, ServerRpcParams serverRpcParams = default)
     {
-        OnDotSelectedClientRpc(x, y);
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        OnDotSelectedClientRpc(x, y, clientId);
     }
     [ClientRpc]
-    private void OnDotSelectedClientRpc(int x, int y)
+    private void OnDotSelectedClientRpc(int x, int y, ulong senderId)
     {
-        if (!IsOwner)
+        if (!senderId.Equals(NetworkManager.LocalClientId))
         {
             stateManager.Inspect(gridManager.dots[x, y].transform);
             _ = gridManager.SelectDotLocal(x, y);
@@ -288,33 +287,35 @@ public class PlayerHandler : NetworkBehaviour
         OnNeighborSelectedServerRpc(x, y);
     }
     [ServerRpc(RequireOwnership = false)]
-    private void OnNeighborSelectedServerRpc(int x, int y)
+    private void OnNeighborSelectedServerRpc(int x, int y, ServerRpcParams serverRpcParams = default)
     {
-        OnNeighborSelectedClientRpc(x, y);
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        OnNeighborSelectedClientRpc(x, y, clientId);
     }
     [ClientRpc]
-    private void OnNeighborSelectedClientRpc(int x, int y)
+    private void OnNeighborSelectedClientRpc(int x, int y, ulong senderId)
     {
-        if (!IsOwner)
+        if (!senderId.Equals(NetworkManager.LocalClientId))
         {
-            gridManager.SelectNeighbor(x, y);
+            _ = gridManager.SelectedNeighbor(x, y);
         }
     }
 
 
     [ServerRpc(RequireOwnership = false)]
-    public void NextTurnServerRpc()
+    public void NextTurnServerRpc(ServerRpcParams serverRpcParams = default)
     {
-        NextTurnClientRpc();
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        NextTurnClientRpc(clientId);
     }
     [ClientRpc]
-    private void NextTurnClientRpc()
+    private void NextTurnClientRpc(ulong senderId)
     {
         if (IsServer)
         {
             IncrementCounter();
         }
-        if (!IsOwner)
+        if (!senderId.Equals(NetworkManager.LocalClientId))
         {
             _ = gridManager.OnConfirm();
             stateManager.SwitchState(stateManager.ResetState);
@@ -332,7 +333,7 @@ public class PlayerHandler : NetworkBehaviour
     }
     [ClientRpc]
     private void UpdateScoreClientRpc(int incomingPoints, bool isOver)
-    {      
+    {
         UpdateScore(incomingPoints, isOver);
     }
     #endregion

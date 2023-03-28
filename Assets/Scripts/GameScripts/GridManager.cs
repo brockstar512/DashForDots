@@ -120,7 +120,8 @@ public class GridManager : MonoBehaviour
     }
 
     public async Task SelectedNeighbor(int x, int y)
-    {     var data =currentDot;
+    {
+        var data = currentDot;
         neighborDot = dots[x, y].coordinates;
         LeaveNeighbors();
         await dots[currentDot.X, currentDot.Y].PairWithNeighbor(dots[neighborDot.X, neighborDot.Y]);
@@ -184,7 +185,7 @@ public class GridManager : MonoBehaviour
         }
     }
     public void LeaveNeighbors()
-    {    
+    {
         //is current dot null?
         if (!dots[currentDot.X, currentDot.Y].connectingCompass[Vector2Int.down])
         {

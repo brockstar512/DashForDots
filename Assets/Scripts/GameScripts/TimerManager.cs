@@ -20,13 +20,17 @@ public class TimerManager : NetworkBehaviour
     public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
     Color32 normalColor = new Color32(101, 138, 167, 255);
 
+    private void OnEnable()
+    {
+        DisplayTime(20);
+    }
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
             return;
         }
-        DisplayTime(timeRemaining.Value);
+        
         timeRemaining.OnValueChanged += TimerManager_UpdateTimeUI;
     }
 
