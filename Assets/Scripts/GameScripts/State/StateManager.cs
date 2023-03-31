@@ -97,6 +97,11 @@ public class StateManager : MonoBehaviour
         gameType = (Enums.GameType)Constants.GAME_TYPE;
         return gameType;
     }
+    public void SetCurrentPlayerTurn(PlayerData playerData)
+    {
+        currentPlayerTurn = playerData;
+    }
+
     public void SwitchState(BaseState state)
     {
         currentState.LeaveState();

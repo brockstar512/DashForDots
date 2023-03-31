@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using Unity.Netcode;
 
 public class LocalGameController : MonoBehaviour
 {
@@ -134,7 +135,7 @@ public class LocalGameController : MonoBehaviour
         else
         {
             if (playerCount >= 2)
-            {
+            {               
                 LoadingManager.Instance.LoadScene(targetScene.ToString());
             }
         }

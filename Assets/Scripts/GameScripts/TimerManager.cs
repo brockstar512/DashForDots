@@ -19,23 +19,29 @@ public class TimerManager : NetworkBehaviour
     public NetworkVariable<float> timeRemaining = new NetworkVariable<float>();
     public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
     Color32 normalColor = new Color32(101, 138, 167, 255);
+    private int defaultTime = 20;
 
     private void OnEnable()
     {
-        DisplayTime(20);
+        timeRemaining.Value = defaultTime;
+        DisplayTime(timeRemaining.Value - 1);
     }
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
+            timeRemaining.Value = defaultTime;
             return;
         }
-        
         timeRemaining.OnValueChanged += TimerManager_UpdateTimeUI;
     }
 
     private void TimerManager_UpdateTimeUI(float previousValue, float newValue)
     {
+        if (!IsServer)
+        {
+            _ = StartTimer();
+        }
         DisplayTime(timeRemaining.Value);
     }
 
@@ -50,7 +56,7 @@ public class TimerManager : NetworkBehaviour
         }
         timeTitle.color = Color.red;
         timeTitle.text = "Get Ready";
-        timeRemaining.Value = 20;
+        timeRemaining.Value = defaultTime;
         if (isMutiplayer)
         {
             GameStartDelayServerRpc(GameStartSequence.Get);
@@ -105,22 +111,26 @@ public class TimerManager : NetworkBehaviour
 
 
     public async Task StartTimer()
-    {
-        //timerIsRunning = false;
+    {      
         isOnce = false;
-        timeText.color = normalColor;
-        timeTitle.color = normalColor;
-        timeTitle.text = "Time";
-        timeText.text = "00:20";
+        UpdateTextColor();
 
         await Task.Delay(1000);
         if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
         {
-            timeRemaining.Value = 20;
+            timeRemaining.Value = defaultTime;
             timerIsRunning.Value = true;
-        }
-        // Starts the timer automatically   
+        }      
     }
+
+    private void UpdateTextColor()
+    {
+        timeText.color = normalColor;
+        timeTitle.color = normalColor;
+        timeTitle.text = "Time";
+        timeText.text = "00:20";
+    }
+
     void Update()
     {
         if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
@@ -156,6 +166,10 @@ public class TimerManager : NetworkBehaviour
             timeTitle.color = Color.red;
             timeText.color = Color.red;
 
+        }
+        else
+        {
+            UpdateTextColor();
         }
         if (timeRemaining.Value <= 0.05f && !isOnce)
         {

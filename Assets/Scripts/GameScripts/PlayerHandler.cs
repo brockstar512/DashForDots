@@ -13,7 +13,7 @@ public class PlayerHandler : NetworkBehaviour
 {
     public static PlayerHandler Instance { get; private set; }
     public List<PlayerData> players { get; private set; }
-    public PlayerData player { get { return players[currentPlayer.Value]; } }
+    public PlayerData player { get { return players[GetPlayerIndex(currentPlayer.Value)]; } }
     public NetworkVariable<int> currentPlayer = new NetworkVariable<int>();
     public Enums.CurrentPlayerTurn CurrentPlayerTurn;
     public Enums.PlayerCount GetPlayerCount;
@@ -49,12 +49,16 @@ public class PlayerHandler : NetworkBehaviour
         gridManager.OnSelectedDot += OnSelectedDot;
         gridManager.OnSelectedNeighbor += OnSelectedNeighbor;
         gridManager.OnSelectedCancel += OnSelectedCancel;
+        gridManager.OnSelectedConfirm += OnSelectedConfirm;
+        gridManager.OnSelectedReset += OnSelectedReset;
     }
     private void OnDisable()
     {
         gridManager.OnSelectedDot -= OnSelectedDot;
         gridManager.OnSelectedNeighbor -= OnSelectedNeighbor;
         gridManager.OnSelectedCancel -= OnSelectedCancel;
+        gridManager.OnSelectedConfirm -= OnSelectedConfirm;
+        gridManager.OnSelectedReset -= OnSelectedReset;
     }
 
     public async Task Init(PlayerCount playerCount)
@@ -119,35 +123,22 @@ public class PlayerHandler : NetworkBehaviour
         {
             dot.GetChild(0).GetComponent<CanvasGroup>().alpha = 0;
         }
-        //turn the first one on
-        if (isMutiplayer)
-        {
-            playerUIDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
-        }
-        else
-        {
-            playerUIDots[0].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
-        }
         if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
         {
             currentPlayer.Value = 0;
         }
+        playerUIDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
         await Task.Yield();
 
     }
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
         bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
-        if (isMutiplayer)
-        {
-            int currentIndex = players.FindIndex(t => t.playerNumber == incomingPoints);
-            incomingPoints = currentIndex;
-        }
         playerScoreDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
         if (isOver)
         {
             Instantiate(gameOverManager, this.transform.parent).Init(players);
-            if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+            if (IsServer || !isMutiplayer)
             {
                 timerManager.timerIsRunning.Value = false;
             }
@@ -167,12 +158,13 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance.IsMutiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
-            boardIntrection.SetActive(!(multiplayerData.clientId == NetworkManager.LocalClientId));           
+            boardIntrection.SetActive(!(multiplayerData.clientId == NetworkManager.LocalClientId));
         }
         else
         {
             boardIntrection.SetActive(false);
         }
+        stateManager.SetCurrentPlayerTurn(players[GetPlayerIndex(currentPlayer.Value)]);
     }
 
     public void NextPlayer()
@@ -185,6 +177,12 @@ public class PlayerHandler : NetworkBehaviour
 
         ChangePlayerIndicator();
         CheckMyTurn();
+        SetPlayerTurn();
+
+    }
+
+    private void SetPlayerTurn()
+    {
         Enums.PlayerType playerType = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetComponent<Player>().playerType;
         switch (playerType)
         {
@@ -199,7 +197,6 @@ public class PlayerHandler : NetworkBehaviour
                 CurrentPlayerTurn = Enums.CurrentPlayerTurn.OpponentPlayer_Turn;
                 break;
         }
-
     }
 
     private void IncrementCounter()
@@ -230,11 +227,11 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance.IsMutiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(value);
-            int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);          
+            int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);
             return index;
         }
         else
-        {          
+        {
             return currentPlayer.Value;
         }
     }
@@ -243,6 +240,45 @@ public class PlayerHandler : NetworkBehaviour
     {
         currentPlayer.OnValueChanged += OnCurrentPlayerValueChanged;
     }
+    private void OnSelectedReset()
+    {
+        OnResetSelectedServerRpc();
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void OnResetSelectedServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        OnResetSelectedClientRpc(clientId);
+    }
+    [ClientRpc]
+    private void OnResetSelectedClientRpc(ulong senderId)
+    {
+        if (!senderId.Equals(NetworkManager.LocalClientId))
+        {
+            stateManager.SwitchState(stateManager.ResetState);
+        }
+    }
+
+    private void OnSelectedConfirm()
+    {
+        OnConfirmSelectedServerRpc();
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void OnConfirmSelectedServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        OnConfirmSelectedClientRpc(clientId);
+    }
+    [ClientRpc]
+    private void OnConfirmSelectedClientRpc(ulong senderId)
+    {
+        if (!senderId.Equals(NetworkManager.LocalClientId))
+        {
+            _ = gridManager.OnConfirm();
+            stateManager.SwitchState(stateManager.ResetState);
+        }
+    }
+
     private void OnSelectedCancel()
     {
         OnCancelSelectedServerRpc();
@@ -280,6 +316,7 @@ public class PlayerHandler : NetworkBehaviour
         {
             stateManager.Inspect(gridManager.dots[x, y].transform);
             _ = gridManager.SelectDotLocal(x, y);
+            gridManager.dots[x, y].DotStyling.Select();
         }
     }
     private void OnSelectedNeighbor(int x, int y)
@@ -315,11 +352,6 @@ public class PlayerHandler : NetworkBehaviour
         {
             IncrementCounter();
         }
-        if (!senderId.Equals(NetworkManager.LocalClientId))
-        {
-            _ = gridManager.OnConfirm();
-            stateManager.SwitchState(stateManager.ResetState);
-        }
     }
     private void OnCurrentPlayerValueChanged(int previous, int current)
     {
@@ -337,8 +369,6 @@ public class PlayerHandler : NetworkBehaviour
         UpdateScore(incomingPoints, isOver);
     }
     #endregion
-
-
 
 }
 

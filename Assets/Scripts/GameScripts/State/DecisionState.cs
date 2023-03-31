@@ -15,14 +15,19 @@ public class DecisionState : BaseState
         this.GridManager = StateManager.gridManager;
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
         cancel.onClick.AddListener(StateManager.gridManager.Cancel);
-        confirm.onClick.AddListener(delegate {
+        confirm.onClick.AddListener(delegate
+        {
             StateManager.gridManager.Confirm();
             StateManager.SwitchState(StateManager.ResetState);
         });
 
     }
     public override void EnterState(StateManager stateManager)
-    {      
+    {
+        if (stateManager.currentPlayerTurn.playerType == Enums.PlayerType.OpponentPlayer)
+        {
+            return;
+        }
         this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
     }
     public override void UpdateState(StateManager stateManager)

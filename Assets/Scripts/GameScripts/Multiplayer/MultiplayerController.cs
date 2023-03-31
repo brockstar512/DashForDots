@@ -10,7 +10,7 @@ public class MultiplayerController : NetworkBehaviour
     private static MultiplayerController instance;
     private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
     public NetworkVariable<int> PlayerCount;//minimum plyer count 2 for multiplayer  
-    public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;
+    public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;   
     public bool IsMutiplayer
     {
         get
@@ -133,7 +133,6 @@ public class MultiplayerController : NetworkBehaviour
 
     private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
     {
-        Debug.LogError($"Client Connect id {clientId} IsServer {IsServer} IsHost {IsHost} IsConnectedClient {NetworkManager.IsConnectedClient}");
         SetPlayerNameServerRpc(GetPlayerName.PlayerName);
         SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
         OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });

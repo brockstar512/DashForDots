@@ -6,7 +6,7 @@ using Unity.VectorGraphics;
 using DG.Tweening;
 using System.Threading.Tasks;
 using System;
-
+using System.Threading;
 
 public class GridManager : MonoBehaviour
 {
@@ -20,6 +20,8 @@ public class GridManager : MonoBehaviour
     public Action<int, int> OnSelectedDot;
     public Action<int, int> OnSelectedNeighbor;
     public Action OnSelectedCancel;
+    public Action OnSelectedConfirm;
+    public Action OnSelectedReset;
     //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -249,9 +251,9 @@ public class GridManager : MonoBehaviour
     }
 
     public async void Confirm()
-    {
-        //Debug.Log("Confirm");
-        await OnConfirm();
+    {       
+        OnSelectedConfirm?.Invoke();
+        await OnConfirm();       
         //if not true switch players else do nothing or i gues reset the clock
         int scoreCount = await scoreKeeper.Check();
         if (scoreCount > 0)
@@ -289,6 +291,7 @@ public class GridManager : MonoBehaviour
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;
         neighborDot = null;
+        await scoreKeeper.Check();
     }
 
     public bool GameFinished()
@@ -306,4 +309,8 @@ public class GridManager : MonoBehaviour
         dotSubscriber = null; ;
     }
 
+    internal void Reset()
+    {
+        OnSelectedReset?.Invoke();
+    }
 }

@@ -78,6 +78,7 @@ namespace DashForDots.AI
             Vector2Int dot2 = validMoves[bestIndex][0] + validMoves[bestIndex][1];
             PlayerHandler.Instance.stateManager.Inspect(gridManager.dots[dot1.x, dot1.y].transform);
             gridManager.SelectDot(dot1.x, dot1.y);
+            gridManager.dots[dot1.x, dot1.y].DotStyling.Select();
             StartCoroutine(ConfirmSelectedDot(dot2.x, dot2.y));
 
         }
