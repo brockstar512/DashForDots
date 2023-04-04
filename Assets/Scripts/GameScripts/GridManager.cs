@@ -7,6 +7,7 @@ using DG.Tweening;
 using System.Threading.Tasks;
 using System;
 using System.Threading;
+using Unity.Netcode;
 
 public class GridManager : MonoBehaviour
 {
@@ -251,47 +252,55 @@ public class GridManager : MonoBehaviour
     }
 
     public async void Confirm()
-    {       
-        OnSelectedConfirm?.Invoke();
-        await OnConfirm();       
-        //if not true switch players else do nothing or i gues reset the clock
-        int scoreCount = await scoreKeeper.Check();
-        if (scoreCount > 0)
+    {
+        if (!MultiplayerController.Instance.IsMutiplayer)
         {
-            if (MultiplayerController.Instance.IsMutiplayer)
-            {
-                PlayerHandler.Instance.UpdateScoreServerRpc(scoreCount, GameFinished());
-            }
-            else
-            {
-                Debug.Log("You are good to go");
-                PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
-
-            }
+            await OnConfirm(false);
         }
         else
         {
-            Debug.Log("You did not score");
-            if (MultiplayerController.Instance.IsMutiplayer)
-            {
-                PlayerHandler.Instance.NextTurnServerRpc();
-            }
-            else
-            {
-                PlayerHandler.Instance.NextPlayer();
-            }
-            //switch player
+            OnSelectedConfirm?.Invoke();
         }
 
     }
-
-    public async Task OnConfirm()
+    public async Task OnConfirm(bool isMultiplayer, ulong senderId = 0)
     {
         await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         currentDot = null;
         neighborDot = null;
-        await scoreKeeper.Check();
+        int scoreCount = await scoreKeeper.Check();
+        bool flag = (senderId.Equals(NetworkManager.Singleton.LocalClientId) && isMultiplayer);
+        if (!isMultiplayer || flag)
+        {
+            //if not true switch players else do nothing or i gues reset the clock
+            if (scoreCount > 0)
+            {
+                if (MultiplayerController.Instance.IsMutiplayer)
+                {
+                    PlayerHandler.Instance.UpdateScoreServerRpc(scoreCount, GameFinished());
+                }
+                else
+                {
+                    Debug.Log("You are good to go");
+                    PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
+
+                }
+            }
+            else
+            {
+                Debug.Log("You did not score");
+                if (MultiplayerController.Instance.IsMutiplayer)
+                {
+                    PlayerHandler.Instance.NextTurnServerRpc();
+                }
+                else
+                {
+                    PlayerHandler.Instance.NextPlayer();
+                }
+                //switch player
+            }
+        }
     }
 
     public bool GameFinished()

@@ -8,6 +8,7 @@ using DashForDots.AI;
 using Unity.Netcode;
 using System;
 using System.Linq;
+using Unity.VectorGraphics;
 
 public class PlayerHandler : NetworkBehaviour
 {
@@ -88,17 +89,19 @@ public class PlayerHandler : NetworkBehaviour
                 {
                     int index = (playerIndex + i) % (int)playerCount;
                     MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
-                    multiplayerData.colorId = i + 1;
+                    multiplayerData.colorId = index + 1;
                     multiplayerData.currentIndex = index;
                     PlayerData playerData = new PlayerData(multiplayerData);
                     playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
                     playerScoreDots[i].name = playerData.playerName;
                     Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
+                    playerObject.GetComponent<SVGImage>().color = playerData.playerColor;
                     playerObject.playerType = playerData.playerType;
                     playerObject.gameObject.name = playerData.playerName;
                     playerObject.UpdatePlayerName(playerData);
                     players.Add(playerData);
                     playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+                    playerScoreDots[i].GetComponent<SVGImage>().color = playerData.playerColor;
                 }
 
             }
@@ -157,8 +160,7 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (MultiplayerController.Instance.IsMutiplayer)
         {
-            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
-            boardIntrection.SetActive(!(multiplayerData.clientId == NetworkManager.LocalClientId));
+            boardIntrection.SetActive(!IsMyTurn());
         }
         else
         {
@@ -203,11 +205,11 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (currentPlayer.Value + 1 >= players.Count)
         {
-            currentPlayer.Value = 0;
+            currentPlayer.Value = 0;          
         }
         else
         {
-            currentPlayer.Value++;
+            currentPlayer.Value++;          
         }
     }
     IEnumerator TakeTurnAI()
@@ -234,6 +236,17 @@ public class PlayerHandler : NetworkBehaviour
         {
             return currentPlayer.Value;
         }
+    }
+
+    public bool IsMyTurn()
+    {
+        if (MultiplayerController.Instance.IsMutiplayer)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+            bool flag = multiplayerData.clientId == NetworkManager.LocalClientId;
+            return flag;
+        }
+        return false;
     }
     #region Multiplayer RPC & NetworkMethods
     public override void OnNetworkSpawn()
@@ -272,11 +285,11 @@ public class PlayerHandler : NetworkBehaviour
     [ClientRpc]
     private void OnConfirmSelectedClientRpc(ulong senderId)
     {
-        if (!senderId.Equals(NetworkManager.LocalClientId))
-        {
-            _ = gridManager.OnConfirm();
-            stateManager.SwitchState(stateManager.ResetState);
-        }
+        //if (!senderId.Equals(NetworkManager.LocalClientId))
+        //{
+        _ = gridManager.OnConfirm(true, senderId);
+        stateManager.SwitchState(stateManager.ResetState);
+        //}
     }
 
     private void OnSelectedCancel()
@@ -352,6 +365,7 @@ public class PlayerHandler : NetworkBehaviour
         {
             IncrementCounter();
         }
+        stateManager.SwitchState(stateManager.ResetState);
     }
     private void OnCurrentPlayerValueChanged(int previous, int current)
     {

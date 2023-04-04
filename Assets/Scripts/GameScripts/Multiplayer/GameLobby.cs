@@ -13,7 +13,12 @@ using UnityEngine;
 public class GameLobby : NetworkBehaviour
 {
     private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
-
+    public event EventHandler OnGameJoinStarted;
+    public event EventHandler<OnGameJoinFailedEventArgs> OnGameJoinFailed;
+    public class OnGameJoinFailedEventArgs : EventArgs
+    {
+        public string message;
+    }
     private static GameLobby instance;
     public static GameLobby Instance
     {
@@ -37,7 +42,6 @@ public class GameLobby : NetworkBehaviour
             await UnityServices.InitializeAsync(initializationOptions);
             AuthenticationService.Instance.SignedIn += () =>
             {
-
                 Debug.Log($"Sign In " + AuthenticationService.Instance.PlayerId);
             };
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
@@ -64,6 +68,7 @@ public class GameLobby : NetworkBehaviour
 
     public async void JoinGame(string roomCode)
     {
+        OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
             Debug.Log("Joining Relay with " + roomCode);
@@ -73,7 +78,8 @@ public class GameLobby : NetworkBehaviour
         }
         catch (RelayServiceException e)
         {
-            Debug.LogError(e);
+            Debug.LogError(e.Message);
+            OnGameJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = e.Message });
         }
     }
 

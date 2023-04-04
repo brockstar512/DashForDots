@@ -18,8 +18,9 @@ public class TimerManager : NetworkBehaviour
     [SerializeField] GameObject screenBlocker;
     public NetworkVariable<float> timeRemaining = new NetworkVariable<float>();
     public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
+    NetworkVariable<bool> isOnce = new NetworkVariable<bool>() { Value = false };
     Color32 normalColor = new Color32(101, 138, 167, 255);
-    private int defaultTime = 20;
+    private int defaultTime = 10;
 
     private void OnEnable()
     {
@@ -38,11 +39,7 @@ public class TimerManager : NetworkBehaviour
 
     private void TimerManager_UpdateTimeUI(float previousValue, float newValue)
     {
-        if (!IsServer)
-        {
-            _ = StartTimer();
-        }
-        DisplayTime(timeRemaining.Value);
+        DisplayTime(newValue);
     }
 
     public async Task GameStartDelay()
@@ -111,16 +108,15 @@ public class TimerManager : NetworkBehaviour
 
 
     public async Task StartTimer()
-    {      
-        isOnce = false;
+    {
         UpdateTextColor();
-
         await Task.Delay(1000);
         if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
         {
             timeRemaining.Value = defaultTime;
             timerIsRunning.Value = true;
-        }      
+            isOnce.Value = false;
+        }
     }
 
     private void UpdateTextColor()
@@ -128,7 +124,7 @@ public class TimerManager : NetworkBehaviour
         timeText.color = normalColor;
         timeTitle.color = normalColor;
         timeTitle.text = "Time";
-        timeText.text = "00:20";
+        timeText.text = $"00:{defaultTime}";
     }
 
     void Update()
@@ -140,7 +136,6 @@ public class TimerManager : NetworkBehaviour
                 if (timeRemaining.Value > 0)
                 {
                     timeRemaining.Value -= Time.deltaTime;
-                    DisplayTime(timeRemaining.Value);
 
                 }
                 else
@@ -149,42 +144,51 @@ public class TimerManager : NetworkBehaviour
                     timeRemaining.Value = 0;
                     timerIsRunning.Value = false;
                 }
+                DisplayTime(timeRemaining.Value);
             }
         }
     }
-
-    bool isOnce = false;
     void DisplayTime(float timeToDisplay)
     {
-        timeToDisplay += 1;
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-
-        if (minutes <= 0 && seconds <= 5)
+        if (!isOnce.Value)
         {
-            timeTitle.text = "Hurry up!";
-            timeTitle.color = Color.red;
-            timeText.color = Color.red;
-
+            timeToDisplay += 1;
+            float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+            float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+            if (minutes <= 0 && seconds <= 5)
+            {
+                timeTitle.text = "Hurry up!";
+                timeTitle.color = Color.red;
+                timeText.color = Color.red;
+            }
+            else
+            {
+                UpdateTextColor();
+            }
+            if (timeRemaining.Value <= 0.05f)
+            {
+                if (IsServer)
+                {
+                    isOnce.Value = true;
+                    PlayerHandler.Instance.NextTurnServerRpc();
+                }
+                else if (!MultiplayerController.Instance.IsMutiplayer)
+                {
+                    isOnce.Value = true;
+                    PlayerHandler.Instance.aiHandler.GetRandomMove();
+                    PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+                }
+            }
+            UpdateTextTime(minutes, seconds);
         }
         else
         {
-            UpdateTextColor();
+            UpdateTextTime(0, 0);
         }
-        if (timeRemaining.Value <= 0.05f && !isOnce)
-        {
-            isOnce = true;
-            if (IsServer)
-            {
-                PlayerHandler.Instance.NextTurnServerRpc();
-            }
-            else if (!MultiplayerController.Instance.IsMutiplayer)
-            {
-                PlayerHandler.Instance.aiHandler.GetRandomMove();
-                PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
-            }
-        }
+    }
 
+    private void UpdateTextTime(float minutes, float seconds)
+    {
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

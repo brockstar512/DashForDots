@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using System.Linq;
 using static OnlineSubMenu;
 using System.Threading.Tasks;
+using static GameLobby;
 
 public class OnlineSubMenu : MonoBehaviour
 {
@@ -63,7 +64,8 @@ public class OnlineSubMenu : MonoBehaviour
         MultiplayerController.Instance.OnPlayerConnected += Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged += Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
-    }
+        GameLobby.Instance.OnGameJoinFailed += GameLobby_OnGameJoinFailed;
+    }   
 
     private void OnDisable()
     {
@@ -76,6 +78,7 @@ public class OnlineSubMenu : MonoBehaviour
         MultiplayerController.Instance.OnPlayerConnected -= Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged -= Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
+        GameLobby.Instance.OnGameJoinFailed -= GameLobby_OnGameJoinFailed;
     }
 
     private void Multiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
@@ -215,6 +218,10 @@ public class OnlineSubMenu : MonoBehaviour
     {
         waitingViewRefrences.loadingView.gameObject.SetActive(flag);
         waitingViewRefrences.waitingForUser.gameObject.SetActive(flag);
+    }
+    private void GameLobby_OnGameJoinFailed(object sender, OnGameJoinFailedEventArgs e)
+    {
+        ToastMessage.Show(e.message.ToUpperInvariant());
     }
 
     [System.Serializable]
