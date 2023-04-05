@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -52,7 +53,7 @@ public class GameLobby : NetworkBehaviour
     {
         try
         {
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MultiplayerController.Instance.PlayerCount.Value - 1);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MultiplayerController.Instance.PlayerCount.Value);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             gameCode = new NetworkVariable<FixedString64Bytes>();
             gameCode.Value = joinCode;
@@ -77,9 +78,8 @@ public class GameLobby : NetworkBehaviour
             MultiplayerController.Instance.StartClient();
         }
         catch (RelayServiceException e)
-        {
-            Debug.LogError(e.Message);
-            OnGameJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = e.Message });
+        {           
+            OnGameJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = Utility.GetErrorMessage(e.ErrorCode) });
         }
     }
 

@@ -20,7 +20,7 @@ public class TimerManager : NetworkBehaviour
     public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
     NetworkVariable<bool> isOnce = new NetworkVariable<bool>() { Value = false };
     Color32 normalColor = new Color32(101, 138, 167, 255);
-    private int defaultTime = 10;
+    private int defaultTime = 20;
 
     private void OnEnable()
     {
@@ -167,16 +167,17 @@ public class TimerManager : NetworkBehaviour
             }
             if (timeRemaining.Value <= 0.05f)
             {
-                if (IsServer)
+                isOnce.Value = true;
+                if (MultiplayerController.Instance.IsMutiplayer)
                 {
-                    isOnce.Value = true;
-                    PlayerHandler.Instance.NextTurnServerRpc();
+                    if (IsServer)
+                    {
+                        GetRandomMove();
+                    }
                 }
-                else if (!MultiplayerController.Instance.IsMutiplayer)
+                else
                 {
-                    isOnce.Value = true;
-                    PlayerHandler.Instance.aiHandler.GetRandomMove();
-                    PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+                    GetRandomMove();
                 }
             }
             UpdateTextTime(minutes, seconds);
@@ -185,6 +186,11 @@ public class TimerManager : NetworkBehaviour
         {
             UpdateTextTime(0, 0);
         }
+    }
+
+    private static void GetRandomMove()
+    {
+        PlayerHandler.Instance.aiHandler.GetRandomMove();
     }
 
     private void UpdateTextTime(float minutes, float seconds)

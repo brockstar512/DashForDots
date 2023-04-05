@@ -3,6 +3,7 @@ using Unity.Netcode;
 
 public struct MultiplayerData : INetworkSerializable, System.IEquatable<MultiplayerData>
 {
+    public bool isHost;
     public ulong clientId;
     public int colorId;
     public int currentIndex;
@@ -10,6 +11,7 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
     public int playerType;//  AI=0,LocalPlayer=1,OpponentPlayer=2
     public FixedString64Bytes playerName;
     public FixedString64Bytes playerId;
+    public int status;//Denote player is active or not
 
     public bool Equals(MultiplayerData other)
     {
@@ -20,7 +22,9 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
             playerId == other.playerId &&
             playerType == other.playerType &&
             currentIndex == other.currentIndex &&
-            serverIndex == other.serverIndex;
+            serverIndex == other.serverIndex &&
+            isHost == other.isHost &&
+            status == other.status;
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
@@ -32,6 +36,8 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
         serializer.SerializeValue(ref playerType);
         serializer.SerializeValue(ref currentIndex);
         serializer.SerializeValue(ref serverIndex);
+        serializer.SerializeValue(ref isHost);
+        serializer.SerializeValue(ref status);
     }
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.Netcode;
 
 public class QuitState : BaseState
 {
@@ -37,6 +38,10 @@ public class QuitState : BaseState
     }
     private void Quit()
     {
+        if (MultiplayerController.Instance.IsMutiplayer)
+        {
+            NetworkManager.Singleton.Shutdown(true);
+        }
         LoadingManager.Instance.LoadScene(targetScene.ToString());
 
     }

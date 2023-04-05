@@ -12,9 +12,9 @@ public class Enums
         Multiplayer
 
     }
-    public enum PlayerType 
+    public enum PlayerType
     {
-        AI, 
+        AI,
         LocalPlayer,
         OpponentPlayer
     }
@@ -29,6 +29,11 @@ public class Enums
         TowPlayer,
         ThreePlayer,
         FourPlayer
-    }   
+    }
 
+    public enum PlayerState
+    {
+        Active = 1,
+        Inactive = 2,
+    }   
 }

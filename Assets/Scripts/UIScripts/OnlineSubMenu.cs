@@ -221,7 +221,7 @@ public class OnlineSubMenu : MonoBehaviour
     }
     private void GameLobby_OnGameJoinFailed(object sender, OnGameJoinFailedEventArgs e)
     {
-        ToastMessage.Show(e.message.ToUpperInvariant());
+        ToastMessage.Show(e.message);
     }
 
     [System.Serializable]

@@ -180,7 +180,14 @@ public class PlayerHandler : NetworkBehaviour
         ChangePlayerIndicator();
         CheckMyTurn();
         SetPlayerTurn();
-
+        if (IsServer)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+            if (multiplayerData.status==(int)Enums.PlayerState.Inactive)
+            {
+                aiHandler.GetRandomMove();
+            }
+        }
     }
 
     private void SetPlayerTurn()
@@ -205,11 +212,11 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (currentPlayer.Value + 1 >= players.Count)
         {
-            currentPlayer.Value = 0;          
+            currentPlayer.Value = 0;
         }
         else
         {
-            currentPlayer.Value++;          
+            currentPlayer.Value++;
         }
     }
     IEnumerator TakeTurnAI()
@@ -243,6 +250,7 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance.IsMutiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+            Debug.LogError($"IsMyTurn {(Enums.PlayerState)multiplayerData.status}");
             bool flag = multiplayerData.clientId == NetworkManager.LocalClientId;
             return flag;
         }
@@ -365,7 +373,6 @@ public class PlayerHandler : NetworkBehaviour
         {
             IncrementCounter();
         }
-        stateManager.SwitchState(stateManager.ResetState);
     }
     private void OnCurrentPlayerValueChanged(int previous, int current)
     {

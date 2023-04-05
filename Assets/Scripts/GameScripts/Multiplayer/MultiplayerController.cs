@@ -3,14 +3,14 @@ using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MultiplayerController : NetworkBehaviour
 {
     #region  refrences
     private static MultiplayerController instance;
-    private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
     public NetworkVariable<int> PlayerCount;//minimum plyer count 2 for multiplayer  
-    public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;   
+    public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;
     public bool IsMutiplayer
     {
         get
@@ -85,15 +85,18 @@ public class MultiplayerController : NetworkBehaviour
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "No Room Avaliable";
-
-            return;
         }
-        connectionApprovalResponse.Approved = true;
+        else
+        {
+            connectionApprovalResponse.Approved = true;
+        }
     }
     private void NetworkManager_OnClientConnectedCallback(ulong clientId)
     {
         playerNetworkList.Add(new MultiplayerData
         {
+            status = (int)Enums.PlayerState.Active,
+            isHost = NetworkManager.Singleton.IsHost,
             clientId = clientId,
             currentIndex = playerNetworkList.Count - 1,
             serverIndex = playerNetworkList.Count - 1,
@@ -106,13 +109,20 @@ public class MultiplayerController : NetworkBehaviour
 
     private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
     {
-        Debug.Log($"Server_OnClientDisconnectCallback client id {clientId} IsServer {IsServer} IsHost {IsHost}");
         for (int i = 0; i < playerNetworkList.Count; i++)
         {
             MultiplayerData playerData = playerNetworkList[i];
             if (playerData.clientId == clientId)
             {
-                playerNetworkList.RemoveAt(i);
+                if (SceneManager.GetActiveScene().name != LoadingManager.Scene.Game.ToString())
+                {
+                    playerNetworkList.RemoveAt(i);
+                }
+                else
+                {
+                    playerData.status = (int)Enums.PlayerState.Inactive;
+                    playerNetworkList[i] = playerData;
+                }
             }
         }
         OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false });
@@ -140,23 +150,15 @@ public class MultiplayerController : NetworkBehaviour
 
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
     {
-        //VT This is a risky approach that must be corrected.
-        if (clientId == 0)
+        if (IsDisconnectedPlayerWasHost(clientId))
         {
             OnHostShutDown?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            if (clientId == NetworkManager.LocalClientId)
+            if (!NetworkManager.IsServer && NetworkManager.DisconnectReason != string.Empty)
             {
-                if (NetworkManager.Singleton.DisconnectReason == "")
-                {
-                    Debug.Log($"Client Disconnect id {clientId} Reason for Disconnect Failed to connect -{NetworkManager.Singleton.DisconnectReason}");
-                }
-                else
-                {
-                    Debug.Log($"Client Disconnect id {clientId} Reason for Disconnect {NetworkManager.Singleton.DisconnectReason}");
-                }
+                ToastMessage.Show(NetworkManager.DisconnectReason);
             }
             for (int i = 0; i < playerNetworkList.Count; i++)
             {
@@ -206,9 +208,17 @@ public class MultiplayerController : NetworkBehaviour
     public void ShutDown()
     {
         Constants.GAME_TYPE = (int)Enums.GameType.None;
-        NetworkManager.Singleton.ConnectionApprovalCallback -= NetworkManager_ConnectionApprovalCallback;
-        NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_OnClientConnectedCallback;
-        NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Server_OnClientDisconnectCallback;
+        if (IsServer)
+        {
+            NetworkManager.Singleton.ConnectionApprovalCallback -= NetworkManager_ConnectionApprovalCallback;
+            NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Server_OnClientDisconnectCallback;
+        }
+        else
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_Client_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Client_OnClientDisconnectCallback;
+        }
         OnServerDisconnect();
     }
     public override void OnNetworkDespawn()
@@ -222,8 +232,7 @@ public class MultiplayerController : NetworkBehaviour
     {
         if (IsClient && !IsServer)
         {
-            NetworkManager.Singleton.Shutdown(true);
-            NetworkManager_Server_OnClientDisconnectCallback(NetworkManager.Singleton.LocalClientId);
+            NetworkManager.Singleton.Shutdown(true);           
         }
         else if (IsServer)
         {
@@ -254,7 +263,7 @@ public class MultiplayerController : NetworkBehaviour
     {
         NetworkManager.Singleton.SceneManager.LoadScene(LoadingManager.Scene.Game.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
-   
+
     #endregion
 
     #region Getter    
@@ -295,6 +304,18 @@ public class MultiplayerController : NetworkBehaviour
             }
         }
         return -1;
+    }
+    public bool IsDisconnectedPlayerWasHost(ulong clientId)
+    {
+        for (int i = 0; i < playerNetworkList.Count; i++)
+        {
+            if (playerNetworkList[i].clientId == clientId)
+            {
+                return playerNetworkList[i].isHost;
+
+            }
+        }
+        return false;
     }
 
     public MultiplayerData GetPlayerDataFromClientId(ulong clientId)

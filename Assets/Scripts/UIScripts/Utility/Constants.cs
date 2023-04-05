@@ -16,4 +16,8 @@ public class Constants
     //Move values for AI
     public const int LOWEST_MOVE_VALUE = 100;
     public const int HIGHEST_MOVE_VALUE = 1000;
+
+    //Messages
+    public const string KMessageInvalidCode = "Join Code not valid";
+
 }
