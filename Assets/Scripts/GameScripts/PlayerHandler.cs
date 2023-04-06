@@ -52,7 +52,9 @@ public class PlayerHandler : NetworkBehaviour
         gridManager.OnSelectedCancel += OnSelectedCancel;
         gridManager.OnSelectedConfirm += OnSelectedConfirm;
         gridManager.OnSelectedReset += OnSelectedReset;
+        MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
     }
+
     private void OnDisable()
     {
         gridManager.OnSelectedDot -= OnSelectedDot;
@@ -60,6 +62,7 @@ public class PlayerHandler : NetworkBehaviour
         gridManager.OnSelectedCancel -= OnSelectedCancel;
         gridManager.OnSelectedConfirm -= OnSelectedConfirm;
         gridManager.OnSelectedReset -= OnSelectedReset;
+        MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
     }
 
     public async Task Init(PlayerCount playerCount)
@@ -183,9 +186,9 @@ public class PlayerHandler : NetworkBehaviour
         if (IsServer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
-            if (multiplayerData.status==(int)Enums.PlayerState.Inactive)
+            if (multiplayerData.status == (int)Enums.PlayerState.Inactive)
             {
-                aiHandler.GetRandomMove();
+                StartCoroutine(TakeTurnAI());
             }
         }
     }
@@ -388,6 +391,10 @@ public class PlayerHandler : NetworkBehaviour
     private void UpdateScoreClientRpc(int incomingPoints, bool isOver)
     {
         UpdateScore(incomingPoints, isOver);
+    }
+    private void Multiplayer_OnHostShutDown(object sender, EventArgs e)
+    {
+        stateManager.SwitchState(stateManager.HostQuitState);
     }
     #endregion
 

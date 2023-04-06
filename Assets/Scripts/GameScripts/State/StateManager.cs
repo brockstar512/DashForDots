@@ -48,6 +48,7 @@ public class StateManager : MonoBehaviour
     public QuitState QuitState;//
     public DecisionState DecisionState;//
     public ResetState ResetState;//
+    public HostQuitState HostQuitState;
     public Enums.GameType gameType;
 
 
@@ -63,6 +64,7 @@ public class StateManager : MonoBehaviour
         QuitState.Initialize(this);
         DecisionState.Initialize(this);
         ResetState.Initialize(this);
+        HostQuitState.Initialize(this);
         GetGameType();
         zoomOutMax = camController.m_Lens.OrthographicSize = maxLensZoom;
 

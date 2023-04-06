@@ -81,15 +81,21 @@ public class MultiplayerController : NetworkBehaviour
     }
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
+        if (SceneManager.GetActiveScene().name != LoadingManager.Scene.MainMenu.ToString())
+        {
+            connectionApprovalResponse.Approved = false;
+            connectionApprovalResponse.Reason = "Game Already Started";
+            return;
+        }
         if (NetworkManager.Singleton.ConnectedClientsIds.Count >= PlayerCount.Value)
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "No Room Avaliable";
+            return;
         }
-        else
-        {
-            connectionApprovalResponse.Approved = true;
-        }
+
+        connectionApprovalResponse.Approved = true;
+
     }
     private void NetworkManager_OnClientConnectedCallback(ulong clientId)
     {
@@ -105,6 +111,7 @@ public class MultiplayerController : NetworkBehaviour
         SetPlayerNameServerRpc(GetPlayerName.PlayerName);
         SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
         OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });
+
     }
 
     private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
@@ -159,14 +166,6 @@ public class MultiplayerController : NetworkBehaviour
             if (!NetworkManager.IsServer && NetworkManager.DisconnectReason != string.Empty)
             {
                 ToastMessage.Show(NetworkManager.DisconnectReason);
-            }
-            for (int i = 0; i < playerNetworkList.Count; i++)
-            {
-                MultiplayerData multiplayerData = playerNetworkList[i];
-                if (multiplayerData.clientId == clientId)
-                {
-                    playerNetworkList.RemoveAt(i);
-                }
             }
             OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false });
         }
@@ -232,7 +231,7 @@ public class MultiplayerController : NetworkBehaviour
     {
         if (IsClient && !IsServer)
         {
-            NetworkManager.Singleton.Shutdown(true);           
+            NetworkManager.Singleton.Shutdown(true);
         }
         else if (IsServer)
         {
