@@ -123,8 +123,7 @@ public class GridManager : MonoBehaviour
     }
 
     public async Task SelectedNeighbor(int x, int y)
-    {
-        var data = currentDot;
+    {       
         neighborDot = dots[x, y].coordinates;
         LeaveNeighbors();
         await dots[currentDot.X, currentDot.Y].PairWithNeighbor(dots[neighborDot.X, neighborDot.Y]);
@@ -253,7 +252,7 @@ public class GridManager : MonoBehaviour
 
     public async void Confirm()
     {
-        if (!MultiplayerController.Instance.IsMutiplayer)
+        if (!MultiplayerController.Instance.IsMultiplayer)
         {
             await OnConfirm(false);
         }
@@ -267,6 +266,7 @@ public class GridManager : MonoBehaviour
     {
         await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+        SetPlayerTurn(currentDot.X, currentDot.Y, neighborDot.X, neighborDot.Y);
         currentDot = null;
         neighborDot = null;
         int scoreCount = await scoreKeeper.Check();
@@ -276,7 +276,7 @@ public class GridManager : MonoBehaviour
             //if not true switch players else do nothing or i gues reset the clock
             if (scoreCount > 0)
             {
-                if (MultiplayerController.Instance.IsMutiplayer)
+                if (MultiplayerController.Instance.IsMultiplayer)
                 {
                     PlayerHandler.Instance.UpdateScoreServerRpc(scoreCount, GameFinished());
                 }
@@ -284,13 +284,12 @@ public class GridManager : MonoBehaviour
                 {
                     Debug.Log("You are good to go");
                     PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
-
                 }
             }
             else
             {
                 Debug.Log("You did not score");
-                if (MultiplayerController.Instance.IsMutiplayer)
+                if (MultiplayerController.Instance.IsMultiplayer)
                 {
                     PlayerHandler.Instance.NextTurnServerRpc();
                 }
@@ -303,6 +302,47 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private void SetPlayerTurn(int selectX, int selectY, int neighborX, int neighborY)
+    {
+        if (NetworkManager.Singleton.IsServer)
+        {
+            PlayerTurn playerTurn = new PlayerTurn()
+            {
+                selectedDot = new Vector2(selectX, selectY),
+                neighborDot = new Vector2(neighborX, neighborY),
+                turn = PlayerHandler.Instance.currentPlayer.Value
+            };
+            MultiplayerController.Instance.SetPlayerTurn(playerTurn);
+        }
+    }
+    public async Task UpdateRejoinUI()
+    {
+        if (MultiplayerController.Instance.IsMultiplayer)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
+            if (multiplayerData.isRejoin)
+            {
+                timerManager.DestoryScreenBlocker();
+                foreach (PlayerTurn turn in MultiplayerController.Instance.playerTurnList)
+                {
+                    await UpdateUIForRejoinPlayer(turn);
+                }
+            }
+        }
+    }
+    private async Task UpdateUIForRejoinPlayer(PlayerTurn playerTurn)
+    {
+        await SelectDotLocal((int)playerTurn.selectedDot.x, (int)playerTurn.selectedDot.y);
+        dots[(int)playerTurn.selectedDot.x, (int)playerTurn.selectedDot.y].DotStyling.Select();
+        await SelectedNeighbor((int)playerTurn.neighborDot.x, (int)playerTurn.neighborDot.y);
+        await LeaveDot();
+        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);      
+        currentDot = null;
+        neighborDot = null;
+        await scoreKeeper.Check();
+        await Task.Yield();
+
+    }
     public bool GameFinished()
     {
         foreach (Dot dot in dots)

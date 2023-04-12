@@ -38,7 +38,7 @@ public class QuitState : BaseState
     }
     private void Quit()
     {
-        if (MultiplayerController.Instance.IsMutiplayer)
+        if (MultiplayerController.Instance.IsMultiplayer)
         {
             NetworkManager.Singleton.Shutdown(true);
         }

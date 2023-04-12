@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Cinemachine;
 using GG.Infrastructure.Utils.Swipe;
 using System.Threading.Tasks;
+using Unity.Netcode;
 
 [RequireComponent(typeof(SwipeListenerEvent))]
 [RequireComponent(typeof(GridManager))]
@@ -75,8 +76,11 @@ public class StateManager : MonoBehaviour
         currentState.EnterState(this);
         // currentPlayerTurn= PlayerData.
         ///
+        await gridManager.UpdateRejoinUI();
         await Task.Yield();
     }
+
+   
 
     // Start is called before the first frame update
     //void Start()

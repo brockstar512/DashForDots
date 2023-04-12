@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using Cinemachine;
 using Unity.Netcode;
+using System;
 
 public class GameInitializer : NetworkBehaviour
 {
@@ -22,15 +23,15 @@ public class GameInitializer : NetworkBehaviour
     private void Awake()
     {
         stateManager = GetComponent<StateManager>();
-        isMultiplayer = stateManager.GetGameType() == Enums.GameType.Multiplayer;
+        isMultiplayer = stateManager.GetGameType() == Enums.GameType.Multiplayer;       
         if (!isMultiplayer)
         {
             StartGame(isMultiplayer);
         }
         else if (NetworkManager.Singleton.IsServer && isMultiplayer)
         {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
-        }
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;         
+        }        
     }
     public override void OnNetworkSpawn()
     {
@@ -38,10 +39,27 @@ public class GameInitializer : NetworkBehaviour
         {
             StartGameServerRpc(true);
         }
+        MultiplayerController.Instance.rejoinPlayerConnected.OnValueChanged += OnRejoinPlayerValueChanged;      
     }
+
+    private void OnRejoinPlayerValueChanged(ulong previousValue, ulong newValue)
+    {
+        if (newValue==NetworkManager.LocalClientId)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
+            if (multiplayerData.isRejoin)
+            {
+                StartGame(true);
+            }
+        }
+    }
+
     private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        //  StartGameServerRpc(true);
+        if (IsServer)
+        {
+            MultiplayerController.Instance.SetGameStarted(true);
+        }
     }
 
     [ServerRpc]

@@ -32,7 +32,7 @@ public class HostQuitState : BaseState
 
     private void MainMenu()
     {
-        if (MultiplayerController.Instance.IsMutiplayer)
+        if (MultiplayerController.Instance.IsMultiplayer)
         {
             NetworkManager.Singleton.Shutdown(true);
         }

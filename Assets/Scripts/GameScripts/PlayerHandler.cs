@@ -9,6 +9,7 @@ using Unity.Netcode;
 using System;
 using System.Linq;
 using Unity.VectorGraphics;
+using Unity.Collections;
 
 public class PlayerHandler : NetworkBehaviour
 {
@@ -67,12 +68,11 @@ public class PlayerHandler : NetworkBehaviour
 
     public async Task Init(PlayerCount playerCount)
     {
-        bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
-        int playerIndex;
+        bool isMutiplayer = MultiplayerController.Instance.IsMultiplayer;
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
         playerUIDots = new List<Transform>();
-        playerIndex = isMutiplayer ? MultiplayerController.Instance.GetPlayerDataIndexFromClientId(NetworkManager.Singleton.LocalClientId) : -1;
+        int playerIndex = isMutiplayer ? MultiplayerController.Instance.GetPlayerDataIndexFromClientId(NetworkManager.Singleton.LocalClientId) : -1;
         for (int i = 0; i < maxPlayerCount; i++)
         {
             if (i < (int)playerCount - LocalGameController.botCount)
@@ -90,21 +90,7 @@ public class PlayerHandler : NetworkBehaviour
                 }
                 else
                 {
-                    int index = (playerIndex + i) % (int)playerCount;
-                    MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
-                    multiplayerData.colorId = index + 1;
-                    multiplayerData.currentIndex = index;
-                    PlayerData playerData = new PlayerData(multiplayerData);
-                    playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
-                    playerScoreDots[i].name = playerData.playerName;
-                    Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
-                    playerObject.GetComponent<SVGImage>().color = playerData.playerColor;
-                    playerObject.playerType = playerData.playerType;
-                    playerObject.gameObject.name = playerData.playerName;
-                    playerObject.UpdatePlayerName(playerData);
-                    players.Add(playerData);
-                    playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
-                    playerScoreDots[i].GetComponent<SVGImage>().color = playerData.playerColor;
+                    SetupPlayerForMultiplayer(playerCount, playerIndex, i);
                 }
 
             }
@@ -129,7 +115,7 @@ public class PlayerHandler : NetworkBehaviour
         {
             dot.GetChild(0).GetComponent<CanvasGroup>().alpha = 0;
         }
-        if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+        if (IsServer || !MultiplayerController.Instance.IsMultiplayer)
         {
             currentPlayer.Value = 0;
         }
@@ -137,9 +123,29 @@ public class PlayerHandler : NetworkBehaviour
         await Task.Yield();
 
     }
+
+    private void SetupPlayerForMultiplayer(PlayerCount playerCount, int playerIndex, int i)
+    {
+        int index = (playerIndex + i) % (int)playerCount;
+        MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
+        multiplayerData.colorId = index + 1;
+        multiplayerData.currentIndex = index;
+        PlayerData playerData = new PlayerData(multiplayerData);
+        playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
+        playerScoreDots[i].name = playerData.playerName;
+        Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
+        playerObject.GetComponent<SVGImage>().color = playerData.playerColor;
+        playerObject.playerType = playerData.playerType;
+        playerObject.gameObject.name = playerData.playerName;
+        playerObject.UpdatePlayerName(playerData);
+        players.Add(playerData);
+        playerScoreDots[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = players[i].playerScore.ToString();
+        playerScoreDots[i].GetComponent<SVGImage>().color = playerData.playerColor;
+    }
+
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
-        bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
+        bool isMutiplayer = MultiplayerController.Instance.IsMultiplayer;
         playerScoreDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
         if (isOver)
         {
@@ -161,9 +167,10 @@ public class PlayerHandler : NetworkBehaviour
 
     private void CheckMyTurn()
     {
-        if (MultiplayerController.Instance.IsMutiplayer)
+        if (MultiplayerController.Instance.IsMultiplayer)
         {
-            boardIntrection.SetActive(!IsMyTurn());
+            Debug.LogError($"ITS my turn{MultiplayerController.Instance.IsMyTurn(currentPlayer.Value)}");
+            boardIntrection.SetActive(!MultiplayerController.Instance.IsMyTurn(currentPlayer.Value));
         }
         else
         {
@@ -174,7 +181,7 @@ public class PlayerHandler : NetworkBehaviour
 
     public void NextPlayer()
     {
-        if (!MultiplayerController.Instance.IsMutiplayer)
+        if (!MultiplayerController.Instance.IsMultiplayer)
         {
             mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
             IncrementCounter();
@@ -236,7 +243,7 @@ public class PlayerHandler : NetworkBehaviour
 
     public int GetPlayerIndex(int value)
     {
-        if (MultiplayerController.Instance.IsMutiplayer)
+        if (MultiplayerController.Instance.IsMultiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(value);
             int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);
@@ -248,22 +255,18 @@ public class PlayerHandler : NetworkBehaviour
         }
     }
 
-    public bool IsMyTurn()
-    {
-        if (MultiplayerController.Instance.IsMutiplayer)
-        {
-            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
-            Debug.LogError($"IsMyTurn {(Enums.PlayerState)multiplayerData.status}");
-            bool flag = multiplayerData.clientId == NetworkManager.LocalClientId;
-            return flag;
-        }
-        return false;
-    }
+
     #region Multiplayer RPC & NetworkMethods
+
+    #region Override Netcode Methods
     public override void OnNetworkSpawn()
     {
         currentPlayer.OnValueChanged += OnCurrentPlayerValueChanged;
+        MultiplayerController.Instance.rejoinPlayerConnected.OnValueChanged += OnRejoinPlayerValueChangedAsync;
     }
+    #endregion Override Netcode Methods
+
+    #region Reset
     private void OnSelectedReset()
     {
         OnResetSelectedServerRpc();
@@ -282,7 +285,9 @@ public class PlayerHandler : NetworkBehaviour
             stateManager.SwitchState(stateManager.ResetState);
         }
     }
+    #endregion Reset
 
+    #region Confirm
     private void OnSelectedConfirm()
     {
         OnConfirmSelectedServerRpc();
@@ -302,7 +307,9 @@ public class PlayerHandler : NetworkBehaviour
         stateManager.SwitchState(stateManager.ResetState);
         //}
     }
+    #endregion Confirm
 
+    #region Cancel
     private void OnSelectedCancel()
     {
         OnCancelSelectedServerRpc();
@@ -321,7 +328,9 @@ public class PlayerHandler : NetworkBehaviour
             _ = gridManager.OnCancel();
         }
     }
+    #endregion Cancel
 
+    #region SelectDot
     private void OnSelectedDot(int x, int y)
     {
         OnDotSelectedServerRpc(x, y);
@@ -343,6 +352,9 @@ public class PlayerHandler : NetworkBehaviour
             gridManager.dots[x, y].DotStyling.Select();
         }
     }
+    #endregion SelectDot
+
+    #region Neighbor Dot
     private void OnSelectedNeighbor(int x, int y)
     {
         OnNeighborSelectedServerRpc(x, y);
@@ -361,8 +373,9 @@ public class PlayerHandler : NetworkBehaviour
             _ = gridManager.SelectedNeighbor(x, y);
         }
     }
+    #endregion Neighbor
 
-
+    #region Next Turn RPC
     [ServerRpc(RequireOwnership = false)]
     public void NextTurnServerRpc(ServerRpcParams serverRpcParams = default)
     {
@@ -382,6 +395,9 @@ public class PlayerHandler : NetworkBehaviour
         mainBoardDotParent.GetChild(GetPlayerIndex(previous)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
         NextPlayer();
     }
+    #endregion Next Turn RPC
+
+    #region Update Score
     [ServerRpc(RequireOwnership = false)]
     public void UpdateScoreServerRpc(int incomingPoints, bool isOver)
     {
@@ -396,7 +412,31 @@ public class PlayerHandler : NetworkBehaviour
     {
         stateManager.SwitchState(stateManager.HostQuitState);
     }
+    #endregion  Update Score
+
+    #region Rejoin & update player data
+    private void OnRejoinPlayerValueChangedAsync(ulong previousValue, ulong newValue)
+    {
+        if (newValue != NetworkManager.LocalClientId)
+        {
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(newValue);
+            foreach (var player in players)
+            {
+                if (player.playerId == multiplayerData.playerId)
+                {
+                    player.playerNumber = (int)multiplayerData.clientId;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            CheckMyTurn();
+        }
+    }
     #endregion
+
+    #endregion Multiplayer RPC & NetworkMethods
 
 }
 
@@ -409,13 +449,14 @@ public enum PlayerCount
 }
 public class PlayerData
 {
-    public readonly int playerNumber;
+    public int playerNumber;
     public int currentIndex;
     public int serverIndex;
     public string playerName;
     public readonly Color32 playerColor;
     public readonly Color32 neighborOption;
     public Enums.PlayerType playerType;
+    public FixedString64Bytes playerId;
     public int playerScore { get; private set; }
 
 
@@ -435,6 +476,7 @@ public class PlayerData
         this.playerScore = 0;
         this.currentIndex = multiplayerData.currentIndex;
         this.serverIndex = multiplayerData.serverIndex;
+        this.playerId = multiplayerData.playerId;
         GetColor((PlayerCount)multiplayerData.colorId, out playerColor, out neighborOption);
         playerType = (Enums.PlayerType)multiplayerData.playerType;
     }
@@ -472,5 +514,4 @@ public class PlayerData
 
         }
     }
-
 }

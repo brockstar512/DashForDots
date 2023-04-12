@@ -12,15 +12,16 @@ public class ExploringState : BaseState
     public override void Initialize(StateManager StateManager)
     {
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
-        reset.onClick.AddListener(delegate {
+        reset.onClick.AddListener(delegate
+        {
             StateManager.gridManager.Reset();
             StateManager.SwitchState(StateManager.ResetState);
         });
-    }  
-   
+    }
+
     public override void EnterState(StateManager stateManager)
     {
-        if (PlayerHandler.Instance.CurrentPlayerTurn == Enums.CurrentPlayerTurn.AI_Turn || stateManager.currentPlayerTurn.playerType == Enums.PlayerType.OpponentPlayer)
+        if (PlayerHandler.Instance.CurrentPlayerTurn == Enums.CurrentPlayerTurn.AI_Turn || stateManager.currentPlayerTurn != null && stateManager.currentPlayerTurn.playerType == Enums.PlayerType.OpponentPlayer)
             return;
         this.GetPage.DOScale(Vector3.one, 0).OnComplete(() => { cg.DOFade(1, .25f); });
     }
@@ -41,7 +42,7 @@ public class ExploringState : BaseState
         }
     }
     public override void LeaveState()
-    {        
+    {
         cg.DOFade(0, .1f).OnComplete(() => { this.GetPage.DOScale(Vector3.zero, 0); });
     }
 

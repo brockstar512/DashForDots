@@ -24,7 +24,7 @@ public class DecisionState : BaseState
     }
     public override void EnterState(StateManager stateManager)
     {
-        if (stateManager.currentPlayerTurn.playerType == Enums.PlayerType.OpponentPlayer)
+        if (stateManager.currentPlayerTurn != null && stateManager.currentPlayerTurn.playerType == Enums.PlayerType.OpponentPlayer)
         {
             return;
         }

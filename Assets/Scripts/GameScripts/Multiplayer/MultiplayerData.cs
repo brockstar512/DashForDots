@@ -12,7 +12,7 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
     public FixedString64Bytes playerName;
     public FixedString64Bytes playerId;
     public int status;//Denote player is active or not
-
+    public bool isRejoin;
     public bool Equals(MultiplayerData other)
     {
         return
@@ -24,7 +24,8 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
             currentIndex == other.currentIndex &&
             serverIndex == other.serverIndex &&
             isHost == other.isHost &&
-            status == other.status;
+            status == other.status &&
+            isRejoin == other.isRejoin;
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
@@ -38,6 +39,7 @@ public struct MultiplayerData : INetworkSerializable, System.IEquatable<Multipla
         serializer.SerializeValue(ref serverIndex);
         serializer.SerializeValue(ref isHost);
         serializer.SerializeValue(ref status);
+        serializer.SerializeValue(ref isRejoin);
     }
 
 }

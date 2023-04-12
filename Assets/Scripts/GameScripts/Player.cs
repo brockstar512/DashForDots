@@ -28,5 +28,6 @@ public class Player : MonoBehaviour
     {
         PlayerData = playerData;
         playerName = playerData.playerName;
+        playerNameText.text = playerName;
     }
 }

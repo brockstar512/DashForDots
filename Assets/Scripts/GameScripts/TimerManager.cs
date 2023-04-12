@@ -20,7 +20,7 @@ public class TimerManager : NetworkBehaviour
     public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
     NetworkVariable<bool> isOnce = new NetworkVariable<bool>() { Value = false };
     Color32 normalColor = new Color32(101, 138, 167, 255);
-    private int defaultTime = 20;
+    private int defaultTime = 50;
 
     private void OnEnable()
     {
@@ -44,11 +44,9 @@ public class TimerManager : NetworkBehaviour
 
     public async Task GameStartDelay()
     {
-        bool isMutiplayer = MultiplayerController.Instance.IsMutiplayer;
-        var data = NetworkManager.Singleton;
+        bool isMutiplayer = MultiplayerController.Instance.IsMultiplayer;
         if (IsClient && isMutiplayer && !IsServer)
         {
-            Debug.LogError("GameStartDelay Return");
             return;
         }
         timeTitle.color = Color.red;
@@ -72,6 +70,11 @@ public class TimerManager : NetworkBehaviour
         }
         PlayerHandler.Instance.UpdateScore(0, false);
         await Task.Yield();
+        DestoryScreenBlocker();
+    }
+
+    public void DestoryScreenBlocker()
+    {
         DestroyImmediate(screenBlocker);
     }
 
@@ -111,7 +114,7 @@ public class TimerManager : NetworkBehaviour
     {
         UpdateTextColor();
         await Task.Delay(1000);
-        if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+        if (IsServer || !MultiplayerController.Instance.IsMultiplayer)
         {
             timeRemaining.Value = defaultTime;
             timerIsRunning.Value = true;
@@ -129,7 +132,7 @@ public class TimerManager : NetworkBehaviour
 
     void Update()
     {
-        if (IsServer || !MultiplayerController.Instance.IsMutiplayer)
+        if (IsServer || !MultiplayerController.Instance.IsMultiplayer)
         {
             if (timerIsRunning.Value)
             {
@@ -168,7 +171,7 @@ public class TimerManager : NetworkBehaviour
             if (timeRemaining.Value <= 0.05f)
             {
                 isOnce.Value = true;
-                if (MultiplayerController.Instance.IsMutiplayer)
+                if (MultiplayerController.Instance.IsMultiplayer)
                 {
                     if (IsServer)
                     {

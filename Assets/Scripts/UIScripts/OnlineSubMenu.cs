@@ -1,16 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
-using static Enums;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
-using System;
-using JetBrains.Annotations;
-using System.Linq;
-using static OnlineSubMenu;
-using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UI;
 using static GameLobby;
 
 public class OnlineSubMenu : MonoBehaviour
@@ -212,6 +207,7 @@ public class OnlineSubMenu : MonoBehaviour
     private void Reset()
     {
         waitingViewRefrences.gameCodeText.text = string.Empty;
+        joinCodeInputField.text = string.Empty;
         MultiplayerController.Instance.ShutDown();
     }
     private void LoadingAnimation(bool flag)
