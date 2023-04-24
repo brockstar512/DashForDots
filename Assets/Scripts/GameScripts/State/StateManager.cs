@@ -76,7 +76,7 @@ public class StateManager : MonoBehaviour
         currentState.EnterState(this);
         // currentPlayerTurn= PlayerData.
         ///
-        await gridManager.UpdateRejoinUI();
+        await gridManager.UpdateRejoinPlayerUI();
         await Task.Yield();
     }
 

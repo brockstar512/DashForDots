@@ -123,7 +123,7 @@ public class GridManager : MonoBehaviour
     }
 
     public async Task SelectedNeighbor(int x, int y)
-    {       
+    {
         neighborDot = dots[x, y].coordinates;
         LeaveNeighbors();
         await dots[currentDot.X, currentDot.Y].PairWithNeighbor(dots[neighborDot.X, neighborDot.Y]);
@@ -315,33 +315,42 @@ public class GridManager : MonoBehaviour
             MultiplayerController.Instance.SetPlayerTurn(playerTurn);
         }
     }
-    public async Task UpdateRejoinUI()
+    public async Task UpdateRejoinPlayerUI()
     {
         if (MultiplayerController.Instance.IsMultiplayer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
             if (multiplayerData.isRejoin)
-            {
+            {              
                 timerManager.DestoryScreenBlocker();
-                foreach (PlayerTurn turn in MultiplayerController.Instance.playerTurnList)
-                {
-                    await UpdateUIForRejoinPlayer(turn);
-                }
+                await UpdateUIForRejoinPlayerAsync(MultiplayerController.Instance.playerTurnList, 0);
+             
             }
         }
     }
-    private async Task UpdateUIForRejoinPlayer(PlayerTurn playerTurn)
-    {
-        await SelectDotLocal((int)playerTurn.selectedDot.x, (int)playerTurn.selectedDot.y);
-        dots[(int)playerTurn.selectedDot.x, (int)playerTurn.selectedDot.y].DotStyling.Select();
-        await SelectedNeighbor((int)playerTurn.neighborDot.x, (int)playerTurn.neighborDot.y);
-        await LeaveDot();
-        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);      
-        currentDot = null;
-        neighborDot = null;
-        await scoreKeeper.Check();
-        await Task.Yield();
 
+    async Task UpdateUIForRejoinPlayerAsync(NetworkList<PlayerTurn> playerTurn, int index)
+    {
+        if (index < playerTurn.Count)
+        {
+            Time.timeScale = 20;
+            PlayerHandler.Instance.SetPlayerDataSync(playerTurn[index].turn);
+            await SelectDotLocal((int)playerTurn[index].selectedDot.x, (int)playerTurn[index].selectedDot.y);
+            dots[(int)playerTurn[index].selectedDot.x, (int)playerTurn[index].selectedDot.y].DotStyling.SelectWithoutDelay();
+            await SelectedNeighbor((int)playerTurn[index].neighborDot.x, (int)playerTurn[index].neighborDot.y);
+            await LeaveDot();
+            await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+            currentDot = null;
+            neighborDot = null;
+            int scoreCount = await scoreKeeper.Check();
+            if (scoreCount > 0)
+            {
+                PlayerHandler.Instance.UpdateScore(scoreCount, playerTurn[index].turn, GameFinished());
+            }           
+            Time.timeScale = 1;
+            await UpdateUIForRejoinPlayerAsync(playerTurn, index + 1);
+
+        }
     }
     public bool GameFinished()
     {

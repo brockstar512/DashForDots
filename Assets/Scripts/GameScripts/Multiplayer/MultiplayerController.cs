@@ -2,7 +2,7 @@ using System;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class MultiplayerController : NetworkBehaviour
 {
     #region  refrences
@@ -14,10 +14,10 @@ public class MultiplayerController : NetworkBehaviour
     {
         get
         {
-            return isMutiplayer.Value;
+            return isMutiplayer.Value|| Constants.GAME_TYPE == (int)Enums.GameType.Multiplayer;
         }
     }
-    private NetworkVariable<bool> isGameStarted = new NetworkVariable<bool>();
+    public NetworkVariable<bool> isGameStarted = new NetworkVariable<bool>();
     public bool IsGameStarted
     {
         get
@@ -75,7 +75,16 @@ public class MultiplayerController : NetworkBehaviour
         //Sign up for unity services in order to use Relay services.  
         GameLobby.Instance.InitializeUnityAuthentication();
         playerNetworkList.OnListChanged += PlayerNetworkList_OnListUpdate;
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
         PlayerCount.Value = 2;
+    }
+
+    private void SceneManager_activeSceneChanged(Scene current, Scene next)
+    {
+        if (current.name == LoadingManager.Scene.MainMenu.ToString())
+        {
+            Reset();
+        }
     }
 
     #endregion
@@ -87,8 +96,7 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
-        Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
-        isMutiplayer.Value = true;
+        Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;       
         NetworkManager.Singleton.StartHost();
     }
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
@@ -124,13 +132,14 @@ public class MultiplayerController : NetworkBehaviour
                 status = (int)Enums.PlayerState.Active,
                 isHost = NetworkManager.Singleton.IsHost,
                 clientId = clientId,
-                currentIndex = playerNetworkList.Count - 1,
-                serverIndex = playerNetworkList.Count - 1,
+                currentIndex = playerNetworkList.Count,
+                serverIndex = playerNetworkList.Count,
                 playerName = "Player_" + (playerNetworkList.Count + 1),
                 colorId = 1,
             });
             SetPlayerServerRpc(AuthenticationService.Instance.PlayerId);
             OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });
+            isMutiplayer.Value = true;
         }
         else
         {
@@ -225,7 +234,6 @@ public class MultiplayerController : NetworkBehaviour
 
         }
     }
-
     private void PlayerNetworkList_OnListUpdate(NetworkListEvent<MultiplayerData> changeEvent)
     {
         Debug.Log($"Total player {playerNetworkList.Count}");
@@ -265,11 +273,17 @@ public class MultiplayerController : NetworkBehaviour
         else if (IsServer)
         {
             DisconnectClientServerRpc();
-            playerNetworkList.Clear();
-            PlayerCount = new NetworkVariable<int>() { Value = 2 };
-            isMutiplayer.Value = false;
-            NetworkManager.Singleton.Shutdown(true);
+            Reset();
         }
+    }
+
+    private void Reset()
+    {
+        playerNetworkList.Clear();
+        PlayerCount = new NetworkVariable<int>() { Value = 2 };
+        isMutiplayer = new NetworkVariable<bool>();
+        isGameStarted = new NetworkVariable<bool>();
+        NetworkManager.Singleton.Shutdown(true);
     }
 
     [ServerRpc]

@@ -13,9 +13,21 @@ using Unity.Collections;
 
 public class PlayerHandler : NetworkBehaviour
 {
-    public static PlayerHandler Instance { get; private set; }
+    private static PlayerHandler instance;
+    public static PlayerHandler Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<PlayerHandler>();
+            }
+            return instance;
+        }
+    }
     public List<PlayerData> players { get; private set; }
-    public PlayerData player { get { return players[GetPlayerIndex(currentPlayer.Value)]; } }
+    //public PlayerData player { get { return players[GetPlayerIndex(currentPlayer.Value)]; } }
+    public PlayerData player { get; set; } = new PlayerData(PlayerCount.Red);
     public NetworkVariable<int> currentPlayer = new NetworkVariable<int>();
     public Enums.CurrentPlayerTurn CurrentPlayerTurn;
     public Enums.PlayerCount GetPlayerCount;
@@ -43,7 +55,7 @@ public class PlayerHandler : NetworkBehaviour
         }
         else
         {
-            Instance = this;
+            instance = this;
         }
     }
     private void OnEnable()
@@ -63,23 +75,25 @@ public class PlayerHandler : NetworkBehaviour
         gridManager.OnSelectedCancel -= OnSelectedCancel;
         gridManager.OnSelectedConfirm -= OnSelectedConfirm;
         gridManager.OnSelectedReset -= OnSelectedReset;
-        MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
+        if (MultiplayerController.Instance != null)
+        {
+            MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
+        }
     }
 
-    public async Task Init(PlayerCount playerCount)
+    public async Task Init(PlayerCount playerCount, bool isMultiplayer)
     {
-        bool isMutiplayer = MultiplayerController.Instance.IsMultiplayer;
         players = new List<PlayerData>();
         playerScoreDots = new List<Transform>();
         playerUIDots = new List<Transform>();
-        int playerIndex = isMutiplayer ? MultiplayerController.Instance.GetPlayerDataIndexFromClientId(NetworkManager.Singleton.LocalClientId) : -1;
+        int playerIndex = isMultiplayer ? MultiplayerController.Instance.GetPlayerDataIndexFromClientId(NetworkManager.Singleton.LocalClientId) : -1;
         for (int i = 0; i < maxPlayerCount; i++)
         {
             if (i < (int)playerCount - LocalGameController.botCount)
             {
                 playerScoreDots.Add(scoreDotParent.GetChild(i));
                 playerUIDots.Add(mainBoardDotParent.GetChild(i));
-                if (!isMutiplayer)
+                if (!isMultiplayer)
                 {
                     playerScoreDots[i].name = "Real player" + 1;
                     players.Add(new PlayerData((PlayerCount)i + 1));
@@ -146,10 +160,9 @@ public class PlayerHandler : NetworkBehaviour
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
         bool isMutiplayer = MultiplayerController.Instance.IsMultiplayer;
-        playerScoreDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
+        UpdateScore(incomingPoints, currentPlayer.Value, isOver);
         if (isOver)
         {
-            Instantiate(gameOverManager, this.transform.parent).Init(players);
             if (IsServer || !isMutiplayer)
             {
                 timerManager.timerIsRunning.Value = false;
@@ -165,20 +178,34 @@ public class PlayerHandler : NetworkBehaviour
 
     }
 
+    public void UpdateScore(int incomingPoints, int index, bool isGameOver)
+    {
+        // Debug.LogError($"Playername{player.playerName} score {incomingPoints}");
+        if (playerScoreDots.Count > 0)
+        {
+            playerScoreDots[GetPlayerIndex(index)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
+        }
+        if (isGameOver)
+        {
+            Instantiate(gameOverManager, this.transform.parent).Init(players);
+        }
+    }
+
     private void CheckMyTurn()
     {
         if (MultiplayerController.Instance.IsMultiplayer)
         {
-            Debug.LogError($"ITS my turn{MultiplayerController.Instance.IsMyTurn(currentPlayer.Value)}");
             boardIntrection.SetActive(!MultiplayerController.Instance.IsMyTurn(currentPlayer.Value));
         }
         else
         {
             boardIntrection.SetActive(false);
         }
-        stateManager.SetCurrentPlayerTurn(players[GetPlayerIndex(currentPlayer.Value)]);
+        if (players != null && players.Count > 0)
+        {
+            stateManager.SetCurrentPlayerTurn(players[GetPlayerIndex(currentPlayer.Value)]);
+        }
     }
-
     public void NextPlayer()
     {
         if (!MultiplayerController.Instance.IsMultiplayer)
@@ -186,7 +213,7 @@ public class PlayerHandler : NetworkBehaviour
             mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
             IncrementCounter();
         }
-
+        SetPlayerDataSync(currentPlayer.Value);
         ChangePlayerIndicator();
         CheckMyTurn();
         SetPlayerTurn();
@@ -235,15 +262,23 @@ public class PlayerHandler : NetworkBehaviour
         yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
     }
+    public void BoardIntraction(bool flag)
+    {
+        boardIntrection.SetActive(!flag);
+    }
     async void ChangePlayerIndicator()
     {
         mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(1, .75f);
         await timerManager.StartTimer();
     }
+    public void SetPlayerDataSync(int index)
+    {
+        player = players[GetPlayerIndex(index)];
+    }
 
     public int GetPlayerIndex(int value)
     {
-        if (MultiplayerController.Instance.IsMultiplayer)
+        if (MultiplayerController.Instance.IsMultiplayer && players != null)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(value);
             int index = players.FindIndex(t => t.serverIndex == multiplayerData.serverIndex);

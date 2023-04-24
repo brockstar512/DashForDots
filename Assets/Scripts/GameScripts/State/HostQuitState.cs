@@ -34,7 +34,9 @@ public class HostQuitState : BaseState
     {
         if (MultiplayerController.Instance.IsMultiplayer)
         {
-            NetworkManager.Singleton.Shutdown(true);
+            MultiplayerController.Instance.ShutDown();
+            Destroy(NetworkManager.Singleton.gameObject);
+            Destroy(MultiplayerController.Instance.gameObject);
         }
         LoadingManager.Instance.LoadScene(targetScene.ToString());
 

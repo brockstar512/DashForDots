@@ -23,28 +23,26 @@ public class GameInitializer : NetworkBehaviour
     private void Awake()
     {
         stateManager = GetComponent<StateManager>();
-        isMultiplayer = stateManager.GetGameType() == Enums.GameType.Multiplayer;       
+        isMultiplayer = MultiplayerController.Instance.IsMultiplayer;
         if (!isMultiplayer)
         {
             StartGame(isMultiplayer);
         }
-        else if (NetworkManager.Singleton.IsServer && isMultiplayer)
+        else if (isMultiplayer)
         {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;         
-        }        
+            LoadingManager.Instance.Show();
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+        }
     }
+
     public override void OnNetworkSpawn()
     {
-        if (IsServer)
-        {
-            StartGameServerRpc(true);
-        }
-        MultiplayerController.Instance.rejoinPlayerConnected.OnValueChanged += OnRejoinPlayerValueChanged;      
+        MultiplayerController.Instance.rejoinPlayerConnected.OnValueChanged += OnRejoinPlayerValueChanged;
     }
 
     private void OnRejoinPlayerValueChanged(ulong previousValue, ulong newValue)
     {
-        if (newValue==NetworkManager.LocalClientId)
+        if (newValue == NetworkManager.LocalClientId)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
             if (multiplayerData.isRejoin)
@@ -56,27 +54,20 @@ public class GameInitializer : NetworkBehaviour
 
     private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
+        StartGame(true);
+    }
+
+
+    async void StartGame(bool isMultiplayer)
+    {
+        LoadingManager.Instance.Hide();
         if (IsServer)
         {
             MultiplayerController.Instance.SetGameStarted(true);
         }
-    }
-
-    [ServerRpc]
-    private void StartGameServerRpc(bool isMultiplayer)
-    {
-        StartGameClientRpc(isMultiplayer);
-    }
-    [ClientRpc]
-    private void StartGameClientRpc(bool isMultiplayer)
-    {
-        StartGame(isMultiplayer);
-    }
-    async void StartGame(bool isMultiplayer)
-    {
         int total_PlayerCount;
         total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.PlayerCount.Value : LocalGameController.playerCount + LocalGameController.botCount;
-        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount);
+        await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount, isMultiplayer);
         int maxLensZoom = 0;
         switch ((PlayerCount)total_PlayerCount)
         {
@@ -105,8 +96,7 @@ public class GameInitializer : NetworkBehaviour
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().size = new Vector3(27f, 48f, 7.22f);
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().center = new Vector3(0f, 0f, -1.08f);
                 break;
-        }
-
+        }       
         await stateManager.Init(currentBoard, maxLensZoom);
         //delay before we actually start the game
     }

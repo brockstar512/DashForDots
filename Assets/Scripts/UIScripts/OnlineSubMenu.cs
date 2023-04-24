@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using static GameLobby;
 
@@ -52,6 +54,7 @@ public class OnlineSubMenu : MonoBehaviour
         shareCode.onClick.AddListener(delegate { StartHost(); });
         play.onClick.AddListener(delegate { StartClient(); });
         waitingViewRefrences.playGame.onClick.AddListener(delegate { StartGame(); });
+        waitingViewRefrences.shareBtn.onClick.AddListener(delegate { ShareCode(); });
         IncreasePlayers.onClick.RemoveAllListeners();
         DecreasePlayers.onClick.RemoveAllListeners();
         IncreasePlayers.onClick.AddListener(delegate { WrapPlayer(1); });
@@ -59,8 +62,10 @@ public class OnlineSubMenu : MonoBehaviour
         MultiplayerController.Instance.OnPlayerConnected += Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged += Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
-        GameLobby.Instance.OnGameJoinFailed += GameLobby_OnGameJoinFailed;
-    }   
+        GameLobby.Instance.OnGameJoinStarted += GameLobby_OnGameJoinStarted;
+        GameLobby.Instance.OnGameCreateJoinFailed += GameLobby_OnGameJoinFailed;      
+    }
+   
 
     private void OnDisable()
     {
@@ -73,8 +78,10 @@ public class OnlineSubMenu : MonoBehaviour
         MultiplayerController.Instance.OnPlayerConnected -= Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged -= Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
-        GameLobby.Instance.OnGameJoinFailed -= GameLobby_OnGameJoinFailed;
-    }
+        GameLobby.Instance.OnGameJoinStarted -= GameLobby_OnGameJoinStarted;
+        GameLobby.Instance.OnGameCreateJoinFailed -= GameLobby_OnGameJoinFailed;     
+       
+    }   
 
     private void Multiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
     {
@@ -89,7 +96,7 @@ public class OnlineSubMenu : MonoBehaviour
         if (NetworkManager.Singleton.IsHost)
         {
             waitingViewRefrences.playGame.gameObject.SetActive(MultiplayerController.Instance.CanHostStartTheGame());
-        }
+        }       
         LoadingAnimation(!MultiplayerController.Instance.CanHostStartTheGame());
         _ = ForceUpdateCanvases();
     }
@@ -158,7 +165,7 @@ public class OnlineSubMenu : MonoBehaviour
     private void StartHost()
     {
         if (playerCount >= 2)
-        {
+        {           
             GameLobby.Instance.HostGame();
         }
     }
@@ -199,15 +206,18 @@ public class OnlineSubMenu : MonoBehaviour
             OpenPage(waitingViewRefrences.waitingPanel);
             waitingViewRefrences.gameCodeText.text = string.Format("Game Code :{0}", GameLobby.Instance.GetGameCode());
         }
-        else if (!e.isClientJoined && e.clientId == NetworkManager.Singleton.LocalClientId)
+        else if (!e.isClientJoined)
         {
             Debug.Log($"e.isClientJoined {e.isClientJoined} e.clientId {e.clientId}LocalClientId {NetworkManager.Singleton.LocalClientId}");
+            UpdateButtonStatus(true);
         }
     }
     private void Reset()
     {
         waitingViewRefrences.gameCodeText.text = string.Empty;
         joinCodeInputField.text = string.Empty;
+        shareCode.interactable = true;
+        play.interactable = true;
         MultiplayerController.Instance.ShutDown();
     }
     private void LoadingAnimation(bool flag)
@@ -215,11 +225,37 @@ public class OnlineSubMenu : MonoBehaviour
         waitingViewRefrences.loadingView.gameObject.SetActive(flag);
         waitingViewRefrences.waitingForUser.gameObject.SetActive(flag);
     }
-    private void GameLobby_OnGameJoinFailed(object sender, OnGameJoinFailedEventArgs e)
+    private void GameLobby_OnGameJoinStarted(object sender, EventArgs e)
     {
-        ToastMessage.Show(e.message);
+        UpdateButtonStatus(false);
     }
 
+    private void UpdateButtonStatus(bool flag)
+    {
+        shareCode.interactable = flag;
+        play.interactable = flag;
+    }
+
+    private void GameLobby_OnGameJoinFailed(object sender, OnGameJoinFailedEventArgs e)
+    {
+        UpdateButtonStatus(true);
+        ToastMessage.Show(e.message);
+    }
+    private void OnTransportFailure()
+    {
+        UpdateButtonStatus(true);
+    }
+    void ShareCode()
+    {
+        string email = "";
+        string subject = MyEscapeURL("Game Code");
+        string body = MyEscapeURL($"Please find game code here : {GameLobby.Instance.GetGameCode()} \nPlease Download the game \n http://google.com ");
+        Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
+    }
+    string MyEscapeURL(string url)
+    {
+        return UnityWebRequest.EscapeURL(url).Replace("+", "%20");
+    }
     [System.Serializable]
     public struct WaitingViewRefrences
     {
@@ -229,6 +265,7 @@ public class OnlineSubMenu : MonoBehaviour
         public List<GameObject> playerList;
         public DotLoadingAnimation loadingView;
         public GameObject waitingForUser;
+        public Button shareBtn;
     }
 
 }

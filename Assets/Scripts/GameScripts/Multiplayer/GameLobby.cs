@@ -15,7 +15,7 @@ public class GameLobby : NetworkBehaviour
 {
     private NetworkVariable<FixedString64Bytes> gameCode = new NetworkVariable<FixedString64Bytes>();
     public event EventHandler OnGameJoinStarted;
-    public event EventHandler<OnGameJoinFailedEventArgs> OnGameJoinFailed;
+    public event EventHandler<OnGameJoinFailedEventArgs> OnGameCreateJoinFailed;
     public class OnGameJoinFailedEventArgs : EventArgs
     {
         public string message;
@@ -53,6 +53,7 @@ public class GameLobby : NetworkBehaviour
     {
         try
         {
+            OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MultiplayerController.Instance.PlayerCount.Value);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             gameCode = new NetworkVariable<FixedString64Bytes>();
@@ -63,7 +64,7 @@ public class GameLobby : NetworkBehaviour
         }
         catch (RelayServiceException e)
         {
-            Debug.Log(e);
+            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = e.Message });
         }
     }
 
@@ -79,7 +80,7 @@ public class GameLobby : NetworkBehaviour
         }
         catch (RelayServiceException e)
         {           
-            OnGameJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = Utility.GetErrorMessage(e.ErrorCode) });
+            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = Utility.GetErrorMessage(e.ErrorCode) });
         }
     }
 

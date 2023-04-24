@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PersistentCanvas : MonoBehaviour
+public class NetworkManagerInstanceCheck : MonoBehaviour
 {
-    public PersistentCanvas Instance { get; private set; }
-
-    private static PersistentCanvas instanceCheck;
+    private static NetworkManagerInstanceCheck instanceCheck;
     private void Start()
     {
         if (instanceCheck == null)
@@ -18,5 +17,5 @@ public class PersistentCanvas : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+    }   
 }

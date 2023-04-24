@@ -1,11 +1,11 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Unity.Netcode;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using System.Linq;
-using Unity.VectorGraphics;
-using TMPro;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -32,15 +32,22 @@ public class GameOverManager : MonoBehaviour
     {
         cg = GetComponent<CanvasGroup>();
         cg.alpha = 0;
-
-        cg.DOFade(1,.5f).SetEase(Ease.InOutBack);
-
+        cg.DOFade(1, .5f).SetEase(Ease.InOutBack);
+        replayButton.gameObject.SetActive(!MultiplayerController.Instance.IsMultiplayer);
         replayButton.onClick.RemoveAllListeners();
         mainMenuButton.onClick.RemoveAllListeners();
         replayButton.onClick.AddListener(delegate { LoadingManager.Instance.LoadScene(replay.ToString()); });
-        mainMenuButton.onClick.AddListener(delegate { LoadingManager.Instance.LoadScene(mainMenu.ToString()); });
+        mainMenuButton.onClick.AddListener(delegate
+        {
+            if (MultiplayerController.Instance.IsMultiplayer)
+            {
+                MultiplayerController.Instance.ShutDown();
+                Destroy(NetworkManager.Singleton.gameObject);
+                Destroy(MultiplayerController.Instance.gameObject);
+            }
+            LoadingManager.Instance.LoadScene(mainMenu.ToString());
 
-
+        });
         List<PlayerData> toReturn = players.OrderByDescending(player => player.playerScore).ToList();
 
         PopulateLeaderBoard(toReturn);
@@ -50,7 +57,7 @@ public class GameOverManager : MonoBehaviour
     {
         int playerCount = players.Count();
         int rank = 1;
-        for(int i = 0; i < leaderboardParent.childCount; i++)
+        for (int i = 0; i < leaderboardParent.childCount; i++)
         {
             if (playerCount <= 0)
             {
@@ -58,7 +65,7 @@ public class GameOverManager : MonoBehaviour
                 continue;
             }
 
-            if(i > 0 && players[i].playerScore == players[i - 1].playerScore)
+            if (i > 0 && players[i].playerScore == players[i - 1].playerScore)
             {
                 rank--;
             }
@@ -71,5 +78,5 @@ public class GameOverManager : MonoBehaviour
         }
     }
 
-    
+
 }

@@ -20,7 +20,7 @@ public class TimerManager : NetworkBehaviour
     public NetworkVariable<bool> timerIsRunning = new NetworkVariable<bool>();
     NetworkVariable<bool> isOnce = new NetworkVariable<bool>() { Value = false };
     Color32 normalColor = new Color32(101, 138, 167, 255);
-    private int defaultTime = 50;
+    private int defaultTime = 20;
 
     private void OnEnable()
     {
@@ -132,14 +132,13 @@ public class TimerManager : NetworkBehaviour
 
     void Update()
     {
-        if (IsServer || !MultiplayerController.Instance.IsMultiplayer)
+        if (IsServer || MultiplayerController.Instance != null && !MultiplayerController.Instance.IsMultiplayer)
         {
             if (timerIsRunning.Value)
             {
                 if (timeRemaining.Value > 0)
                 {
                     timeRemaining.Value -= Time.deltaTime;
-
                 }
                 else
                 {
@@ -168,11 +167,15 @@ public class TimerManager : NetworkBehaviour
             {
                 UpdateTextColor();
             }
-            if (timeRemaining.Value <= 0.05f)
+            if (timeRemaining.Value <= 0.08f)
             {
-                isOnce.Value = true;
+                if (IsServer || MultiplayerController.Instance != null && !MultiplayerController.Instance.IsMultiplayer)
+                {
+                    isOnce.Value = true;
+                }
                 if (MultiplayerController.Instance.IsMultiplayer)
                 {
+                    PlayerHandler.Instance.BoardIntraction(false);
                     if (IsServer)
                     {
                         GetRandomMove();
@@ -190,7 +193,12 @@ public class TimerManager : NetworkBehaviour
             UpdateTextTime(0, 0);
         }
     }
-
+    public override void OnNetworkDespawn()
+    {
+        timeRemaining = new NetworkVariable<float>();
+        timerIsRunning = new NetworkVariable<bool>();
+        base.OnNetworkDespawn();
+    }
     private static void GetRandomMove()
     {
         PlayerHandler.Instance.aiHandler.GetRandomMove();
