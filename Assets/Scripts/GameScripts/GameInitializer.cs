@@ -66,7 +66,7 @@ public class GameInitializer : NetworkBehaviour
             MultiplayerController.Instance.SetGameStarted(true);
         }
         int total_PlayerCount;
-        total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.PlayerCount.Value : LocalGameController.playerCount + LocalGameController.botCount;
+        total_PlayerCount = isMultiplayer ? MultiplayerController.Instance.GetPlayerList().Count : LocalGameController.playerCount + LocalGameController.botCount;
         await PlayerHandler.Instance.Init((PlayerCount)total_PlayerCount, isMultiplayer);
         int maxLensZoom = 0;
         switch ((PlayerCount)total_PlayerCount)

@@ -44,6 +44,7 @@ public class GameOverManager : MonoBehaviour
                 MultiplayerController.Instance.ShutDown();
                 Destroy(NetworkManager.Singleton.gameObject);
                 Destroy(MultiplayerController.Instance.gameObject);
+                Destroy(GameLobby.Instance.gameObject);
             }
             LoadingManager.Instance.LoadScene(mainMenu.ToString());
 

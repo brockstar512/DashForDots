@@ -43,6 +43,7 @@ public class QuitState : BaseState
             MultiplayerController.Instance.ShutDown();
             Destroy(NetworkManager.Singleton.gameObject);
             Destroy(MultiplayerController.Instance.gameObject);
+            Destroy(GameLobby.Instance.gameObject);
         }
         LoadingManager.Instance.LoadScene(targetScene.ToString());
 
