@@ -109,7 +109,7 @@ public class StateManager : MonoBehaviour
     }
 
     public void SwitchState(BaseState state)
-    {
+    {       
         currentState.LeaveState();
         currentState = state;
         currentState.EnterState(this);

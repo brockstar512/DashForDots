@@ -9,7 +9,7 @@ public class MultiplayerController : NetworkBehaviour
 {
     #region  refrences
     private static MultiplayerController instance;
-    public NetworkVariable<int> PlayerCount;//minimum plyer count 2 for multiplayer  
+    public NetworkVariable<int> MaxPlayerCount;//minimum plyer count 2 for multiplayer  
     public event EventHandler<OnPlayerConnectedEventArgs> OnPlayerConnected;
     public NetworkVariable<bool> isMutiplayer = new NetworkVariable<bool>(false);
     public bool IsMultiplayer
@@ -68,7 +68,7 @@ public class MultiplayerController : NetworkBehaviour
     private void InitializeVariable()
     {
         playerNetworkList = new NetworkList<MultiplayerData>();
-        PlayerCount = new NetworkVariable<int>(2);
+        // PlayerCount = new NetworkVariable<int>(2);
         playerTurnList = new NetworkList<PlayerTurn>();
     }
 
@@ -78,7 +78,7 @@ public class MultiplayerController : NetworkBehaviour
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         GameLobby.Instance.InitializeUnityAuthentication();
         playerNetworkList.OnListChanged += PlayerNetworkList_OnListUpdate;
-        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+        // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
     private void SceneManager_activeSceneChanged(Scene current, Scene next)
@@ -116,7 +116,7 @@ public class MultiplayerController : NetworkBehaviour
             connectionApprovalResponse.Reason = "Game Already Started";
             return;
         }
-        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= PlayerCount.Value)
+        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MaxPlayerCount.Value)
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "No Room Avaliable";
@@ -128,6 +128,12 @@ public class MultiplayerController : NetworkBehaviour
     {
         if (!IsGameStarted)
         {
+            if (!isMaxPlayerSet)
+            {
+                MaxPlayerCount = new NetworkVariable<int>();
+                MaxPlayerCount.Value = maxPlayerCount;
+                isMaxPlayerSet = true;
+            }
             playerNetworkList.Add(new MultiplayerData
             {
                 status = (int)Enums.PlayerState.Active,
@@ -140,6 +146,7 @@ public class MultiplayerController : NetworkBehaviour
             SetPlayerServerRpc(AuthenticationService.Instance.PlayerId, NetworkManager.Singleton.IsHost);
             OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });
             isMutiplayer.Value = true;
+
         }
         else
         {
@@ -283,7 +290,8 @@ public class MultiplayerController : NetworkBehaviour
         playerNetworkList.Clear();
         isMutiplayer = new NetworkVariable<bool>();
         isGameStarted = new NetworkVariable<bool>();
-        PlayerCount = new NetworkVariable<int>(2);
+        // PlayerCount = new NetworkVariable<int>(2);
+        isMaxPlayerSet = false;
         NetworkManager.Singleton.Shutdown(true);
     }
 
@@ -310,10 +318,16 @@ public class MultiplayerController : NetworkBehaviour
 
     #endregion
 
-    #region Getter    
+    #region Getter   
+    private int maxPlayerCount = 2;
+    private bool isMaxPlayerSet = false;
     public void SetPlayerCount(int count)
     {
-        PlayerCount.Value = count;
+        maxPlayerCount = count;
+    }
+    public void ResetPlayerCount()
+    {
+        MaxPlayerCount = new NetworkVariable<int>(2);
     }
     public NetworkList<MultiplayerData> GetPlayerList()
     {
@@ -321,7 +335,7 @@ public class MultiplayerController : NetworkBehaviour
     }
     public bool CanHostStartTheGame()
     {
-        return playerNetworkList.Count == PlayerCount.Value;
+        return playerNetworkList.Count == MaxPlayerCount.Value;
     }
     public MultiplayerData GetPlayerData()
     {
@@ -414,6 +428,12 @@ public class MultiplayerController : NetworkBehaviour
     {
         isGameStarted.Value = flag;
     }
+    public void UpdatePlayerScore(int CurrentPlayer, int score)
+    {
+        MultiplayerData multiplayerData = GetPlayerDataFromPlayerIndex(CurrentPlayer);
+        multiplayerData.score = score;
+        playerNetworkList[CurrentPlayer] = multiplayerData;
 
+    }
     #endregion
 }

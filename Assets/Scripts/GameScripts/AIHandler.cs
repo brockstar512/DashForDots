@@ -92,8 +92,7 @@ namespace DashForDots.AI
         }
 
         public void GetRandomMove()
-        {
-
+        {         
             GetAllValidMoves();
             int validMovesCount = validMoves.Count;
             int randomMoveIndex = Random.Range(0, validMovesCount);

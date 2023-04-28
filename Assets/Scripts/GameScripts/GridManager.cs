@@ -23,6 +23,7 @@ public class GridManager : MonoBehaviour
     public Action OnSelectedCancel;
     public Action OnSelectedConfirm;
     public Action OnSelectedReset;
+    int retryCounter = 3;
     //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -101,6 +102,10 @@ public class GridManager : MonoBehaviour
 
     public async Task SelectDotLocal(int x, int y)
     {
+        if (dots == null)
+        {
+            return;
+        }
         if (currentDot != null)
         {
             await LeaveDot();
@@ -321,35 +326,62 @@ public class GridManager : MonoBehaviour
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
             if (multiplayerData.isRejoin)
-            {              
-                timerManager.DestoryScreenBlocker();
-                await UpdateUIForRejoinPlayerAsync(MultiplayerController.Instance.playerTurnList, 0);
-             
+            {
+                try
+                {
+                    var turnData = MultiplayerController.Instance.playerTurnList;
+                    await SyncRejoin(turnData);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log($"Exception {e.Message}");
+                    if (retryCounter > 0)
+                    {
+                        retryCounter--;
+                        await UpdateRejoinPlayerUI();
+                    }
+                }
             }
         }
     }
 
-    async Task UpdateUIForRejoinPlayerAsync(NetworkList<PlayerTurn> playerTurn, int index)
+    private async Task SyncRejoin(NetworkList<PlayerTurn> turnData)
     {
-        if (index < playerTurn.Count)
+        PlayerHandler.Instance.isSycningGame = true;
+        PlayerHandler.Instance.lastSyncIndex = turnData.Count;
+        Time.timeScale = 30;
+        foreach (PlayerTurn item in turnData)
         {
-            Time.timeScale = 20;
-            PlayerHandler.Instance.SetPlayerDataSync(playerTurn[index].turn);
-            await SelectDotLocal((int)playerTurn[index].selectedDot.x, (int)playerTurn[index].selectedDot.y);
-            dots[(int)playerTurn[index].selectedDot.x, (int)playerTurn[index].selectedDot.y].DotStyling.SelectWithoutDelay();
-            await SelectedNeighbor((int)playerTurn[index].neighborDot.x, (int)playerTurn[index].neighborDot.y);
+            await UpdateUIForRejoinPlayerAsync(item);
+        }       
+        Time.timeScale = 1;
+        retryCounter = 3;
+        PlayerHandler.Instance.isSycningGame = false;
+        PlayerHandler.Instance.SetPlayerDataSync(PlayerHandler.Instance.currentPlayer.Value, true);
+        timerManager.DestoryScreenBlocker();
+    }
+
+    public async Task UpdateUIForRejoinPlayerAsync(PlayerTurn playerTurn)
+    {
+        try
+        {
+            PlayerHandler.Instance.SetPlayerDataSync(playerTurn.turn, true);
+            await SelectDotLocal((int)playerTurn.selectedDot.x, (int)playerTurn.selectedDot.y);
+            dots[(int)playerTurn.selectedDot.x, (int)playerTurn.selectedDot.y].DotStyling.Select();
+            await SelectedNeighbor((int)playerTurn.neighborDot.x, (int)playerTurn.neighborDot.y);
             await LeaveDot();
             await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+            int scoreCount = await scoreKeeper.Check();
             currentDot = null;
             neighborDot = null;
-            int scoreCount = await scoreKeeper.Check();
             if (scoreCount > 0)
             {
-                PlayerHandler.Instance.UpdateScore(scoreCount, playerTurn[index].turn, GameFinished());
-            }           
-            Time.timeScale = 1;
-            await UpdateUIForRejoinPlayerAsync(playerTurn, index + 1);
-
+                PlayerHandler.Instance.UpdateScore(scoreCount, playerTurn.turn, GameFinished());
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"Exception {e.Message}");
         }
     }
     public bool GameFinished()

@@ -43,7 +43,7 @@ public class OnlineSubMenu : MonoBehaviour
     }
     private void Start()
     {
-        playerCount = MultiplayerController.Instance.PlayerCount.Value;
+        playerCount = 2;
         WrapPlayer(0);
         LoadingAnimation(true);
     }
@@ -166,7 +166,7 @@ public class OnlineSubMenu : MonoBehaviour
     {
         if (playerCount >= 2)
         {           
-            GameLobby.Instance.HostGame();
+            GameLobby.Instance.HostGame(playerCount);
         }
     }
     private void StartClient()
@@ -218,6 +218,7 @@ public class OnlineSubMenu : MonoBehaviour
         joinCodeInputField.text = string.Empty;
         shareCode.interactable = true;
         play.interactable = true;
+        MultiplayerController.Instance.ResetPlayerCount();
         MultiplayerController.Instance.ShutDown();
     }
     private void LoadingAnimation(bool flag)

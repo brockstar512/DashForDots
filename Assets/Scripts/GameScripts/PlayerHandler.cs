@@ -27,7 +27,7 @@ public class PlayerHandler : NetworkBehaviour
     }
     public List<PlayerData> players { get; private set; }
     //public PlayerData player { get { return players[GetPlayerIndex(currentPlayer.Value)]; } }
-    public PlayerData player { get; set; } = new PlayerData(PlayerCount.Red);
+    public PlayerData player { get; private set; } = new PlayerData(PlayerCount.Red);
     public NetworkVariable<int> currentPlayer = new NetworkVariable<int>();
     public Enums.CurrentPlayerTurn CurrentPlayerTurn;
     public Enums.PlayerCount GetPlayerCount;
@@ -41,6 +41,9 @@ public class PlayerHandler : NetworkBehaviour
     public AIHandler aiHandler;
     public StateManager stateManager;
     public GridManager gridManager;
+    public bool isSycningGame;
+    public int lastSyncIndex;
+    public bool isGameSynced;
     //StopIntrection with board
     [SerializeField] GameObject boardIntrection;
 
@@ -180,22 +183,40 @@ public class PlayerHandler : NetworkBehaviour
 
     public void UpdateScore(int incomingPoints, int index, bool isGameOver)
     {
-        // Debug.LogError($"Playername{player.playerName} score {incomingPoints}");
         if (playerScoreDots.Count > 0)
-        {
+        {          
             playerScoreDots[GetPlayerIndex(index)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
         }
+        CheckGameOver(isGameOver);
+    }   
+    public void CheckGameOver(bool isGameOver)
+    {
         if (isGameOver)
         {
             Instantiate(gameOverManager, this.transform.parent).Init(players);
         }
     }
 
-    private void CheckMyTurn()
+    private async void CheckMyTurn()
     {
         if (MultiplayerController.Instance.IsMultiplayer)
         {
             boardIntrection.SetActive(!MultiplayerController.Instance.IsMyTurn(currentPlayer.Value));
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
+            if (multiplayerData.isRejoin && IsMyTurn() && !isGameSynced && !isSycningGame)
+            {
+                Time.timeScale = 30;
+                BoardIntraction(false);
+                var playerTurn = MultiplayerController.Instance.playerTurnList;
+                for (int i = lastSyncIndex; i < playerTurn.Count; i++)
+                {
+                    await gridManager.UpdateUIForRejoinPlayerAsync(playerTurn[i]);
+                }
+                isGameSynced = true;
+                SetPlayerDataSync(currentPlayer.Value, true);
+                BoardIntraction(true);
+                Time.timeScale = 1;
+            }
         }
         else
         {
@@ -205,6 +226,7 @@ public class PlayerHandler : NetworkBehaviour
         {
             stateManager.SetCurrentPlayerTurn(players[GetPlayerIndex(currentPlayer.Value)]);
         }
+
     }
     public void NextPlayer()
     {
@@ -213,7 +235,7 @@ public class PlayerHandler : NetworkBehaviour
             mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
             IncrementCounter();
         }
-        SetPlayerDataSync(currentPlayer.Value);
+        SetPlayerDataSync(currentPlayer.Value, false);
         ChangePlayerIndicator();
         CheckMyTurn();
         SetPlayerTurn();
@@ -258,7 +280,7 @@ public class PlayerHandler : NetworkBehaviour
     }
     IEnumerator TakeTurnAI()
     {
-        boardIntrection.SetActive(true);
+        BoardIntraction(false);
         yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
     }
@@ -266,14 +288,26 @@ public class PlayerHandler : NetworkBehaviour
     {
         boardIntrection.SetActive(!flag);
     }
+    public void TakeRandomTurnAI()
+    {
+        aiHandler.GetRandomMove();
+    }
     async void ChangePlayerIndicator()
     {
         mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(1, .75f);
         await timerManager.StartTimer();
     }
-    public void SetPlayerDataSync(int index)
+    public void SetPlayerDataSync(int index, bool enableForceFully)
     {
-        player = players[GetPlayerIndex(index)];
+        if (!isSycningGame || enableForceFully)
+        {
+            player = players[GetPlayerIndex(index)];
+            Debug.Log($"Current Color {(PlayerCount)player.colorId}");
+        }
+        else
+        {
+            Debug.LogError("Else" + index);
+        }
     }
 
     public int GetPlayerIndex(int value)
@@ -289,7 +323,10 @@ public class PlayerHandler : NetworkBehaviour
             return currentPlayer.Value;
         }
     }
-
+    public bool IsMyTurn()
+    {
+        return MultiplayerController.Instance.IsMyTurn(currentPlayer.Value);
+    }
 
     #region Multiplayer RPC & NetworkMethods
 
@@ -363,6 +400,21 @@ public class PlayerHandler : NetworkBehaviour
             _ = gridManager.OnCancel();
         }
     }
+    [ClientRpc]
+    public void OnCancelSelectedDotAndAITurnClientRpc()
+    {
+        MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+        if (IsMyTurn() || multiplayerData.status == (int)Enums.PlayerState.Inactive)
+        {
+            CancelDotForAITurn();
+        }
+    }
+    private void CancelDotForAITurn()
+    {
+        BoardIntraction(false);
+        TakeRandomTurnAI();
+    }
+
     #endregion Cancel
 
     #region SelectDot
@@ -488,6 +540,7 @@ public class PlayerData
     public int currentIndex;
     public int serverIndex;
     public string playerName;
+    public int colorId;
     public readonly Color32 playerColor;
     public readonly Color32 neighborOption;
     public Enums.PlayerType playerType;
@@ -512,6 +565,7 @@ public class PlayerData
         this.currentIndex = multiplayerData.currentIndex;
         this.serverIndex = multiplayerData.serverIndex;
         this.playerId = multiplayerData.playerId;
+        this.colorId = multiplayerData.colorId;
         GetColor((PlayerCount)multiplayerData.colorId, out playerColor, out neighborOption);
         playerType = (Enums.PlayerType)multiplayerData.playerType;
     }

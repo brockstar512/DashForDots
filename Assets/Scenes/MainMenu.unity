@@ -316,6 +316,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 2691674839
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!114 &296165205
@@ -627,6 +630,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 3752288732
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!114 &544312958
@@ -641,7 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5307f93e833185a44a357358d71f63d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCount:
+  MaxPlayerCount:
     m_InternalValue: 0
   isMutiplayer:
     m_InternalValue: 0
@@ -1064,7 +1070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5260213658282111751, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 374.789
       objectReference: {fileID: 0}
     - target: {fileID: 5260213658282111751, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1088,7 +1094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5260213658588645978, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5260213658588645978, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1204,7 +1210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7341535328833221764, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 374.789
       objectReference: {fileID: 0}
     - target: {fileID: 7341535328833221764, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1228,7 +1234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7341535329675906521, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7341535329675906521, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1252,7 +1258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7561645105748208525, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7561645105748208525, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1276,7 +1282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7561645106591486672, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 374.789
       objectReference: {fileID: 0}
     - target: {fileID: 7561645106591486672, guid: 216e0239716fe40cca76f0415b42f028, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2318,7 +2324,9 @@ MonoBehaviour:
     ProtocolVersion: 1
     NetworkTransport: {fileID: 1256535923}
     PlayerPrefab: {fileID: 1135359905633808811, guid: 3e397e5b6f8d108459faef5f9775eeda, type: 3}
-    NetworkPrefabs: []
+    Prefabs:
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 6dae86edbfad4df4c9d9fd5d56543d11, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 1
@@ -2334,6 +2342,7 @@ MonoBehaviour:
     LoadSceneTimeOut: 120
     SpawnTimeout: 1
     EnableNetworkLogs: 1
+    OldPrefabList: []
 --- !u!4 &1256535925
 Transform:
   m_ObjectHideFlags: 0

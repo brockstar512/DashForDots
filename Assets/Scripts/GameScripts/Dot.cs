@@ -127,7 +127,7 @@ public class Dot : MonoBehaviour
     {
         foreach (var direction in connectingCompass)
         {
-            Debug.Log($"<color=yellow>direction Value:{ direction.Value}</color> -- <color=yellow>connecting compass count : {connectingCompass.Count}</color> ");
+           // Debug.Log($"<color=yellow>direction Value:{ direction.Value}</color> -- <color=yellow>connecting compass count : {connectingCompass.Count}</color> ");
             if (!direction.Value)
                 return;
         }

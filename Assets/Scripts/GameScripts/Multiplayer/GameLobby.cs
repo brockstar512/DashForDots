@@ -58,15 +58,15 @@ public class GameLobby : NetworkBehaviour
         }
     }
 
-    public async void HostGame()
+    public async void HostGame(int playerCount)
     {
         try
         {
             OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MultiplayerController.Instance.PlayerCount.Value);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(playerCount);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             gameCode = joinCode;
-            Debug.Log("Joining code " + joinCode + "\n" + MultiplayerController.Instance.PlayerCount.Value);
+            Debug.Log("Joining code " + joinCode + "\n" + playerCount);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
             MultiplayerController.Instance.StartHost();
         }

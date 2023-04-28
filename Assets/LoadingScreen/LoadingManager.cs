@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using DG.Tweening;
-
-
+using UnityEngine.PlayerLoop;
 
 public class LoadingManager : MonoBehaviour
 {
@@ -34,8 +33,7 @@ public class LoadingManager : MonoBehaviour
     {
         if(Instance == null)
         {
-            Instance = this;
-            //DontDestroyOnLoad(gameObject);
+            Instance = this;         
         }
         else
         {
@@ -100,6 +98,16 @@ public class LoadingManager : MonoBehaviour
         // _loaderCanvas.transform.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1920), 1f).SetEase(exitEase);
         _loaderCanvas.transform.GetComponent<CanvasGroup>().DOFade(0, .25f).SetEase(enterEase).OnComplete(() =>  _progressBar.fillAmount = 1f);
 
+    }
+    
+
+    public void Show()
+    {
+        _loaderCanvas.transform.GetComponent<CanvasGroup>().DOFade(1,0).SetEase(enterEase);
+    }
+    public  void Hide()
+    {
+        _loaderCanvas.transform.GetComponent<CanvasGroup>().DOFade(0, 0).SetEase(enterEase);
     }
 
 }

@@ -167,7 +167,7 @@ public class TimerManager : NetworkBehaviour
             {
                 UpdateTextColor();
             }
-            if (timeRemaining.Value <= 0.08f)
+            if (timeRemaining.Value <= 0.1f)
             {
                 if (IsServer || MultiplayerController.Instance != null && !MultiplayerController.Instance.IsMultiplayer)
                 {
@@ -175,10 +175,9 @@ public class TimerManager : NetworkBehaviour
                 }
                 if (MultiplayerController.Instance.IsMultiplayer)
                 {
-                    PlayerHandler.Instance.BoardIntraction(false);
                     if (IsServer)
                     {
-                        GetRandomMove();
+                        PlayerHandler.Instance.OnCancelSelectedDotAndAITurnClientRpc();
                     }
                 }
                 else
@@ -201,7 +200,7 @@ public class TimerManager : NetworkBehaviour
     }
     private static void GetRandomMove()
     {
-        PlayerHandler.Instance.aiHandler.GetRandomMove();
+        PlayerHandler.Instance.TakeRandomTurnAI();
     }
 
     private void UpdateTextTime(float minutes, float seconds)
