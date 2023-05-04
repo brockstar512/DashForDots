@@ -12,7 +12,7 @@ using Unity.VectorGraphics;
 using Unity.Collections;
 
 public class PlayerHandler : NetworkBehaviour
-{
+{   
     private static PlayerHandler instance;
     public static PlayerHandler Instance
     {
@@ -42,8 +42,6 @@ public class PlayerHandler : NetworkBehaviour
     public StateManager stateManager;
     public GridManager gridManager;
     public bool isSycningGame;
-    public int lastSyncIndex;
-    public bool isGameSynced;
     //StopIntrection with board
     [SerializeField] GameObject boardIntrection;
 
@@ -69,6 +67,7 @@ public class PlayerHandler : NetworkBehaviour
         gridManager.OnSelectedConfirm += OnSelectedConfirm;
         gridManager.OnSelectedReset += OnSelectedReset;
         MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
+        MultiplayerController.Instance.OnPauseWhileSyncing += Multiplayer_OnPauseWhileSyncing;
     }
 
     private void OnDisable()
@@ -81,6 +80,7 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance != null)
         {
             MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
+            MultiplayerController.Instance.OnPauseWhileSyncing -= Multiplayer_OnPauseWhileSyncing;
         }
     }
 
@@ -184,11 +184,11 @@ public class PlayerHandler : NetworkBehaviour
     public void UpdateScore(int incomingPoints, int index, bool isGameOver)
     {
         if (playerScoreDots.Count > 0)
-        {          
+        {
             playerScoreDots[GetPlayerIndex(index)].GetChild(0).GetComponent<TextMeshProUGUI>().text = player.Score(incomingPoints).ToString();
         }
         CheckGameOver(isGameOver);
-    }   
+    }
     public void CheckGameOver(bool isGameOver)
     {
         if (isGameOver)
@@ -197,26 +197,11 @@ public class PlayerHandler : NetworkBehaviour
         }
     }
 
-    private async void CheckMyTurn()
+    private void CheckMyTurn()
     {
         if (MultiplayerController.Instance.IsMultiplayer)
         {
             boardIntrection.SetActive(!MultiplayerController.Instance.IsMyTurn(currentPlayer.Value));
-            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
-            if (multiplayerData.isRejoin && IsMyTurn() && !isGameSynced && !isSycningGame)
-            {
-                Time.timeScale = 30;
-                BoardIntraction(false);
-                var playerTurn = MultiplayerController.Instance.playerTurnList;
-                for (int i = lastSyncIndex; i < playerTurn.Count; i++)
-                {
-                    await gridManager.UpdateUIForRejoinPlayerAsync(playerTurn[i]);
-                }
-                isGameSynced = true;
-                SetPlayerDataSync(currentPlayer.Value, true);
-                BoardIntraction(true);
-                Time.timeScale = 1;
-            }
         }
         else
         {
@@ -301,7 +286,7 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (!isSycningGame || enableForceFully)
         {
-            player = players[GetPlayerIndex(index)];
+            player = players[GetPlayerIndex(index)];          
             Debug.Log($"Current Color {(PlayerCount)player.colorId}");
         }
         else
@@ -327,6 +312,10 @@ public class PlayerHandler : NetworkBehaviour
     {
         return MultiplayerController.Instance.IsMyTurn(currentPlayer.Value);
     }
+    public void PauseAndResumeGameWhileSyncing(bool flag)
+    {
+        MultiplayerController.Instance.SyncingServerRpc(flag);
+    }
 
     #region Multiplayer RPC & NetworkMethods
 
@@ -337,6 +326,31 @@ public class PlayerHandler : NetworkBehaviour
         MultiplayerController.Instance.rejoinPlayerConnected.OnValueChanged += OnRejoinPlayerValueChangedAsync;
     }
     #endregion Override Netcode Methods
+
+    private void Multiplayer_OnPauseWhileSyncing(object sender, bool flag)
+    {
+        if (IsServer)
+        {
+            timerManager.timerIsRunning.Value = !flag;
+        }
+        if (flag)
+        {
+            BoardIntraction(false);
+            MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+            if (IsMyTurn() && !multiplayerData.isRejoin)
+            {
+                stateManager.SwitchState(stateManager.ResetState);
+                _ = gridManager.ResetAllSelectedDotAsync();
+            }
+            ToastMessage.Show(Constants.KMessagePleaseWait, false, FontColor.RED);
+        }
+        else
+        {
+            BoardIntraction(IsMyTurn());
+            ToastMessage.Hide();
+        }
+    }
+
 
     #region Reset
     private void OnSelectedReset()
@@ -367,6 +381,7 @@ public class PlayerHandler : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void OnConfirmSelectedServerRpc(ServerRpcParams serverRpcParams = default)
     {
+        timerManager.timerIsRunning.Value = false;
         var clientId = serverRpcParams.Receive.SenderClientId;
         OnConfirmSelectedClientRpc(clientId);
     }
@@ -404,6 +419,7 @@ public class PlayerHandler : NetworkBehaviour
     public void OnCancelSelectedDotAndAITurnClientRpc()
     {
         MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
+        stateManager.SwitchState(stateManager.ResetState);
         if (IsMyTurn() || multiplayerData.status == (int)Enums.PlayerState.Inactive)
         {
             CancelDotForAITurn();
@@ -497,6 +513,7 @@ public class PlayerHandler : NetworkBehaviour
     }
     private void Multiplayer_OnHostShutDown(object sender, EventArgs e)
     {
+        BoardIntraction(true);
         stateManager.SwitchState(stateManager.HostQuitState);
     }
     #endregion  Update Score

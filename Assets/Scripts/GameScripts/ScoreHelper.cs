@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class ScoreHelper : MonoBehaviour
 {
-   public SVGImage scoreBox;
+    public SVGImage scoreBox;
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class ScoreHelper : MonoBehaviour
 
     public void ShowFill()
     {
-        scoreBox.DOColor(PlayerHandler.Instance.player.neighborOption, .75f).SetEase(Ease.OutSine).OnComplete(()=> { Destroy(this); });
+        scoreBox.DOColor(PlayerHandler.Instance.player.neighborOption,  .75f).SetEase(Ease.OutSine).OnComplete(() => { Destroy(this); });
     }
 
 }

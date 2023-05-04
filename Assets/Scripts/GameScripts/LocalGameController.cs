@@ -135,12 +135,17 @@ public class LocalGameController : MonoBehaviour
         else
         {
             if (playerCount >= 2)
-            {               
+            {
                 LoadingManager.Instance.LoadScene(targetScene.ToString());
             }
         }
         //else
         //start game
+    }
+
+    public static void ResetCount()
+    {
+        botCount = 0;
     }
 }
 

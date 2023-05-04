@@ -962,6 +962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cafbb6741b064d039cc271c24f710d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentturnDemo: {fileID: 1752860309832548025}
   currentPlayer:
     m_InternalValue: 0
   CurrentPlayerTurn: 1
@@ -975,6 +976,7 @@ MonoBehaviour:
   aiHandler: {fileID: 766883407}
   stateManager: {fileID: 766883401}
   gridManager: {fileID: 766883403}
+  isSycningGame: 0
   boardIntrection: {fileID: 1752860309832548021}
 --- !u!114 &766883406
 MonoBehaviour:
@@ -1063,6 +1065,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 1574796328
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!1 &839335355
@@ -3016,8 +3021,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 3656265538
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1752860309832548025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1752860309745455611, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+  m_PrefabInstance: {fileID: 1752860309832548019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2118323998562913702
 GameObject:
   m_ObjectHideFlags: 0

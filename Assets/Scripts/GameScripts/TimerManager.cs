@@ -167,7 +167,7 @@ public class TimerManager : NetworkBehaviour
             {
                 UpdateTextColor();
             }
-            if (timeRemaining.Value <= 0.1f)
+            if (timeRemaining.Value <= 0.05f)
             {
                 if (IsServer || MultiplayerController.Instance != null && !MultiplayerController.Instance.IsMultiplayer)
                 {

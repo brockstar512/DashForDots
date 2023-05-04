@@ -35,6 +35,7 @@ public class MultiplayerController : NetworkBehaviour
     private NetworkList<MultiplayerData> playerNetworkList;
     public event EventHandler OnHostShutDown;
     public event EventHandler OnPlayerDataNetworkListChanged;
+    public event EventHandler<bool> OnPauseWhileSyncing;
     public NetworkList<PlayerTurn> playerTurnList { get; private set; }
     public NetworkVariable<ulong> rejoinPlayerConnected = new NetworkVariable<ulong>();
     private bool isSycningGame;
@@ -76,6 +77,7 @@ public class MultiplayerController : NetworkBehaviour
     {
         //Sign up for unity services in order to use Relay services.  
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Application.targetFrameRate = 60;
         GameLobby.Instance.InitializeUnityAuthentication();
         playerNetworkList.OnListChanged += PlayerNetworkList_OnListUpdate;
         // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
@@ -99,6 +101,7 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
         NetworkManager.Singleton.StartHost();
+        LocalGameController.ResetCount();
     }
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
@@ -187,6 +190,7 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(AuthenticationService.Instance.PlayerId);
+        LocalGameController.ResetCount();
         NetworkManager.Singleton.StartClient();
     }
 
@@ -237,6 +241,7 @@ public class MultiplayerController : NetworkBehaviour
                 multiplayerData.status = (int)Enums.PlayerState.Active;
                 int index = GetPlayerDataIndexFromPlayerId(playerId);
                 playerNetworkList[index] = multiplayerData;
+                SyncingServerRpc(true);
                 rejoinPlayerConnected.Value = serverRpcParams.Receive.SenderClientId;
             }
 
@@ -246,6 +251,16 @@ public class MultiplayerController : NetworkBehaviour
     {
         Debug.Log($"Total player {playerNetworkList.Count}");
         OnPlayerDataNetworkListChanged?.Invoke(this, EventArgs.Empty);
+    }
+    [ClientRpc]
+    private void SyncingClientRpc(bool flag)
+    {
+        OnPauseWhileSyncing?.Invoke(this, flag);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SyncingServerRpc(bool flag)
+    {
+        SyncingClientRpc(flag);
     }
 
 

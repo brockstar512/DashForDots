@@ -19,5 +19,5 @@ public class Constants
 
     //Messages
     public const string KMessageInvalidCode = "Join Code not valid";
-
+    public const string KMessagePleaseWait = "Please wait..";
 }

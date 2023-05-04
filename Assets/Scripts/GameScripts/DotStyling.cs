@@ -61,7 +61,7 @@ public class DotStyling : MonoBehaviour
         }
         //Close();
         image = GetComponent<SVGImage>();
-        cap = this.transform.parent.GetChild(this.transform.parent.childCount-1).GetComponent<SVGImage>();
+        cap = this.transform.parent.GetChild(this.transform.parent.childCount - 1).GetComponent<SVGImage>();
         Close();
 
     }
@@ -83,7 +83,7 @@ public class DotStyling : MonoBehaviour
     [ContextMenu("DrawLine")]
     public void DrawLine()
     {
-        left?.DOFillAmount(1,speed).SetEase(Ease.OutSine);
+        left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
         right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
         up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
         down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
@@ -93,13 +93,13 @@ public class DotStyling : MonoBehaviour
 
     public void DrawLine(Vector2Int direction)
     {
-        
+
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
                 if (up?.fillAmount == 1)
                     break;
-                up?.DOColor(PlayerHandler.Instance.player.playerColor,0);
+                up?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Up");
                 break;
@@ -137,7 +137,7 @@ public class DotStyling : MonoBehaviour
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
                 up?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
-                up?.DOFillAmount(0, speed  - .5f).SetEase(Ease.OutSine);
+                up?.DOFillAmount(0,speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
@@ -162,13 +162,14 @@ public class DotStyling : MonoBehaviour
 
     public void Select()
     {
-        this.transform.DOScale(.55f, .25f).SetEase(Ease.OutSine);
+        this.transform.DOScale(.55f,  .25f).SetEase(Ease.OutSine);
         image.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
 
     }
     public void Deselect()
     {
-        this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
+        this.transform.DOScale(0, 0);
+        //this.transform.DOScale(0,  .25f).SetEase(Ease.OutSine);
         //image.DOColor(this.playerColor, .15f);
     }
     //Check in which neighbor you put line
@@ -178,7 +179,7 @@ public class DotStyling : MonoBehaviour
         //if (this.transform.lossyScale == Vector3.one)
         //    return;
         image.DOColor(PlayerHandler.Instance.player.neighborOption, 0);
-        this.transform.DOScale(1f, .25f).SetEase(Ease.OutSine);
+        this.transform.DOScale(1f,  .25f).SetEase(Ease.OutSine);
 
     }
     public void NeighborUnHighlight()
@@ -189,13 +190,13 @@ public class DotStyling : MonoBehaviour
     public void PairingSelected()
     {
         image.DOColor(PlayerHandler.Instance.player.playerColor, .25f);
-        this.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
+        this.transform.DOScale(1,  .25f).SetEase(Ease.OutSine);
     }
     public void Confirm()
     {
         //cap.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
-        this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
-        cap.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
+        this.transform.DOScale(0,  .25f).SetEase(Ease.OutSine);
+        cap.DOColor(PlayerHandler.Instance.player.playerColor,  .15f);
     }
     public void ResizeLines(Vector2 dotPositionA, Vector2 dotPositionB)
     {

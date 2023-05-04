@@ -1,12 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+public enum FontColor
+{
+    WHITE,
+    RED,
+}
 public class ToastMessage : MonoBehaviour
 {
     private static GameObject toastGameObject;
-    public static void Show(string message)
+    public static void Show(string message, bool autoHideEnable = true, FontColor fontColor = FontColor.WHITE)
     {
         if (toastGameObject == null)
         {
@@ -18,9 +20,17 @@ public class ToastMessage : MonoBehaviour
             }
             toastGameObject = Instantiate(prefab);
             ToastHandler toastHandler = toastGameObject.GetComponent<ToastHandler>();
-            toastHandler.ShowToastMessage(message, OnHide);
+            toastHandler.ShowToastMessage(message, autoHideEnable, fontColor, OnHide);
         }
 
+    }
+    public static void Hide()
+    {
+        if (toastGameObject != null)
+        {
+            ToastHandler toastHandler = toastGameObject.GetComponent<ToastHandler>();
+            toastHandler.HideToast();
+        }
     }
     private static void OnHide()
     {

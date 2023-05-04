@@ -80,7 +80,7 @@ public class StateManager : MonoBehaviour
         await Task.Yield();
     }
 
-   
+
 
     // Start is called before the first frame update
     //void Start()
@@ -109,10 +109,13 @@ public class StateManager : MonoBehaviour
     }
 
     public void SwitchState(BaseState state)
-    {       
-        currentState.LeaveState();
-        currentState = state;
-        currentState.EnterState(this);
+    {
+        if (currentState != null)
+        {
+            currentState.LeaveState();
+            currentState = state;
+            currentState.EnterState(this);
+        }
     }
 
     public void Inspect(Transform dot)

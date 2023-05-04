@@ -41,7 +41,7 @@ public class GameInitializer : NetworkBehaviour
     }
 
     private void OnRejoinPlayerValueChanged(ulong previousValue, ulong newValue)
-    {
+    {        
         if (newValue == NetworkManager.LocalClientId)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);

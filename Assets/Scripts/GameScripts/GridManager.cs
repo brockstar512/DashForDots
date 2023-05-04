@@ -272,9 +272,11 @@ public class GridManager : MonoBehaviour
         await LeaveDot();
         await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
         SetPlayerTurn(currentDot.X, currentDot.Y, neighborDot.X, neighborDot.Y);
+        PlayerHandler.Instance.BoardIntraction(false);
         currentDot = null;
         neighborDot = null;
         int scoreCount = await scoreKeeper.Check();
+        await Task.Delay(1000);
         bool flag = (senderId.Equals(NetworkManager.Singleton.LocalClientId) && isMultiplayer);
         if (!isMultiplayer || flag)
         {
@@ -347,18 +349,19 @@ public class GridManager : MonoBehaviour
 
     private async Task SyncRejoin(NetworkList<PlayerTurn> turnData)
     {
+       // PlayerHandler.Instance.PauseAndResumeGameWhileSyncing(true);
         PlayerHandler.Instance.isSycningGame = true;
-        PlayerHandler.Instance.lastSyncIndex = turnData.Count;
         Time.timeScale = 30;
         foreach (PlayerTurn item in turnData)
         {
             await UpdateUIForRejoinPlayerAsync(item);
-        }       
+        }
         Time.timeScale = 1;
         retryCounter = 3;
         PlayerHandler.Instance.isSycningGame = false;
         PlayerHandler.Instance.SetPlayerDataSync(PlayerHandler.Instance.currentPlayer.Value, true);
         timerManager.DestoryScreenBlocker();
+        PlayerHandler.Instance.PauseAndResumeGameWhileSyncing(false);
     }
 
     public async Task UpdateUIForRejoinPlayerAsync(PlayerTurn playerTurn)
@@ -393,6 +396,17 @@ public class GridManager : MonoBehaviour
         }
         return true;
 
+    }
+    public async Task ResetAllSelectedDotAsync()
+    {
+        if (currentDot != null)
+        {
+            if (neighborDot != null)
+            {                 
+                await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
+            }
+            await LeaveDot();
+        }
     }
     private void OnDestroy()
     {
