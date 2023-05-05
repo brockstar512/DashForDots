@@ -62,6 +62,11 @@ public class MultiplayerController : NetworkBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+#if UNITY_EDITOR
+            Debug.unityLogger.logEnabled = true;
+#else
+            Debug.unityLogger.logEnabled = false;
+#endif
         }
         InitializeVariable();
     }
@@ -329,6 +334,20 @@ public class MultiplayerController : NetworkBehaviour
     private void StartGameServerRpc()
     {
         NetworkManager.Singleton.SceneManager.LoadScene(LoadingManager.Scene.Game.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void InActivePlayerInBackgroundServerRpc(bool inBackground, ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        for (int i = 0; i < playerNetworkList.Count; i++)
+        {
+            MultiplayerData playerData = playerNetworkList[i];
+            if (playerData.clientId == clientId)
+            {
+                playerData.status = inBackground ? (int)Enums.PlayerState.Inactive : (int)Enums.PlayerState.Active;
+                playerNetworkList[i] = playerData;
+            }
+        }
     }
 
     #endregion

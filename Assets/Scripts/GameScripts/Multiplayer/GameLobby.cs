@@ -60,8 +60,18 @@ public class GameLobby : NetworkBehaviour
 
     public async void HostGame(int playerCount)
     {
+
         try
         {
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                InitializationOptions initializationOptions = new InitializationOptions();
+                await UnityServices.InitializeAsync(initializationOptions);
+            }
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            }
             OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(playerCount);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
@@ -81,6 +91,15 @@ public class GameLobby : NetworkBehaviour
         OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                InitializationOptions initializationOptions = new InitializationOptions();
+                await UnityServices.InitializeAsync(initializationOptions);
+            }
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            }
             Debug.Log("Joining Relay with " + roomCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(roomCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));

@@ -114,7 +114,7 @@ public class TimerManager : NetworkBehaviour
     {
         UpdateTextColor();
         await Task.Delay(1000);
-        if (IsServer || !MultiplayerController.Instance.IsMultiplayer)
+        if (IsServer || MultiplayerController.Instance != null && !MultiplayerController.Instance.IsMultiplayer)
         {
             timeRemaining.Value = defaultTime;
             timerIsRunning.Value = true;

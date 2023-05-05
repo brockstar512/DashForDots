@@ -12,7 +12,7 @@ using Unity.VectorGraphics;
 using Unity.Collections;
 
 public class PlayerHandler : NetworkBehaviour
-{   
+{
     private static PlayerHandler instance;
     public static PlayerHandler Instance
     {
@@ -286,7 +286,7 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (!isSycningGame || enableForceFully)
         {
-            player = players[GetPlayerIndex(index)];          
+            player = players[GetPlayerIndex(index)];
             Debug.Log($"Current Color {(PlayerCount)player.colorId}");
         }
         else
@@ -339,8 +339,9 @@ public class PlayerHandler : NetworkBehaviour
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
             if (IsMyTurn() && !multiplayerData.isRejoin)
             {
-                stateManager.SwitchState(stateManager.ResetState);
                 _ = gridManager.ResetAllSelectedDotAsync();
+                stateManager.SwitchState(stateManager.ResetState);
+                stateManager.SwitchState(stateManager.NeutralState);
             }
             ToastMessage.Show(Constants.KMessagePleaseWait, false, FontColor.RED);
         }
@@ -423,12 +424,17 @@ public class PlayerHandler : NetworkBehaviour
         if (IsMyTurn() || multiplayerData.status == (int)Enums.PlayerState.Inactive)
         {
             CancelDotForAITurn();
+            _ = gridManager.ResetAllSelectedDotAsync();
+        }
+        if (IsServer)
+        {
+            TakeRandomTurnAI();
         }
     }
     private void CancelDotForAITurn()
     {
         BoardIntraction(false);
-        TakeRandomTurnAI();
+        //TakeRandomTurnAI();
     }
 
     #endregion Cancel
@@ -539,6 +545,14 @@ public class PlayerHandler : NetworkBehaviour
         }
     }
     #endregion
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (MultiplayerController.Instance != null && MultiplayerController.Instance.IsMultiplayer && pauseStatus && !IsServer)
+        {
+            NetworkManager.Singleton.Shutdown();
+            stateManager.SwitchState(stateManager.HostQuitState);
+        }
+    }
 
     #endregion Multiplayer RPC & NetworkMethods
 
