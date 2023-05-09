@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static GameLobby;
+using static OnlineSubMenu;
 
 public class OnlineSubMenu : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class OnlineSubMenu : MonoBehaviour
     [SerializeField] Button createGame;
     [SerializeField] Button shareCode;
     [SerializeField] Button joinGame;
+    [SerializeField] Button quickGame;
     [SerializeField] Button play;
     [SerializeField] Button back;
     private Stack<CanvasGroup> subStack;
@@ -29,6 +29,7 @@ public class OnlineSubMenu : MonoBehaviour
     [SerializeField] Button DecreasePlayers;
     [SerializeField] TMP_InputField joinCodeInputField;
     [SerializeField] WaitingViewRefrences waitingViewRefrences;
+    [SerializeField] QuickGameViewRefrences quickGameViewRefrences;
     [SerializeField] Scenes targetScene;
     private int playerCount;
 
@@ -51,6 +52,7 @@ public class OnlineSubMenu : MonoBehaviour
     {
         createGame.onClick.AddListener(delegate { OpenPage(creatGamePanel); });
         joinGame.onClick.AddListener(delegate { OpenPage(joinGamePanel); });
+        quickGame.onClick.AddListener(delegate { OpenPage(quickGameViewRefrences.quickGamePanel); });
         shareCode.onClick.AddListener(delegate { StartHost(); });
         play.onClick.AddListener(delegate { StartClient(); });
         waitingViewRefrences.playGame.onClick.AddListener(delegate { StartGame(); });
@@ -59,29 +61,37 @@ public class OnlineSubMenu : MonoBehaviour
         DecreasePlayers.onClick.RemoveAllListeners();
         IncreasePlayers.onClick.AddListener(delegate { WrapPlayer(1); });
         DecreasePlayers.onClick.AddListener(delegate { WrapPlayer(-1); });
+        quickGameViewRefrences.increasePlayers.onClick.AddListener(delegate { WrapPlayer(1); });
+        quickGameViewRefrences.decreasePlayers.onClick.AddListener(delegate { WrapPlayer(-1); });
+        quickGameViewRefrences.quickPlay.onClick.AddListener(delegate { QuickMatch(); });
         MultiplayerController.Instance.OnPlayerConnected += Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged += Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown += Multiplayer_OnHostShutDown;
         GameLobby.Instance.OnGameJoinStarted += GameLobby_OnGameJoinStarted;
-        GameLobby.Instance.OnGameCreateJoinFailed += GameLobby_OnGameJoinFailed;      
+        GameLobby.Instance.OnGameCreateJoinFailed += GameLobby_OnGameJoinFailed;
+        GameLobby.Instance.OnQuickGameFailed += GameLobby_OnQuickGameFailed;
     }
-   
 
     private void OnDisable()
     {
         IncreasePlayers.onClick.RemoveAllListeners();
         DecreasePlayers.onClick.RemoveAllListeners();
+        quickGameViewRefrences.increasePlayers.onClick.RemoveAllListeners();
+        quickGameViewRefrences.decreasePlayers.onClick.RemoveAllListeners();
         createGame.onClick.RemoveAllListeners();
         joinGame.onClick.RemoveAllListeners();
+        quickGame.onClick.RemoveAllListeners();
         shareCode.onClick.RemoveAllListeners();
+        quickGameViewRefrences.quickPlay.onClick.RemoveAllListeners();
         waitingViewRefrences.playGame.onClick.RemoveAllListeners();
         MultiplayerController.Instance.OnPlayerConnected -= Multiplayer_OnPlayerConnected;
         MultiplayerController.Instance.OnPlayerDataNetworkListChanged -= Multiplayer_OnPlayerDataNetworkListChanged;
         MultiplayerController.Instance.OnHostShutDown -= Multiplayer_OnHostShutDown;
         GameLobby.Instance.OnGameJoinStarted -= GameLobby_OnGameJoinStarted;
-        GameLobby.Instance.OnGameCreateJoinFailed -= GameLobby_OnGameJoinFailed;     
-       
-    }   
+        GameLobby.Instance.OnGameCreateJoinFailed -= GameLobby_OnGameJoinFailed;
+        GameLobby.Instance.OnQuickGameFailed -= GameLobby_OnQuickGameFailed;
+
+    }
 
     private void Multiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
     {
@@ -96,7 +106,7 @@ public class OnlineSubMenu : MonoBehaviour
         if (NetworkManager.Singleton.IsHost)
         {
             waitingViewRefrences.playGame.gameObject.SetActive(MultiplayerController.Instance.CanHostStartTheGame());
-        }       
+        }
         LoadingAnimation(!MultiplayerController.Instance.CanHostStartTheGame());
         _ = ForceUpdateCanvases();
     }
@@ -160,13 +170,14 @@ public class OnlineSubMenu : MonoBehaviour
             playerCount += increaseOrDecrease;
         }
         MultiplayerController.Instance.SetPlayerCount(playerCount);
-        playerCountText.text = playerCount.ToString() + " PLAYERS";
+        quickGameViewRefrences.playerCountText.text = playerCountText.text = playerCount.ToString() + " PLAYERS";
     }
     private void StartHost()
     {
         if (playerCount >= 2)
-        {           
-            GameLobby.Instance.HostGame(playerCount);
+        {
+            // GameLobby.Instance.HostGame(playerCount);
+            GameLobby.Instance.CreateLobby(DateTime.Now.TimeOfDay.ToString(), true, playerCount);
         }
     }
     private void StartClient()
@@ -174,7 +185,13 @@ public class OnlineSubMenu : MonoBehaviour
         string code = joinCodeInputField.text;
         if (playerCount >= 2 && !string.IsNullOrEmpty(code))
         {
-            GameLobby.Instance.JoinGame(code);
+            //GameLobby.Instance.JoinGame(code);
+            GameLobby.Instance.JoinWithCode(code);
+
+        }
+        else
+        {
+            ToastMessage.Show(Constants.KMessageEnterValidCode);
         }
     }
 
@@ -182,6 +199,16 @@ public class OnlineSubMenu : MonoBehaviour
     {
         MultiplayerController.Instance.StartGame();
     }
+
+    public void QuickMatch()
+    {
+        if (playerCount >= 2)
+        {
+            // GameLobby.Instance.HostGame(playerCount);
+            GameLobby.Instance.QuickJoin(playerCount);
+        }
+    }
+
     void OpenPage(CanvasGroup screen)
     {
         back.onClick.RemoveAllListeners();
@@ -204,7 +231,15 @@ public class OnlineSubMenu : MonoBehaviour
         if (e.isClientJoined && e.clientId == NetworkManager.Singleton.LocalClientId)
         {
             OpenPage(waitingViewRefrences.waitingPanel);
-            waitingViewRefrences.gameCodeText.text = string.Format("Game Code :{0}", GameLobby.Instance.GetGameCode());
+            shareCode.gameObject.SetActive(!e.isQuickMatch);
+            if (e.isQuickMatch)
+            {
+                waitingViewRefrences.gameCodeText.text = string.Format("Remaining Time :{0}", 30);
+            }
+            else
+            {
+                waitingViewRefrences.gameCodeText.text = string.Format("Game Code :{0}", GameLobby.Instance.GetGameCode());
+            }
         }
         else if (!e.isClientJoined)
         {
@@ -212,6 +247,15 @@ public class OnlineSubMenu : MonoBehaviour
             UpdateButtonStatus(true);
         }
     }
+
+    private void GameLobby_OnQuickGameFailed(object sender, GameLobby.OnGameJoinFailedEventArgs e)
+    {
+        if (e.errorCode == 16006)
+        {
+            GameLobby.Instance.CreateLobby(DateTime.Now.TimeOfDay.ToString(), false, playerCount);
+        }
+    }
+
     private void Reset()
     {
         waitingViewRefrences.gameCodeText.text = string.Empty;
@@ -237,7 +281,7 @@ public class OnlineSubMenu : MonoBehaviour
         play.interactable = flag;
     }
 
-    private void GameLobby_OnGameJoinFailed(object sender, OnGameJoinFailedEventArgs e)
+    private void GameLobby_OnGameJoinFailed(object sender, GameLobby.OnGameJoinFailedEventArgs e)
     {
         UpdateButtonStatus(true);
         ToastMessage.Show(e.message);
@@ -267,6 +311,15 @@ public class OnlineSubMenu : MonoBehaviour
         public DotLoadingAnimation loadingView;
         public GameObject waitingForUser;
         public Button shareBtn;
+    }
+    [System.Serializable]
+    public struct QuickGameViewRefrences
+    {
+        public CanvasGroup quickGamePanel;
+        public Button increasePlayers;
+        public Button decreasePlayers;
+        public TextMeshProUGUI playerCountText;
+        public Button quickPlay;
     }
 
 }

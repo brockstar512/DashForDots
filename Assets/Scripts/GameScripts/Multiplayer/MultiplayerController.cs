@@ -31,6 +31,7 @@ public class MultiplayerController : NetworkBehaviour
     {
         public ulong clientId;
         public bool isClientJoined;
+        public bool isQuickMatch;
     }
     private NetworkList<MultiplayerData> playerNetworkList;
     public event EventHandler OnHostShutDown;
@@ -39,6 +40,7 @@ public class MultiplayerController : NetworkBehaviour
     public NetworkList<PlayerTurn> playerTurnList { get; private set; }
     public NetworkVariable<ulong> rejoinPlayerConnected = new NetworkVariable<ulong>();
     private bool isSycningGame;
+    private bool isQuickMatch;
     #endregion
     public static MultiplayerController Instance
     {
@@ -85,26 +87,18 @@ public class MultiplayerController : NetworkBehaviour
         Application.targetFrameRate = 60;
         GameLobby.Instance.InitializeUnityAuthentication();
         playerNetworkList.OnListChanged += PlayerNetworkList_OnListUpdate;
-        // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
-    }
-
-    private void SceneManager_activeSceneChanged(Scene current, Scene next)
-    {
-        if (current.name == LoadingManager.Scene.MainMenu.ToString())
-        {
-            Reset();
-        }
     }
 
     #endregion
 
     #region Host 
-    public void StartHost()
+    public void StartHost(bool isQuickMatch = false)
     {
         NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
+        this.isQuickMatch = isQuickMatch;
         NetworkManager.Singleton.StartHost();
         LocalGameController.ResetCount();
     }
@@ -152,7 +146,7 @@ public class MultiplayerController : NetworkBehaviour
                 colorId = 1,
             });
             SetPlayerServerRpc(AuthenticationService.Instance.PlayerId, NetworkManager.Singleton.IsHost);
-            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });
+            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = isQuickMatch });
             isMutiplayer.Value = true;
 
         }
@@ -181,19 +175,20 @@ public class MultiplayerController : NetworkBehaviour
                 }
             }
         }
-        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false });
+        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false, isQuickMatch = isQuickMatch });
     }
 
     #endregion Host
 
     #region Client
-    public void StartClient()
+    public void StartClient(bool isQuickMatch = false)
     {
         NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Client_OnClientDisconnectCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
+        this.isQuickMatch = isQuickMatch;
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(AuthenticationService.Instance.PlayerId);
         LocalGameController.ResetCount();
         NetworkManager.Singleton.StartClient();
@@ -202,7 +197,7 @@ public class MultiplayerController : NetworkBehaviour
     private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
     {
         SetPlayerServerRpc(AuthenticationService.Instance.PlayerId, NetworkManager.Singleton.IsHost);
-        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true });
+        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = isQuickMatch });
     }
 
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
@@ -217,7 +212,7 @@ public class MultiplayerController : NetworkBehaviour
             {
                 ToastMessage.Show(NetworkManager.DisconnectReason);
             }
-            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false });
+            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false, isQuickMatch = isQuickMatch });
         }
     }
     #endregion

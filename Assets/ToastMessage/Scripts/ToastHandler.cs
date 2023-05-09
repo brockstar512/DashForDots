@@ -38,7 +38,7 @@ public class ToastHandler : MonoBehaviour
                 toastTransform.DOMoveY(currentPostion.y, 0.5f).SetEase(Ease.InBack).SetDelay(2f).OnComplete(() =>
                 {
                     onHide?.Invoke();
-                    Destroy(this);
+                    Destroy(this.gameObject);
                 });
             }
         });
@@ -50,7 +50,7 @@ public class ToastHandler : MonoBehaviour
         {
             tint.SetActive(false);
             onHide?.Invoke();
-            Destroy(this);
+            Destroy(this.gameObject);
         });
     }
 
