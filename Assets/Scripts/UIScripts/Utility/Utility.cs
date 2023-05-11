@@ -3,15 +3,16 @@ using System.Diagnostics;
 public class Utility
 {
     public static string GetErrorMessage(int code)
-    {
-        UnityEngine.Debug.LogError("Code " + code);
+    {       
         switch (code)
         {
             case 15001:
             case 15009:
+            case 16001:
+            case 16010:
                 return Constants.KMessageInvalidCode;
             default:
-                return "";
+                return Constants.KMessageSomethingwentworng;
         }
     }
 }

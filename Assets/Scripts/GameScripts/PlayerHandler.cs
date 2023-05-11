@@ -178,7 +178,7 @@ public class PlayerHandler : NetworkBehaviour
         {
             StartCoroutine(TakeTurnAI());
         }
-
+        ServerTakeAITurn();
     }
 
     public void UpdateScore(int incomingPoints, int index, bool isGameOver)
@@ -224,6 +224,11 @@ public class PlayerHandler : NetworkBehaviour
         ChangePlayerIndicator();
         CheckMyTurn();
         SetPlayerTurn();
+        ServerTakeAITurn();
+    }
+
+    private void ServerTakeAITurn()
+    {
         if (IsServer)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
@@ -273,8 +278,9 @@ public class PlayerHandler : NetworkBehaviour
     {
         boardIntrection.SetActive(!flag);
     }
-    public void TakeRandomTurnAI()
+    public IEnumerator TakeRandomTurnAI()
     {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         aiHandler.GetRandomMove();
     }
     async void ChangePlayerIndicator()
@@ -423,18 +429,18 @@ public class PlayerHandler : NetworkBehaviour
         stateManager.SwitchState(stateManager.ResetState);
         if (IsMyTurn() || multiplayerData.status == (int)Enums.PlayerState.Inactive)
         {
-            CancelDotForAITurn();
-            _ = gridManager.ResetAllSelectedDotAsync();
+            CancelDotForAITurn();           
         }
         if (IsServer)
         {
-            TakeRandomTurnAI();
+            StartCoroutine(TakeRandomTurnAI());
         }
     }
-    private void CancelDotForAITurn()
+    private async void CancelDotForAITurn()
     {
         BoardIntraction(false);
-        //TakeRandomTurnAI();
+        await gridManager.ResetAllSelectedDotAsync();
+        
     }
 
     #endregion Cancel

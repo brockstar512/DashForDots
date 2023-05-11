@@ -36,6 +36,7 @@ public class GameLobby : NetworkBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            InitializeUnityAuthentication();
         }
     }
     public static GameLobby Instance
@@ -65,7 +66,6 @@ public class GameLobby : NetworkBehaviour
 
     public async void HostGame(int playerCount)
     {
-
         try
         {
             await AuthenticateUnityServices();
@@ -132,7 +132,7 @@ public class GameLobby : NetworkBehaviour
     private void Update()
     {
         HandleHeartbeat();
-        HandlePeriodicListLobbies();
+        HandlePeriodicListLobbies();        
     }
     private void HandlePeriodicListLobbies()
     {
@@ -196,6 +196,7 @@ public class GameLobby : NetworkBehaviour
     {
         try
         {
+            OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             await AuthenticateUnityServices();
             joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, playerCount, new CreateLobbyOptions
             {
@@ -203,20 +204,21 @@ public class GameLobby : NetworkBehaviour
             });
             Allocation allocation = await AllocateRelay(playerCount);
             string relayJoinCode = await GetRelayJoinCode(allocation);
-            gameCode = relayJoinCode;
-            Debug.Log("Joining code " + relayJoinCode + "\n" + playerCount);
             await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
             {
                 Data = new Dictionary<string, DataObject> {
                      { KEY_RELAY_JOIN_CODE , new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode) }
                  }
             });
+            gameCode = joinedLobby.LobbyCode;
+            Debug.Log("Joining code " + gameCode + "\n" + playerCount);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
             MultiplayerController.Instance.StartHost(!isPrivate);
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = e.Message });
         }
     }
     public async void JoinWithId(string lobbyId)
@@ -229,12 +231,13 @@ public class GameLobby : NetworkBehaviour
             string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+            gameCode = joinedLobby.LobbyCode;
             MultiplayerController.Instance.StartClient();
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = e.Message });
+            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = Utility.GetErrorMessage(e.ErrorCode) });
         }
     }
 
@@ -242,19 +245,25 @@ public class GameLobby : NetworkBehaviour
     {
         OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
-        {
-            await AuthenticateUnityServices();
+        {           
             Debug.Log("Joining Relay with " + lobbyCode);
+            await AuthenticateUnityServices();
             joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
             string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+            gameCode = lobbyCode;
+            ToastMessage.Show(AuthenticationService.Instance.PlayerId);
             MultiplayerController.Instance.StartClient();
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = e.Message });
+            if (e.ErrorCode.Equals(16003))
+            {
+                LeaveLobby();               
+            }
+            OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = Utility.GetErrorMessage(e.ErrorCode) });
         }
     }
     public async void QuickJoin(int playerCount)
@@ -269,7 +278,7 @@ public class GameLobby : NetworkBehaviour
                  {
                   new QueryFilter(
                   field: QueryFilter.FieldOptions.MaxPlayers,
-                  op: QueryFilter.OpOptions.GE,
+                  op: QueryFilter.OpOptions.EQ,
                   value: playerCount.ToString())
                   };
 
@@ -327,7 +336,7 @@ public class GameLobby : NetworkBehaviour
         }
     }
     public async void DeleteLobby()
-    {
+    {        
         if (joinedLobby != null)
         {
             try

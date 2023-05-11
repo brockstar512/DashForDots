@@ -402,7 +402,7 @@ public class GridManager : MonoBehaviour
         if (currentDot != null)
         {
             if (neighborDot != null)
-            {                 
+            {
                 await dots[currentDot.X, currentDot.Y].ChangeNeighborChoice(dots[neighborDot.X, neighborDot.Y]);
             }
             await LeaveDot();

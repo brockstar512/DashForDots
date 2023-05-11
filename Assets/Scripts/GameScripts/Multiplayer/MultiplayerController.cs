@@ -1,10 +1,12 @@
+using DashForDots.AI;
 using System;
-using System.Runtime.CompilerServices;
-using Unity.Collections;
+using System.Collections;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+
 public class MultiplayerController : NetworkBehaviour
 {
     #region  refrences
@@ -40,7 +42,11 @@ public class MultiplayerController : NetworkBehaviour
     public NetworkList<PlayerTurn> playerTurnList { get; private set; }
     public NetworkVariable<ulong> rejoinPlayerConnected = new NetworkVariable<ulong>();
     private bool isSycningGame;
-    private bool isQuickMatch;
+    public bool IsQuickMatch { get; set; }
+    public NetworkVariable<float> timeRemainingForQuickMatch = new NetworkVariable<float>(Constants.QuickGameCountDown);
+    public bool enableQuickGameCountdown = false;
+    private Coroutine coroutineQuickTimeEnable;
+    private bool isNetworkSpawnDone = false;
     #endregion
     public static MultiplayerController Instance
     {
@@ -76,16 +82,13 @@ public class MultiplayerController : NetworkBehaviour
     private void InitializeVariable()
     {
         playerNetworkList = new NetworkList<MultiplayerData>();
-        // PlayerCount = new NetworkVariable<int>(2);
         playerTurnList = new NetworkList<PlayerTurn>();
     }
 
     private void Start()
     {
-        //Sign up for unity services in order to use Relay services.  
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Application.targetFrameRate = 60;
-        GameLobby.Instance.InitializeUnityAuthentication();
+        Application.targetFrameRate = 60;       
         playerNetworkList.OnListChanged += PlayerNetworkList_OnListUpdate;
     }
 
@@ -98,7 +101,7 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
-        this.isQuickMatch = isQuickMatch;
+        this.IsQuickMatch = isQuickMatch;
         NetworkManager.Singleton.StartHost();
         LocalGameController.ResetCount();
     }
@@ -146,7 +149,7 @@ public class MultiplayerController : NetworkBehaviour
                 colorId = 1,
             });
             SetPlayerServerRpc(AuthenticationService.Instance.PlayerId, NetworkManager.Singleton.IsHost);
-            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = isQuickMatch });
+            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = IsQuickMatch });
             isMutiplayer.Value = true;
 
         }
@@ -175,7 +178,7 @@ public class MultiplayerController : NetworkBehaviour
                 }
             }
         }
-        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false, isQuickMatch = isQuickMatch });
+        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false, isQuickMatch = IsQuickMatch });
     }
 
     #endregion Host
@@ -188,7 +191,7 @@ public class MultiplayerController : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback -= NetworkManager_Client_OnClientDisconnectCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
         Constants.GAME_TYPE = (int)Enums.GameType.Multiplayer;
-        this.isQuickMatch = isQuickMatch;
+        this.IsQuickMatch = isQuickMatch;
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(AuthenticationService.Instance.PlayerId);
         LocalGameController.ResetCount();
         NetworkManager.Singleton.StartClient();
@@ -197,7 +200,7 @@ public class MultiplayerController : NetworkBehaviour
     private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
     {
         SetPlayerServerRpc(AuthenticationService.Instance.PlayerId, NetworkManager.Singleton.IsHost);
-        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = isQuickMatch });
+        OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = IsQuickMatch });
     }
 
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
@@ -212,7 +215,7 @@ public class MultiplayerController : NetworkBehaviour
             {
                 ToastMessage.Show(NetworkManager.DisconnectReason);
             }
-            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false, isQuickMatch = isQuickMatch });
+            OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = false, isQuickMatch = IsQuickMatch });
         }
     }
     #endregion
@@ -280,13 +283,92 @@ public class MultiplayerController : NetworkBehaviour
         }
         OnServerDisconnect();
     }
+    public override void OnNetworkSpawn()
+    {
+        if (IsServer)
+        {
+            isNetworkSpawnDone = true;
+        }
+    }
     public override void OnNetworkDespawn()
     {
         if (IsServer)
         {
+            isNetworkSpawnDone = false;
             ShutDown();
         }
     }
+
+    public void EnableQuickTimeCountDown()
+    {
+        if (coroutineQuickTimeEnable != null)
+        {
+            StopCoroutine(coroutineQuickTimeEnable);
+        }
+        coroutineQuickTimeEnable = StartCoroutine(WaitForNetworkSpawn());
+    }
+    private IEnumerator WaitForNetworkSpawn()
+    {
+        yield return new WaitUntil(() => isNetworkSpawnDone && !NetworkManager.Singleton.ShutdownInProgress);        
+        timeRemainingForQuickMatch.Value = Constants.QuickGameCountDown;
+        enableQuickGameCountdown = true;
+    }
+    public void DisableQuickTimeCountDown()
+    {
+        if (IsServer && timeRemainingForQuickMatch != null)
+        {
+            timeRemainingForQuickMatch.Value = 0;
+            enableQuickGameCountdown = false;
+        }
+    }
+    protected void Update()
+    {
+        if (enableQuickGameCountdown && IsServer)
+        {
+            if (timeRemainingForQuickMatch.Value > 0)
+            {
+                timeRemainingForQuickMatch.Value -= Time.deltaTime;
+            }
+            else
+            {
+                StartQuickGame();
+                timeRemainingForQuickMatch.Value = 0;
+                enableQuickGameCountdown = false;
+            }
+        }
+    }
+    private void StartQuickGame()
+    {
+        if (playerNetworkList.Count == MaxPlayerCount.Value)
+        {
+            QuickGame();
+        }
+        else
+        {
+            for (int i = playerNetworkList.Count; i < MaxPlayerCount.Value; i++)
+            {
+                playerNetworkList.Add(new MultiplayerData
+                {
+                    status = (int)Enums.PlayerState.Inactive,
+                    clientId = (ulong)i,
+                    currentIndex = playerNetworkList.Count,
+                    serverIndex = playerNetworkList.Count,
+                    playerName = "Player " + (playerNetworkList.Count + 1),
+                    colorId = 1,
+                });
+                SetPlayerServerRpc(AuthenticationService.Instance.PlayerId + i, false);
+                OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = (ulong)i, isClientJoined = true, isQuickMatch = IsQuickMatch });
+            }
+            QuickGame();
+        }
+
+    }
+    public async void QuickGame()
+    {
+        await Task.Delay(1000);
+        StartGame();
+    }
+
     private void OnServerDisconnect()
     {
         if (IsClient && !IsServer)
@@ -307,6 +389,7 @@ public class MultiplayerController : NetworkBehaviour
         isGameStarted = new NetworkVariable<bool>();
         // PlayerCount = new NetworkVariable<int>(2);
         isMaxPlayerSet = false;
+        isNetworkSpawnDone = false;      
         NetworkManager.Singleton.Shutdown(true);
     }
 
@@ -328,6 +411,7 @@ public class MultiplayerController : NetworkBehaviour
     [ServerRpc]
     private void StartGameServerRpc()
     {
+        GameLobby.Instance.DeleteLobby();
         NetworkManager.Singleton.SceneManager.LoadScene(LoadingManager.Scene.Game.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
     [ServerRpc(RequireOwnership = false)]

@@ -6,7 +6,7 @@ public class Constants
 {
     // public static int AI_COUNT = 0;
     public static int GAME_TYPE = 0;
-
+    public static int QuickGameCountDown = 20;
     //Difficulty Of AI
 
     public static readonly string EASY_GAME = "easy";
@@ -21,4 +21,5 @@ public class Constants
     public const string KMessageInvalidCode = "Join Code not valid";
     public const string KMessagePleaseWait = "Please wait..";
     public const string KMessageEnterValidCode = "Please enter valid code.";
+    public const string KMessageSomethingwentworng = "Something went wrong please try again later.";
 }

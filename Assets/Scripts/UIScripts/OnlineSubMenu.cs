@@ -32,7 +32,7 @@ public class OnlineSubMenu : MonoBehaviour
     [SerializeField] QuickGameViewRefrences quickGameViewRefrences;
     [SerializeField] Scenes targetScene;
     private int playerCount;
-
+    public List<int> temp;
     private void Awake()
     {
         subStack = new Stack<CanvasGroup>();
@@ -46,7 +46,7 @@ public class OnlineSubMenu : MonoBehaviour
     {
         playerCount = 2;
         WrapPlayer(0);
-        LoadingAnimation(true);
+        LoadingAnimation(true);      
     }
     void OnEnable()
     {
@@ -70,8 +70,8 @@ public class OnlineSubMenu : MonoBehaviour
         GameLobby.Instance.OnGameJoinStarted += GameLobby_OnGameJoinStarted;
         GameLobby.Instance.OnGameCreateJoinFailed += GameLobby_OnGameJoinFailed;
         GameLobby.Instance.OnQuickGameFailed += GameLobby_OnQuickGameFailed;
+        MultiplayerController.Instance.timeRemainingForQuickMatch.OnValueChanged += TimerManager_UpdateTimeUI;
     }
-
     private void OnDisable()
     {
         IncreasePlayers.onClick.RemoveAllListeners();
@@ -90,9 +90,21 @@ public class OnlineSubMenu : MonoBehaviour
         GameLobby.Instance.OnGameJoinStarted -= GameLobby_OnGameJoinStarted;
         GameLobby.Instance.OnGameCreateJoinFailed -= GameLobby_OnGameJoinFailed;
         GameLobby.Instance.OnQuickGameFailed -= GameLobby_OnQuickGameFailed;
+        MultiplayerController.Instance.timeRemainingForQuickMatch.OnValueChanged -= TimerManager_UpdateTimeUI;
 
     }
 
+    private void TimerManager_UpdateTimeUI(float previousValue, float newValue)
+    {
+        DisplayTime(newValue);
+    }
+    void DisplayTime(float timeToDisplay)
+    {
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        string time = string.Format("{0:00}", seconds);
+        waitingViewRefrences.gameCodeText.text = string.Format("Remaining Time : <size=40>{0}</size>", time);
+    }
     private void Multiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
     {
         foreach (var item in waitingViewRefrences.playerList)
@@ -105,7 +117,7 @@ public class OnlineSubMenu : MonoBehaviour
         }
         if (NetworkManager.Singleton.IsHost)
         {
-            waitingViewRefrences.playGame.gameObject.SetActive(MultiplayerController.Instance.CanHostStartTheGame());
+            waitingViewRefrences.playGame.gameObject.SetActive(MultiplayerController.Instance.CanHostStartTheGame() && !MultiplayerController.Instance.IsQuickMatch);
         }
         LoadingAnimation(!MultiplayerController.Instance.CanHostStartTheGame());
         _ = ForceUpdateCanvases();
@@ -176,8 +188,8 @@ public class OnlineSubMenu : MonoBehaviour
     {
         if (playerCount >= 2)
         {
-            // GameLobby.Instance.HostGame(playerCount);
-            GameLobby.Instance.CreateLobby(DateTime.Now.TimeOfDay.ToString(), true, playerCount);
+             GameLobby.Instance.HostGame(playerCount);
+            //GameLobby.Instance.CreateLobby(DateTime.Now.TimeOfDay.ToString(), true, playerCount);
         }
     }
     private void StartClient()
@@ -185,8 +197,8 @@ public class OnlineSubMenu : MonoBehaviour
         string code = joinCodeInputField.text;
         if (playerCount >= 2 && !string.IsNullOrEmpty(code))
         {
-            //GameLobby.Instance.JoinGame(code);
-            GameLobby.Instance.JoinWithCode(code);
+            GameLobby.Instance.JoinGame(code);
+            //GameLobby.Instance.JoinWithCode(code);
 
         }
         else
@@ -194,7 +206,6 @@ public class OnlineSubMenu : MonoBehaviour
             ToastMessage.Show(Constants.KMessageEnterValidCode);
         }
     }
-
     private void StartGame()
     {
         MultiplayerController.Instance.StartGame();
@@ -231,15 +242,25 @@ public class OnlineSubMenu : MonoBehaviour
         if (e.isClientJoined && e.clientId == NetworkManager.Singleton.LocalClientId)
         {
             OpenPage(waitingViewRefrences.waitingPanel);
-            shareCode.gameObject.SetActive(!e.isQuickMatch);
+            waitingViewRefrences.shareBtn.transform.parent.gameObject.SetActive(!e.isQuickMatch);
             if (e.isQuickMatch)
             {
-                waitingViewRefrences.gameCodeText.text = string.Format("Remaining Time :{0}", 30);
+                if (NetworkManager.Singleton.IsServer)
+                {
+                    MultiplayerController.Instance.EnableQuickTimeCountDown();
+                }
             }
             else
             {
                 waitingViewRefrences.gameCodeText.text = string.Format("Game Code :{0}", GameLobby.Instance.GetGameCode());
             }
+        }
+        else if (e.isClientJoined && NetworkManager.Singleton.IsServer
+            && MultiplayerController.Instance.CanHostStartTheGame() &&
+            MultiplayerController.Instance.timeRemainingForQuickMatch.Value > 0)
+        {
+            MultiplayerController.Instance.DisableQuickTimeCountDown();
+            StartGame();
         }
         else if (!e.isClientJoined)
         {
@@ -260,9 +281,10 @@ public class OnlineSubMenu : MonoBehaviour
     {
         waitingViewRefrences.gameCodeText.text = string.Empty;
         joinCodeInputField.text = string.Empty;
-        shareCode.interactable = true;
-        play.interactable = true;
-        MultiplayerController.Instance.ResetPlayerCount();
+        UpdateButtonStatus(true);
+        MultiplayerController.Instance.ResetPlayerCount();       
+        MultiplayerController.Instance.DisableQuickTimeCountDown();
+        GameLobby.Instance.DeleteLobby();
         MultiplayerController.Instance.ShutDown();
     }
     private void LoadingAnimation(bool flag)
@@ -279,6 +301,7 @@ public class OnlineSubMenu : MonoBehaviour
     {
         shareCode.interactable = flag;
         play.interactable = flag;
+        quickGameViewRefrences.quickPlay.interactable = flag;
     }
 
     private void GameLobby_OnGameJoinFailed(object sender, GameLobby.OnGameJoinFailedEventArgs e)

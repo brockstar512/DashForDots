@@ -39,7 +39,10 @@ public class TimerManager : NetworkBehaviour
 
     private void TimerManager_UpdateTimeUI(float previousValue, float newValue)
     {
-        DisplayTime(newValue);
+        if (!IsServer)
+        {
+            DisplayTime(newValue);
+        }
     }
 
     public async Task GameStartDelay()
@@ -198,9 +201,9 @@ public class TimerManager : NetworkBehaviour
         timerIsRunning = new NetworkVariable<bool>();
         base.OnNetworkDespawn();
     }
-    private static void GetRandomMove()
+    private void GetRandomMove()
     {
-        PlayerHandler.Instance.TakeRandomTurnAI();
+        StartCoroutine( PlayerHandler.Instance.TakeRandomTurnAI());
     }
 
     private void UpdateTextTime(float minutes, float seconds)
