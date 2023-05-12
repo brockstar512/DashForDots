@@ -13,6 +13,7 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Unity.Collections.AllocatorManager;
 
 public class GameLobby : NetworkBehaviour
 {
@@ -50,25 +51,25 @@ public class GameLobby : NetworkBehaviour
             return instance;
         }
     }
+    private void Start()
+    {
+        InitializeUnityAuthentication();
+    }
     public async void InitializeUnityAuthentication()
     {
-        if (UnityServices.State != ServicesInitializationState.Initialized)
-        {
-            InitializationOptions initializationOptions = new InitializationOptions();
-            await UnityServices.InitializeAsync(initializationOptions);
-            AuthenticationService.Instance.SignedIn += () =>
-            {
-                Debug.Log($"Sign In " + AuthenticationService.Instance.PlayerId);
-            };
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        }
+        await AuthenticateUnityServices();
     }
 
     public async void HostGame(int playerCount)
     {
         try
         {
-            await AuthenticateUnityServices();
+            bool playerIsAuthorized = await EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                Debug.Log("HostGame Player is not Authorized");
+                return;
+            }
             OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(playerCount);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
@@ -88,7 +89,12 @@ public class GameLobby : NetworkBehaviour
         OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
-            await AuthenticateUnityServices();
+            bool playerIsAuthorized = await EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                Debug.Log("JoinGame Player is not Authorized");
+                return;
+            }
             Debug.Log("Joining Relay with " + roomCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(roomCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
@@ -105,12 +111,43 @@ public class GameLobby : NetworkBehaviour
     {
         if (UnityServices.State != ServicesInitializationState.Initialized)
         {
-            InitializationOptions initializationOptions = new InitializationOptions();
-            await UnityServices.InitializeAsync(initializationOptions);
-        }
-        if (!AuthenticationService.Instance.IsSignedIn)
-        {
+            await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                throw new InvalidOperationException("Player was not signed in successfully; unable to continue without a logged in player");
+            }
+            else
+            {
+                Debug.Log($"Sign In " + AuthenticationService.Instance.PlayerId);
+                Debug.Log($"Unity Services {UnityServices.State == ServicesInitializationState.Initialized}");
+            }
+        }
+
+    }
+    public async Task<bool> EnsurePlayerIsAuthorized()
+    {
+        if (AuthenticationService.Instance.IsAuthorized)
+        {
+            return true;
+        }
+        try
+        {
+            await UnityServices.InitializeAsync();
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            return true;
+        }
+        catch (AuthenticationException e)
+        {
+            var reason = $"{e.Message} ({e.InnerException?.Message})";
+            Debug.Log("EnsurePlayerIsAuthorized AuthenticationException :" + reason);
+            return false;
+        }
+        catch (Exception e)
+        {
+            var reason = $"{e.Message} ({e.InnerException?.Message})";
+            Debug.Log("EnsurePlayerIsAuthorized Exception :" + reason);
+            return false;
         }
     }
 
@@ -132,7 +169,7 @@ public class GameLobby : NetworkBehaviour
     private void Update()
     {
         HandleHeartbeat();
-        HandlePeriodicListLobbies();        
+        HandlePeriodicListLobbies();
     }
     private void HandlePeriodicListLobbies()
     {
@@ -196,8 +233,13 @@ public class GameLobby : NetworkBehaviour
     {
         try
         {
+            bool playerIsAuthorized = await EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                Debug.Log("CreateLobby Player is not Authorized");
+                return;
+            }
             OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
-            await AuthenticateUnityServices();
             joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, playerCount, new CreateLobbyOptions
             {
                 IsPrivate = isPrivate,
@@ -223,10 +265,15 @@ public class GameLobby : NetworkBehaviour
     }
     public async void JoinWithId(string lobbyId)
     {
-        OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
-            await AuthenticateUnityServices();
+            bool playerIsAuthorized = await EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                Debug.Log("JoinbyID CreateLobby Player is not Authorized");
+                return;
+            }
+            OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             joinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId);
             string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
@@ -243,11 +290,16 @@ public class GameLobby : NetworkBehaviour
 
     public async void JoinWithCode(string lobbyCode)
     {
-        OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
-        {           
+        {
+            bool playerIsAuthorized = await EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                Debug.Log("JoinWithCode Player is not Authorized");
+                return;
+            }
             Debug.Log("Joining Relay with " + lobbyCode);
-            await AuthenticateUnityServices();
+            OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
             string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
@@ -259,19 +311,20 @@ public class GameLobby : NetworkBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            if (e.ErrorCode.Equals(16003))
-            {
-                LeaveLobby();               
-            }
             OnGameCreateJoinFailed?.Invoke(this, new OnGameJoinFailedEventArgs() { message = Utility.GetErrorMessage(e.ErrorCode) });
         }
     }
     public async void QuickJoin(int playerCount)
     {
-        OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
-            await AuthenticateUnityServices();
+            bool playerIsAuthorized = await EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                Debug.Log("QuickJoin Player is not Authorized");
+                return;
+            }
+            OnGameJoinStarted?.Invoke(this, EventArgs.Empty);
             QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
 
             options.Filter = new List<QueryFilter>()
@@ -336,7 +389,7 @@ public class GameLobby : NetworkBehaviour
         }
     }
     public async void DeleteLobby()
-    {        
+    {
         if (joinedLobby != null)
         {
             try

@@ -553,7 +553,7 @@ public class PlayerHandler : NetworkBehaviour
     #endregion
     void OnApplicationPause(bool pauseStatus)
     {
-        if (MultiplayerController.Instance != null && MultiplayerController.Instance.IsMultiplayer && pauseStatus && !IsServer)
+        if (MultiplayerController.Instance != null && MultiplayerController.Instance.IsMultiplayer && pauseStatus /*&& !IsServer*/)
         {
             NetworkManager.Singleton.Shutdown();
             stateManager.SwitchState(stateManager.HostQuitState);

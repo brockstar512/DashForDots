@@ -6,7 +6,7 @@ public class Constants
 {
     // public static int AI_COUNT = 0;
     public static int GAME_TYPE = 0;
-    public static int QuickGameCountDown = 20;
+    public static int QuickGameCountDown = 30;
     //Difficulty Of AI
 
     public static readonly string EASY_GAME = "easy";
