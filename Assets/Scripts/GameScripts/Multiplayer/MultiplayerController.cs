@@ -71,9 +71,9 @@ public class MultiplayerController : NetworkBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 #if UNITY_EDITOR
-          //  Debug.unityLogger.logEnabled = true;
+            Debug.unityLogger.logEnabled = true;
 #else
-          //  Debug.unityLogger.logEnabled = false;
+            Debug.unityLogger.logEnabled = false;
 #endif
         }
         InitializeVariable();
