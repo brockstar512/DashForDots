@@ -1,7 +1,10 @@
+using DG.Tweening;
+using System;
 using System.Diagnostics;
 
 public class Utility
 {
+    public static bool IsAITakeTurn=false;
     public static string GetErrorMessage(int code)
     {       
         switch (code)
@@ -13,6 +16,13 @@ public class Utility
                 return Constants.KMessageInvalidCode;
             default:
                 return Constants.KMessageSomethingwentworng;
+        }
+    }
+    public static void CheckIsTweening(Object obj)
+    {
+        if (DOTween.IsTweening(obj))
+        {
+            DOTween.Complete(obj,true);
         }
     }
 }

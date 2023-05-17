@@ -164,7 +164,7 @@ public class StateManager : MonoBehaviour
         }
 
 #if UNITY_EDITOR
-        zoom(Input.GetAxis("Mouse ScrollWheel"));
+       // zoom(Input.GetAxis("Mouse ScrollWheel"));
 #endif
 
     }

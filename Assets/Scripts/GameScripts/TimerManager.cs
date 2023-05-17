@@ -24,7 +24,7 @@ public class TimerManager : NetworkBehaviour
 
     private void OnEnable()
     {
-        timeRemaining.Value = defaultTime;
+        timeRemaining.Value = defaultTime;       
         DisplayTime(timeRemaining.Value - 1);
     }
     public override void OnNetworkSpawn()
@@ -141,7 +141,7 @@ public class TimerManager : NetworkBehaviour
             {
                 if (timeRemaining.Value > 0)
                 {
-                    timeRemaining.Value -= Time.deltaTime;
+                    timeRemaining.Value -= Time.deltaTime;                   
                 }
                 else
                 {
@@ -185,6 +185,7 @@ public class TimerManager : NetworkBehaviour
                 }
                 else
                 {
+                    PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
                     GetRandomMove();
                 }
             }
@@ -203,7 +204,7 @@ public class TimerManager : NetworkBehaviour
     }
     private void GetRandomMove()
     {
-        StartCoroutine( PlayerHandler.Instance.TakeRandomTurnAI());
+        StartCoroutine(PlayerHandler.Instance.TakeRandomTurnAI());
     }
 
     private void UpdateTextTime(float minutes, float seconds)

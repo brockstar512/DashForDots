@@ -138,7 +138,7 @@ public class GridManager : MonoBehaviour
     {
         dot.button.onClick.RemoveAllListeners();
         dot.button.onClick.AddListener(dot.OnSelect);
-        dotSubscriber.Invoke(dot.button);
+        //dotSubscriber.Invoke(dot.button);
     }
 
     void IntroduceNeighbors()
@@ -269,42 +269,45 @@ public class GridManager : MonoBehaviour
     }
     public async Task OnConfirm(bool isMultiplayer, ulong senderId = 0)
     {
-        await LeaveDot();
-        await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
-        SetPlayerTurn(currentDot.X, currentDot.Y, neighborDot.X, neighborDot.Y);
-        PlayerHandler.Instance.BoardIntraction(false);
-        currentDot = null;
-        neighborDot = null;
-        int scoreCount = await scoreKeeper.Check();
-        await Task.Delay(1000);
-        bool flag = (senderId.Equals(NetworkManager.Singleton.LocalClientId) && isMultiplayer);
-        if (!isMultiplayer || flag)
+        if (currentDot != null)
         {
-            //if not true switch players else do nothing or i gues reset the clock
-            if (scoreCount > 0)
+            await LeaveDot();
+            await dots[currentDot.X, currentDot.Y].Confirm(dots[neighborDot.X, neighborDot.Y]);
+            SetPlayerTurn(currentDot.X, currentDot.Y, neighborDot.X, neighborDot.Y);
+            PlayerHandler.Instance.BoardIntraction(false);
+            currentDot = null;
+            neighborDot = null;
+            int scoreCount = await scoreKeeper.Check();
+            await Task.Delay(1000);
+            bool flag = (senderId.Equals(NetworkManager.Singleton.LocalClientId) && isMultiplayer);
+            if (!isMultiplayer || flag)
             {
-                if (MultiplayerController.Instance.IsMultiplayer)
+                //if not true switch players else do nothing or i gues reset the clock
+                if (scoreCount > 0)
                 {
-                    PlayerHandler.Instance.UpdateScoreServerRpc(scoreCount, GameFinished());
+                    if (MultiplayerController.Instance.IsMultiplayer)
+                    {
+                        PlayerHandler.Instance.UpdateScoreServerRpc(scoreCount, GameFinished());
+                    }
+                    else
+                    {
+                        Debug.Log("You are good to go");
+                        PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
+                    }
                 }
                 else
                 {
-                    Debug.Log("You are good to go");
-                    PlayerHandler.Instance.UpdateScore(scoreCount, GameFinished());
+                    Debug.Log("You did not score");
+                    if (MultiplayerController.Instance.IsMultiplayer)
+                    {
+                        PlayerHandler.Instance.NextTurnServerRpc();
+                    }
+                    else
+                    {
+                        PlayerHandler.Instance.NextPlayer();
+                    }
+                    //switch player
                 }
-            }
-            else
-            {
-                Debug.Log("You did not score");
-                if (MultiplayerController.Instance.IsMultiplayer)
-                {
-                    PlayerHandler.Instance.NextTurnServerRpc();
-                }
-                else
-                {
-                    PlayerHandler.Instance.NextPlayer();
-                }
-                //switch player
             }
         }
     }
@@ -349,7 +352,7 @@ public class GridManager : MonoBehaviour
 
     private async Task SyncRejoin(NetworkList<PlayerTurn> turnData)
     {
-       // PlayerHandler.Instance.PauseAndResumeGameWhileSyncing(true);
+        // PlayerHandler.Instance.PauseAndResumeGameWhileSyncing(true);
         PlayerHandler.Instance.isSycningGame = true;
         Time.timeScale = 30;
         foreach (PlayerTurn item in turnData)

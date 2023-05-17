@@ -93,12 +93,12 @@ public class DotStyling : MonoBehaviour
 
     public void DrawLine(Vector2Int direction)
     {
-
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
                 if (up?.fillAmount == 1)
                     break;
+                Utility.CheckIsTweening(up);
                 up?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 up?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Up");
@@ -106,6 +106,7 @@ public class DotStyling : MonoBehaviour
             case Vector2Int v when v.Equals(Vector2Int.down):
                 if (down?.fillAmount == 1)
                     break;
+                Utility.CheckIsTweening(down);
                 down?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 down?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Down");
@@ -113,6 +114,7 @@ public class DotStyling : MonoBehaviour
             case Vector2Int v when v.Equals(Vector2Int.right):
                 if (right?.fillAmount == 1)
                     break;
+                Utility.CheckIsTweening(right);
                 right?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 right?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Right");
@@ -120,6 +122,7 @@ public class DotStyling : MonoBehaviour
             case Vector2Int v when v.Equals(Vector2Int.left):
                 if (left?.fillAmount == 1)
                     break;
+                Utility.CheckIsTweening(left);
                 left?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 left?.DOFillAmount(1, speed).SetEase(Ease.OutSine);
                 //Debug.Log("Left");
@@ -128,7 +131,7 @@ public class DotStyling : MonoBehaviour
         }
         PairingSelected();
 
-    }
+    } 
 
     public void EraseLine(Vector2Int direction)
     {
@@ -136,21 +139,25 @@ public class DotStyling : MonoBehaviour
         switch (direction)
         {
             case Vector2Int v when v.Equals(Vector2Int.up):
+                Utility.CheckIsTweening(up);
                 up?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
-                up?.DOFillAmount(0,speed - .5f).SetEase(Ease.OutSine);
+                up?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Up");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.down):
+                Utility.CheckIsTweening(down);
                 down?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 down?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Down");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.right):
+                Utility.CheckIsTweening(right);
                 right?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 right?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Right");
                 break;
             case Vector2Int v when v.Equals(Vector2Int.left):
+                Utility.CheckIsTweening(left);
                 left?.DOColor(PlayerHandler.Instance.player.playerColor, 0);
                 left?.DOFillAmount(0, speed - .5f).SetEase(Ease.OutSine);
                 //Debug.Log("Left");
@@ -162,12 +169,15 @@ public class DotStyling : MonoBehaviour
 
     public void Select()
     {
-        this.transform.DOScale(.55f,  .25f).SetEase(Ease.OutSine);
+        Utility.CheckIsTweening(this.transform);
+        this.transform.DOScale(.55f, .25f).SetEase(Ease.OutSine);
+        Utility.CheckIsTweening(image);
         image.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
 
     }
     public void Deselect()
     {
+        Utility.CheckIsTweening(this.transform);
         this.transform.DOScale(0, 0);
         //this.transform.DOScale(0,  .25f).SetEase(Ease.OutSine);
         //image.DOColor(this.playerColor, .15f);
@@ -178,8 +188,10 @@ public class DotStyling : MonoBehaviour
         //think about how not to rescale the neighbor thts already selected
         //if (this.transform.lossyScale == Vector3.one)
         //    return;
+        Utility.CheckIsTweening(image);
         image.DOColor(PlayerHandler.Instance.player.neighborOption, 0);
-        this.transform.DOScale(1f,  .25f).SetEase(Ease.OutSine);
+        Utility.CheckIsTweening(this.transform);
+        this.transform.DOScale(1f, .25f).SetEase(Ease.OutSine);
 
     }
     public void NeighborUnHighlight()
@@ -189,14 +201,18 @@ public class DotStyling : MonoBehaviour
     }
     public void PairingSelected()
     {
+        Utility.CheckIsTweening(image);
         image.DOColor(PlayerHandler.Instance.player.playerColor, .25f);
-        this.transform.DOScale(1,  .25f).SetEase(Ease.OutSine);
+        Utility.CheckIsTweening(this.transform);
+        this.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
     }
     public void Confirm()
     {
         //cap.transform.DOScale(1, .25f).SetEase(Ease.OutSine);
-        this.transform.DOScale(0,  .25f).SetEase(Ease.OutSine);
-        cap.DOColor(PlayerHandler.Instance.player.playerColor,  .15f);
+        Utility.CheckIsTweening(this.transform);
+        this.transform.DOScale(0, .25f).SetEase(Ease.OutSine);
+        Utility.CheckIsTweening(cap);
+        cap.DOColor(PlayerHandler.Instance.player.playerColor, .15f);
     }
     public void ResizeLines(Vector2 dotPositionA, Vector2 dotPositionB)
     {

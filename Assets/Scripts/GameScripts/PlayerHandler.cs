@@ -57,6 +57,7 @@ public class PlayerHandler : NetworkBehaviour
         else
         {
             instance = this;
+            Input.multiTouchEnabled = false;
         }
     }
     private void OnEnable()
@@ -217,7 +218,7 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (!MultiplayerController.Instance.IsMultiplayer)
         {
-            mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
+            mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);           
             IncrementCounter();
         }
         SetPlayerDataSync(currentPlayer.Value, false);
@@ -280,6 +281,7 @@ public class PlayerHandler : NetworkBehaviour
     }
     public IEnumerator TakeRandomTurnAI()
     {
+        BoardIntraction(false);
         yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         aiHandler.GetRandomMove();
     }
@@ -345,9 +347,7 @@ public class PlayerHandler : NetworkBehaviour
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
             if (IsMyTurn() && !multiplayerData.isRejoin)
             {
-                _ = gridManager.ResetAllSelectedDotAsync();
-                stateManager.SwitchState(stateManager.ResetState);
-                stateManager.SwitchState(stateManager.NeutralState);
+                ResetStateAndDotColor();
             }
             ToastMessage.Show(Constants.KMessagePleaseWait, false, FontColor.RED);
         }
@@ -356,6 +356,13 @@ public class PlayerHandler : NetworkBehaviour
             BoardIntraction(IsMyTurn());
             ToastMessage.Hide();
         }
+    }
+
+    private void ResetStateAndDotColor()
+    {
+        _ = gridManager.ResetAllSelectedDotAsync();
+        stateManager.SwitchState(stateManager.ResetState);
+        stateManager.SwitchState(stateManager.NeutralState);
     }
 
 
@@ -429,7 +436,7 @@ public class PlayerHandler : NetworkBehaviour
         stateManager.SwitchState(stateManager.ResetState);
         if (IsMyTurn() || multiplayerData.status == (int)Enums.PlayerState.Inactive)
         {
-            CancelDotForAITurn();           
+            CancelDotForAITurn();
         }
         if (IsServer)
         {
@@ -440,7 +447,7 @@ public class PlayerHandler : NetworkBehaviour
     {
         BoardIntraction(false);
         await gridManager.ResetAllSelectedDotAsync();
-        
+
     }
 
     #endregion Cancel

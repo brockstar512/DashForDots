@@ -55,6 +55,14 @@ public class LocalGameController : MonoBehaviour
 
     //        includeBots.onValueChanged.AddListener(delegate { botsSection.SetActive(includeBots.isOn); });
 
+    private void OnEnable()
+    {
+        playerCount = 2;
+        botCount = 0;
+        WrapPlayer(0);
+        WrapBot(0);
+    }
+
     void ToggleBots(bool isOn)
     {
         Debug.Log("Toggle");
@@ -135,7 +143,7 @@ public class LocalGameController : MonoBehaviour
         else
         {
             if (playerCount >= 2)
-            {
+            {              
                 LoadingManager.Instance.LoadScene(targetScene.ToString());
             }
         }
@@ -146,6 +154,7 @@ public class LocalGameController : MonoBehaviour
     public static void ResetCount()
     {
         botCount = 0;
+        playerCount = 0;
     }
 }
 

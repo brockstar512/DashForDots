@@ -73,6 +73,7 @@ namespace DashForDots.AI
         #region CALCULATE BEST MOVES
         public void CalculateBestMove()
         {
+            Utility.IsAITakeTurn = true;
             int bestIndex = GetBestMove();
             Vector2Int dot1 = validMoves[bestIndex][0];
             Vector2Int dot2 = validMoves[bestIndex][0] + validMoves[bestIndex][1];
@@ -88,11 +89,13 @@ namespace DashForDots.AI
             gridManager.SelectNeighbor(dotXCoordinate, dotYCoordinate);
             yield return new WaitForSeconds(Random.Range(0.9f, 1.3f));
             gridManager.Confirm();
+            Utility.IsAITakeTurn = false;
             PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
         }
 
         public void GetRandomMove()
-        {         
+        {
+            Utility.IsAITakeTurn = true;
             GetAllValidMoves();
             int validMovesCount = validMoves.Count;
             int randomMoveIndex = Random.Range(0, validMovesCount);

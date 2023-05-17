@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
-
-
+using DG.Tweening;
 
 public class Dot : MonoBehaviour
 {
@@ -65,9 +64,8 @@ public class Dot : MonoBehaviour
     public void OnSelect()
     {
         if (!PlayerHandler.Instance.stateManager.isSwiping)
-        {
+        {          
             GridManager.SelectDot(coordinates.X, coordinates.Y);
-
             DotStyling.Select();
             button.onClick.RemoveAllListeners();
         }
