@@ -138,7 +138,7 @@ public class GridManager : MonoBehaviour
     {
         dot.button.onClick.RemoveAllListeners();
         dot.button.onClick.AddListener(dot.OnSelect);
-        //dotSubscriber.Invoke(dot.button);
+        dotSubscriber.Invoke(dot.button);
     }
 
     void IntroduceNeighbors()
