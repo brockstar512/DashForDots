@@ -57,7 +57,7 @@ public class PlayerHandler : NetworkBehaviour
         else
         {
             instance = this;
-            Input.multiTouchEnabled = false;
+            //Input.multiTouchEnabled = false;
         }
     }
     private void OnEnable()
@@ -218,7 +218,7 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (!MultiplayerController.Instance.IsMultiplayer)
         {
-            mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);           
+            mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
             IncrementCounter();
         }
         SetPlayerDataSync(currentPlayer.Value, false);
@@ -433,19 +433,26 @@ public class PlayerHandler : NetworkBehaviour
     public void OnCancelSelectedDotAndAITurnClientRpc()
     {
         MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
-        stateManager.SwitchState(stateManager.ResetState);
-        if (IsMyTurn() || multiplayerData.status == (int)Enums.PlayerState.Inactive)
+        // stateManager.SwitchState(stateManager.ResetState);
+        BoardIntraction(false);
+        if (IsMyTurn())
         {
-            CancelDotForAITurn();
+            if (!stateManager.IConfirmState())
+            {
+                CancelDotForAITurn();
+            }
         }
-        if (IsServer)
-        {
+        if (IsServer && !stateManager.IConfirmState())
+        {           
             StartCoroutine(TakeRandomTurnAI());
+        }
+        else if (IsServer)
+        {                                
+            OnSelectedConfirm();
         }
     }
     private async void CancelDotForAITurn()
     {
-        BoardIntraction(false);
         await gridManager.ResetAllSelectedDotAsync();
 
     }

@@ -98,6 +98,10 @@ public class StateManager : MonoBehaviour
 
         currentState.UpdateState(this);
     }
+    public bool IConfirmState()
+    {
+        return currentState == DecisionState;
+    }
     public Enums.GameType GetGameType()
     {
         gameType = (Enums.GameType)Constants.GAME_TYPE;
@@ -164,7 +168,7 @@ public class StateManager : MonoBehaviour
         }
 
 #if UNITY_EDITOR
-       // zoom(Input.GetAxis("Mouse ScrollWheel"));
+        zoom(Input.GetAxis("Mouse ScrollWheel"));
 #endif
 
     }
@@ -191,6 +195,7 @@ public class StateManager : MonoBehaviour
         if (Input.touchCount == 2 || currentState == QuitState)
             return;
         //Debug.Log("abc " + id);
+
         switch (id)
         {
             case DirectionId.ID_DOWN:
@@ -228,11 +233,11 @@ public class StateManager : MonoBehaviour
     }
     public void OnDragStart()
     {
-        isSwiping = true;
+        isSwiping = true;       
     }
     public void onDragEnd()
     {
-        isSwiping = false;
+        isSwiping = false;      
     }
     private void MoveDownRight()
     {

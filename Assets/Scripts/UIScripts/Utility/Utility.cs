@@ -4,9 +4,10 @@ using System.Diagnostics;
 
 public class Utility
 {
-    public static bool IsAITakeTurn=false;
+    public static bool IsAITakeTurn = false;
+    public static bool IsClickDisable = false;
     public static string GetErrorMessage(int code)
-    {       
+    {
         switch (code)
         {
             case 15001:
@@ -22,7 +23,7 @@ public class Utility
     {
         if (DOTween.IsTweening(obj))
         {
-            DOTween.Complete(obj,true);
+            DOTween.Complete(obj, true);
         }
     }
 }

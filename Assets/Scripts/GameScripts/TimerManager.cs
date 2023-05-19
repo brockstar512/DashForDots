@@ -24,7 +24,7 @@ public class TimerManager : NetworkBehaviour
 
     private void OnEnable()
     {
-        timeRemaining.Value = defaultTime;       
+        timeRemaining.Value = defaultTime;
         DisplayTime(timeRemaining.Value - 1);
     }
     public override void OnNetworkSpawn()
@@ -141,7 +141,7 @@ public class TimerManager : NetworkBehaviour
             {
                 if (timeRemaining.Value > 0)
                 {
-                    timeRemaining.Value -= Time.deltaTime;                   
+                    timeRemaining.Value -= Time.deltaTime;
                 }
                 else
                 {
@@ -155,7 +155,7 @@ public class TimerManager : NetworkBehaviour
     }
     void DisplayTime(float timeToDisplay)
     {
-        if (!isOnce.Value)
+        if (!isOnce.Value && timerIsRunning.Value)
         {
             timeToDisplay += 1;
             float minutes = Mathf.FloorToInt(timeToDisplay / 60);
@@ -185,11 +185,31 @@ public class TimerManager : NetworkBehaviour
                 }
                 else
                 {
-                    PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
-                    GetRandomMove();
+                    if (!PlayerHandler.Instance.gridManager.isConfirmClicked)
+                    {
+                        PlayerHandler.Instance.BoardIntraction(false);
+                        if (PlayerHandler.Instance.stateManager.IConfirmState())
+                        {
+                            PlayerHandler.Instance.gridManager.Confirm();
+                            PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+                        }
+                        else
+                        {
+                            PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
+                            GetRandomMove();
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Is Confirm Already Clicked");
+                    }
                 }
+                UpdateTextTime(0, 0);
             }
-            UpdateTextTime(minutes, seconds);
+            else
+            {
+                UpdateTextTime(minutes, seconds);
+            }
         }
         else
         {
@@ -207,7 +227,7 @@ public class TimerManager : NetworkBehaviour
         StartCoroutine(PlayerHandler.Instance.TakeRandomTurnAI());
     }
 
-    private void UpdateTextTime(float minutes, float seconds)
+    public void UpdateTextTime(float minutes, float seconds)
     {
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }

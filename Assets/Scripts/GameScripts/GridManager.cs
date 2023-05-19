@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
     public Action OnSelectedConfirm;
     public Action OnSelectedReset;
     int retryCounter = 3;
+    public bool isConfirmClicked = false;
     //Fill dot as per x*y input
     public void Init(Transform dotParent, Action<Button> SubscribeButton)
     {
@@ -259,6 +260,7 @@ public class GridManager : MonoBehaviour
     {
         if (!MultiplayerController.Instance.IsMultiplayer)
         {
+            isConfirmClicked = true;
             await OnConfirm(false);
         }
         else
@@ -279,6 +281,7 @@ public class GridManager : MonoBehaviour
             neighborDot = null;
             int scoreCount = await scoreKeeper.Check();
             await Task.Delay(1000);
+            isConfirmClicked = false;
             bool flag = (senderId.Equals(NetworkManager.Singleton.LocalClientId) && isMultiplayer);
             if (!isMultiplayer || flag)
             {

@@ -26,7 +26,7 @@ public class Dot : MonoBehaviour
 
         foreach (KeyValuePair<Vector2Int, bool> item in connectingCompass)
         {
-            Debug.Log($"< color = yellow > check key:  {item.Key} Value: { item.Value}</color>");
+            Debug.Log($"< color = yellow > check key:  {item.Key} Value: {item.Value}</color>");
             NodeData nodeData = new NodeData(item.Key, item.Value);
             nodeDataList.Add(nodeData);
         }
@@ -63,14 +63,22 @@ public class Dot : MonoBehaviour
     //when this dot is selected
     public void OnSelect()
     {
-        if (!PlayerHandler.Instance.stateManager.isSwiping)
-        {          
+        if (!PlayerHandler.Instance.stateManager.isSwiping && !Utility.IsClickDisable)
+        {
+            Utility.IsClickDisable = true;
+            DOVirtual.DelayedCall(0.2f, () =>
+            {
+                Utility.IsClickDisable = false;
+            });
             GridManager.SelectDot(coordinates.X, coordinates.Y);
             DotStyling.Select();
             button.onClick.RemoveAllListeners();
         }
     }
-
+    public void DeSelect()
+    {
+        DotStyling.Deselect();
+    }
     //Pair with neighbor
     public async Task PairWithNeighbor(Dot NeighborChoice)
     {
@@ -125,7 +133,7 @@ public class Dot : MonoBehaviour
     {
         foreach (var direction in connectingCompass)
         {
-           // Debug.Log($"<color=yellow>direction Value:{ direction.Value}</color> -- <color=yellow>connecting compass count : {connectingCompass.Count}</color> ");
+            // Debug.Log($"<color=yellow>direction Value:{ direction.Value}</color> -- <color=yellow>connecting compass count : {connectingCompass.Count}</color> ");
             if (!direction.Value)
                 return;
         }
