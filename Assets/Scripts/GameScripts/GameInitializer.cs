@@ -41,7 +41,7 @@ public class GameInitializer : NetworkBehaviour
     }
 
     private void OnRejoinPlayerValueChanged(ulong previousValue, ulong newValue)
-    {        
+    {
         if (newValue == NetworkManager.LocalClientId)
         {
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
@@ -82,7 +82,7 @@ public class GameInitializer : NetworkBehaviour
                 break;
             case (PlayerCount)3:
                 currentBoard = Instantiate(ThreePersonBoard);
-                maxLensZoom = 12;
+                maxLensZoom = 12;              
                 PlayerHandler.Instance.GetPlayerCount = Enums.PlayerCount.ThreePlayer;
                 PlayerHandler.Instance.stateManager.ResetConfiner(PlayerHandler.Instance.stateManager.ThreeConfiner);
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().size = new Vector3(18f, 24f, 7.22f);
@@ -90,17 +90,29 @@ public class GameInitializer : NetworkBehaviour
                 break;
             case (PlayerCount)4:
                 currentBoard = Instantiate(FourPersonBoard);
-                maxLensZoom = 24;
+                maxLensZoom = 24;             
                 PlayerHandler.Instance.GetPlayerCount = Enums.PlayerCount.FourPlayer;
                 PlayerHandler.Instance.stateManager.ResetConfiner(PlayerHandler.Instance.stateManager.FourConfiner);
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().size = new Vector3(27f, 48f, 7.22f);
                 PlayerHandler.Instance.stateManager.selectedBoard.GetComponent<BoxCollider>().center = new Vector3(0f, 0f, -1.08f);
                 break;
-        }       
+        }
+        currentBoard.transform.localScale = Vector3.one * GetScaleValue();
         await stateManager.Init(currentBoard, maxLensZoom);
         //delay before we actually start the game
     }
 
-
+    private float GetScaleValue()
+    {
+        float ratio = (float)Screen.width / (float)Screen.height;
+        if (ratio > 0.47f)//0.56/.76
+        {
+            return 0.95f;
+        }
+        else
+        {
+            return 0.9f;
+        }
+    }
 
 }

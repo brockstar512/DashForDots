@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.VectorGraphics;
-using DG.Tweening;
-using System.Threading.Tasks;
-using System;
-using System.Threading;
-using Unity.Netcode;
 
 public class GridManager : MonoBehaviour
 {
@@ -416,11 +411,11 @@ public class GridManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        dotSubscriber = null; ;
+        dotSubscriber = null; 
     }
 
     internal void Reset()
     {
         OnSelectedReset?.Invoke();
-    }
+    }  
 }

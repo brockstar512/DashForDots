@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
-public class Dot : MonoBehaviour
+public class Dot : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     //public int X { get; private set; }
     //public int Y { get; private set; }
@@ -16,7 +17,7 @@ public class Dot : MonoBehaviour
     public DotStyling DotStyling { get; private set; }
     GridManager GridManager;
     public DotValue coordinates { get; private set; }
-
+    private bool isClickable = true;
 
     public int[] savedDot;
 
@@ -63,7 +64,7 @@ public class Dot : MonoBehaviour
     //when this dot is selected
     public void OnSelect()
     {
-        if (!PlayerHandler.Instance.stateManager.isSwiping && !Utility.IsClickDisable)
+        if (!PlayerHandler.Instance.stateManager.isSwiping && !Utility.IsClickDisable && isClickable)
         {
             Utility.IsClickDisable = true;
             DOVirtual.DelayedCall(0.2f, () =>
@@ -138,6 +139,15 @@ public class Dot : MonoBehaviour
                 return;
         }
         Destroy(GetComponent<Button>());
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        isClickable = true;       
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        isClickable = false;       
     }
 }
 [System.Serializable]
