@@ -18,7 +18,12 @@ namespace DashForDots
         public bool changeDotColor = true;
         private Coroutine coroutine;
         private Tween tween;
+        int index = 0;
         private void OnEnable()
+        {
+            Play();
+        }
+        public void Play()
         {
             if (coroutine != null)
             {
@@ -26,7 +31,7 @@ namespace DashForDots
             }
             coroutine = StartCoroutine(LoadingAnimation());
         }
-        int index = 0;
+
         public void Stop()
         {
             if (coroutine != null)

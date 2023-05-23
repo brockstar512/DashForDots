@@ -222,8 +222,10 @@ public class PlayerHandler : NetworkBehaviour
     {
         if (!MultiplayerController.Instance.IsMultiplayer)
         {
-            mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(0, .75f);
+            Transform obj = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0);
+            obj.GetComponent<CanvasGroup>().DOFade(0, .75f);          
             IncrementCounter();
+            obj.GetComponent<DotAnimation>().Play();
         }
         SetPlayerDataSync(currentPlayer.Value, false);
         ChangePlayerIndicator();
@@ -302,23 +304,28 @@ public class PlayerHandler : NetworkBehaviour
         if (MultiplayerController.Instance != null && MultiplayerController.Instance.IsMultiplayer)
         {
             if (!IsMyTurn())
-            {                
+            {
                 obj.GetComponent<DotAnimation>().Stop();
             }
             else
             {
-                Handheld.Vibrate();
+                obj.GetComponent<DotAnimation>().Play();
             }
         }
     }
+    public void StopPlayerDotBlink()
+    {
+        Transform obj = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0);        
+        obj.GetComponent<DotAnimation>().Stop();
 
+    }
     public void SetPlayerDataSync(int index, bool enableForceFully)
     {
         if (!isSycningGame || enableForceFully)
         {
             player = players[GetPlayerIndex(index)];
             Debug.Log($"Current Color {(PlayerCount)player.colorId}");
-        }        
+        }
     }
 
     public int GetPlayerIndex(int value)
@@ -455,6 +462,7 @@ public class PlayerHandler : NetworkBehaviour
         BoardIntraction(false);
         if (IsMyTurn())
         {
+            StopPlayerDotBlink();
             if (!stateManager.IConfirmState())
             {
                 CancelDotForAITurn();

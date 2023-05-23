@@ -195,6 +195,7 @@ public class TimerManager : NetworkBehaviour
                         }
                         else
                         {
+                            PlayerHandler.Instance.StopPlayerDotBlink();
                             PlayerHandler.Instance.stateManager.SwitchState(PlayerHandler.Instance.stateManager.ResetState);
                             GetRandomMove();
                         }
