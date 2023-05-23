@@ -1,3 +1,4 @@
+using DashForDots;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -331,7 +332,7 @@ public class OnlineSubMenu : MonoBehaviour
         public TMP_Text gameCodeText;
         public Button playGame;
         public List<GameObject> playerList;
-        public DotLoadingAnimation loadingView;
+        public DotAnimation loadingView;
         public GameObject waitingForUser;
         public Button shareBtn;
     }

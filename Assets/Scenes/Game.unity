@@ -938,6 +938,7 @@ MonoBehaviour:
   _height: 0
   _width: 0
   timerManager: {fileID: 1752860309832548020}
+  isConfirmClicked: 0
 --- !u!114 &766883404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,7 +963,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cafbb6741b064d039cc271c24f710d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentturnDemo: {fileID: 1752860309832548025}
   currentPlayer:
     m_InternalValue: 0
   CurrentPlayerTurn: 1
@@ -3026,17 +3026,102 @@ MonoBehaviour:
   SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1752860309832548025 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1752860309745455611, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+--- !u!1 &1752860309832548024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6531050351490133953, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
   m_PrefabInstance: {fileID: 1752860309832548019}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!1 &1752860309832548025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6437487747326577466, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+  m_PrefabInstance: {fileID: 1752860309832548019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1752860309832548026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5226316010131932222, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+  m_PrefabInstance: {fileID: 1752860309832548019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1752860309832548027 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 940987950860626698, guid: 83f9108c5911047ef95b5501536ae9ea, type: 3}
+  m_PrefabInstance: {fileID: 1752860309832548019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1752860309832548028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752860309832548024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: f51626626d7dd844a8763a4cca9d592e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingView:
+  - {fileID: 1752860309832548024}
+  darkColor: {r: 0.40000004, g: 0.5411765, b: 0.6509804, a: 1}
+  ease: 3
+  scaleLenth: 2
+  time: 0.5
+  changeDotColor: 0
+--- !u!114 &1752860309832548029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752860309832548025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51626626d7dd844a8763a4cca9d592e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingView:
+  - {fileID: 1752860309832548025}
+  darkColor: {r: 0.40000004, g: 0.5411765, b: 0.6509804, a: 1}
+  ease: 3
+  scaleLenth: 2
+  time: 0.5
+  changeDotColor: 0
+--- !u!114 &1752860309832548030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752860309832548026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51626626d7dd844a8763a4cca9d592e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingView:
+  - {fileID: 1752860309832548026}
+  darkColor: {r: 0.40000004, g: 0.5411765, b: 0.6509804, a: 1}
+  ease: 3
+  scaleLenth: 2
+  time: 0.5
+  changeDotColor: 0
+--- !u!114 &1752860309832548031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752860309832548027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51626626d7dd844a8763a4cca9d592e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingView:
+  - {fileID: 1752860309832548027}
+  darkColor: {r: 0.40000004, g: 0.5411765, b: 0.6509804, a: 1}
+  ease: 3
+  scaleLenth: 2
+  time: 0.5
+  changeDotColor: 0
 --- !u!1 &2118323998562913702
 GameObject:
   m_ObjectHideFlags: 0

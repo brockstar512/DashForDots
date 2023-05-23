@@ -352,7 +352,7 @@ public class GridManager : MonoBehaviour
     {
         // PlayerHandler.Instance.PauseAndResumeGameWhileSyncing(true);
         PlayerHandler.Instance.isSycningGame = true;
-        Time.timeScale = 30;
+        Time.timeScale = 45;
         foreach (PlayerTurn item in turnData)
         {
             await UpdateUIForRejoinPlayerAsync(item);

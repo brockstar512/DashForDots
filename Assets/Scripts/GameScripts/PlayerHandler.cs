@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using Unity.VectorGraphics;
 using Unity.Collections;
+using DashForDots;
 
 public class PlayerHandler : NetworkBehaviour
 {
@@ -137,19 +138,22 @@ public class PlayerHandler : NetworkBehaviour
         {
             currentPlayer.Value = 0;
         }
-        playerUIDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
+        //playerUIDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
+        EnablePlayerTurnDot();
         await Task.Yield();
 
     }
 
     private void SetupPlayerForMultiplayer(PlayerCount playerCount, int playerIndex, int i)
     {
-        int index = (playerIndex + i) % (int)playerCount;
+        // int index = (playerIndex + i) % (int)playerCount;
+        int index = i;
         MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
         multiplayerData.colorId = index + 1;
         multiplayerData.currentIndex = index;
         PlayerData playerData = new PlayerData(multiplayerData);
-        playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
+        //playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
+        playerData.playerType = multiplayerData.clientId == NetworkManager.LocalClientId ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
         playerScoreDots[i].name = playerData.playerName;
         Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
         playerObject.GetComponent<SVGImage>().color = playerData.playerColor;
@@ -287,20 +291,34 @@ public class PlayerHandler : NetworkBehaviour
     }
     async void ChangePlayerIndicator()
     {
-        mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0).GetComponent<CanvasGroup>().DOFade(1, .75f);
+        EnablePlayerTurnDot();
         await timerManager.StartTimer();
     }
+
+    private void EnablePlayerTurnDot()
+    {
+        Transform obj = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0);
+        obj.GetComponent<CanvasGroup>().DOFade(1, .75f);
+        if (MultiplayerController.Instance != null && MultiplayerController.Instance.IsMultiplayer)
+        {
+            if (!IsMyTurn())
+            {                
+                obj.GetComponent<DotAnimation>().Stop();
+            }
+            else
+            {
+                Handheld.Vibrate();
+            }
+        }
+    }
+
     public void SetPlayerDataSync(int index, bool enableForceFully)
     {
         if (!isSycningGame || enableForceFully)
         {
             player = players[GetPlayerIndex(index)];
             Debug.Log($"Current Color {(PlayerCount)player.colorId}");
-        }
-        else
-        {
-            Debug.LogError("Else" + index);
-        }
+        }        
     }
 
     public int GetPlayerIndex(int value)
@@ -443,11 +461,11 @@ public class PlayerHandler : NetworkBehaviour
             }
         }
         if (IsServer && !stateManager.IConfirmState())
-        {           
+        {
             StartCoroutine(TakeRandomTurnAI());
         }
         else if (IsServer)
-        {                                
+        {
             OnSelectedConfirm();
         }
     }
@@ -562,6 +580,7 @@ public class PlayerHandler : NetworkBehaviour
         else
         {
             CheckMyTurn();
+            EnablePlayerTurnDot();
         }
     }
     #endregion

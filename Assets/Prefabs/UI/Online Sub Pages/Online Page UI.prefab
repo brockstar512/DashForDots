@@ -1602,6 +1602,7 @@ MonoBehaviour:
     playerCountText: {fileID: 7289695670573392407}
     quickPlay: {fileID: 6123417319356140073}
   targetScene: 1
+  temp: 
 --- !u!114 &506322028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14365,6 +14366,10 @@ MonoBehaviour:
   - {fileID: 7446050483787584556}
   - {fileID: 7446050484066781700}
   - {fileID: 7446050483963613431}
+  darkColor: {r: 0, g: 0, b: 0, a: 1}
+  ease: 19
+  scaleLenth: 1.2
+  time: 0.2
 --- !u!1 &7446050484251110901
 GameObject:
   m_ObjectHideFlags: 0
