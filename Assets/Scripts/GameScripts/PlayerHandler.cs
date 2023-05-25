@@ -422,6 +422,7 @@ public class PlayerHandler : NetworkBehaviour
     #region Confirm
     private void OnSelectedConfirm()
     {
+        StopPlayerDotBlink();
         OnConfirmSelectedServerRpc();
     }
     [ServerRpc(RequireOwnership = false)]
