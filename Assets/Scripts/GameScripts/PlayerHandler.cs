@@ -139,7 +139,7 @@ public class PlayerHandler : NetworkBehaviour
             currentPlayer.Value = 0;
         }
         //playerUIDots[GetPlayerIndex(currentPlayer.Value)].GetChild(0).GetComponent<CanvasGroup>().alpha = 1;
-        EnablePlayerTurnDot();
+        //EnablePlayerTurnDot();
         await Task.Yield();
 
     }
@@ -168,6 +168,7 @@ public class PlayerHandler : NetworkBehaviour
     public async void UpdateScore(int incomingPoints, bool isOver)
     {
         bool isMutiplayer = MultiplayerController.Instance.IsMultiplayer;
+        EnablePlayerTurnDot();
         UpdateScore(incomingPoints, currentPlayer.Value, isOver);
         if (isOver)
         {
@@ -223,7 +224,7 @@ public class PlayerHandler : NetworkBehaviour
         if (!MultiplayerController.Instance.IsMultiplayer)
         {
             Transform obj = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0);
-            obj.GetComponent<CanvasGroup>().DOFade(0, .75f);          
+            obj.GetComponent<CanvasGroup>().DOFade(0, .75f);
             IncrementCounter();
             obj.GetComponent<DotAnimation>().Play();
         }
@@ -241,7 +242,7 @@ public class PlayerHandler : NetworkBehaviour
             MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(currentPlayer.Value);
             if (multiplayerData.status == (int)Enums.PlayerState.Inactive)
             {
-                StartCoroutine(TakeTurnAI());
+                StartCoroutine(TakeTurnAI((Enums.AIMode)multiplayerData.aIMode));
             }
         }
     }
@@ -281,6 +282,12 @@ public class PlayerHandler : NetworkBehaviour
         yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         this.gameObject.GetComponent<AIHandler>().CalculateBestMove();
     }
+    IEnumerator TakeTurnAI(Enums.AIMode aIMode)
+    {
+        BoardIntraction(false);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
+        this.gameObject.GetComponent<AIHandler>().CalculateBestMove(aIMode);
+    }
     public void BoardIntraction(bool flag)
     {
         boardIntrection.SetActive(!flag);
@@ -288,7 +295,7 @@ public class PlayerHandler : NetworkBehaviour
     public IEnumerator TakeRandomTurnAI()
     {
         BoardIntraction(false);
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));       
         aiHandler.GetRandomMove();
     }
     async void ChangePlayerIndicator()
@@ -315,7 +322,7 @@ public class PlayerHandler : NetworkBehaviour
     }
     public void StopPlayerDotBlink()
     {
-        Transform obj = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0);        
+        Transform obj = mainBoardDotParent.GetChild(GetPlayerIndex(currentPlayer.Value)).GetChild(0);
         obj.GetComponent<DotAnimation>().Stop();
 
     }
@@ -470,7 +477,7 @@ public class PlayerHandler : NetworkBehaviour
         }
         if (IsServer && !stateManager.IConfirmState())
         {
-            StartCoroutine(TakeRandomTurnAI());
+            StartCoroutine(TakeTurnAI((Enums.AIMode)multiplayerData.aIMode));
         }
         else if (IsServer)
         {

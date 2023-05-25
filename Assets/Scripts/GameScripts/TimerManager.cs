@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Collections;
 using System;
+using DG.Tweening;
 
 public class TimerManager : NetworkBehaviour
 {
@@ -39,7 +40,7 @@ public class TimerManager : NetworkBehaviour
 
     private void TimerManager_UpdateTimeUI(float previousValue, float newValue)
     {
-        if (!IsServer)
+        if (!IsServer && timerIsRunning.Value)
         {
             DisplayTime(newValue);
         }
@@ -229,7 +230,7 @@ public class TimerManager : NetworkBehaviour
     }
 
     public void UpdateTextTime(float minutes, float seconds)
-    {
+    {        
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

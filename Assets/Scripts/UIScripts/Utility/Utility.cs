@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Diagnostics;
+using static Enums;
 
 public class Utility
 {
@@ -24,6 +25,20 @@ public class Utility
         if (DOTween.IsTweening(obj))
         {
             DOTween.Complete(obj, true);
+        }
+    }
+
+    public static string GetAIMode(AIMode mode)
+    {
+        switch (mode)
+        {
+            case AIMode.EASY:
+            default:
+                return Constants.EASY_GAME;
+            case AIMode.MEDIUM:              
+            case AIMode.HARD:
+            case AIMode.SUPER_HARD:
+                return Constants.NORMAL_GAME;
         }
     }
 }

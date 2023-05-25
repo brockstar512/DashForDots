@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using static Enums;
+
 namespace DashForDots.AI
 {
     public class AIHandler : MonoBehaviour
@@ -71,6 +73,13 @@ namespace DashForDots.AI
         #endregion
 
         #region CALCULATE BEST MOVES
+        public void CalculateBestMove(AIMode mode)
+        {
+            BotFactory.SetDifficulty(Utility.GetAIMode(mode));
+            Debug.Log($"Difficulty in Multiplayer Mode : {BotFactory.difficulty}");
+            CalculateBestMove();
+        }
+
         public void CalculateBestMove()
         {
             Utility.IsAITakeTurn = true;
@@ -145,7 +154,7 @@ namespace DashForDots.AI
         }
         private int GetBestMove()
         {
-            
+
             GetAllValidMoves();
             countForNormalMoves = 0;
             thirdLineMoves.Clear();
@@ -466,7 +475,7 @@ namespace DashForDots.AI
                 moveValue += CheckParallelLine(dot1lowerdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, lowergridDirection);
                 moveValue += CheckParallelLine(dot1upperdot, moveValue, dotCoordinateFrom, dotCoordinateTo, dotRefFrom, dotRefTo, direction, uppergridDirection);
             }
-                return moveValue;
+            return moveValue;
         }
         #endregion
 

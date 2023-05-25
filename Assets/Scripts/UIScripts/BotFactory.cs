@@ -31,4 +31,8 @@ public class BotFactory : MonoBehaviour
         difficulty = difficultyName;
         LoadingManager.Instance.LoadScene(targetScene.ToString());
     }
+    public static void SetDifficulty(string difficultyName)
+    {
+        difficulty = difficultyName;
+    }
 }

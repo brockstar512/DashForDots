@@ -35,5 +35,13 @@ public class Enums
     {
         Active = 1,
         Inactive = 2,
-    }   
+    }
+
+    public enum AIMode
+    {
+        SUPER_HARD = 0,
+        HARD,
+        MEDIUM,
+        EASY,
+    }
 }

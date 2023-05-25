@@ -1562,6 +1562,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 766883400}
     m_Modifications:
+    - target: {fileID: 1615985908228912693, guid: ae6d3d884feb341cdadece4cf28c031f, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6425493052935493369, guid: ae6d3d884feb341cdadece4cf28c031f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1727,6 +1731,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 766883400}
     m_Modifications:
+    - target: {fileID: 1157428708870789982, guid: ff94e474fc6cd4009a34a8c560e73986, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2794698116796683955, guid: ff94e474fc6cd4009a34a8c560e73986, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3387,6 +3395,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 766883400}
     m_Modifications:
+    - target: {fileID: 5512219001165601841, guid: 907f168d0e6c44f8b9476681e1d81ed2, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7658952119965191363, guid: 907f168d0e6c44f8b9476681e1d81ed2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3484,6 +3496,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 766883400}
     m_Modifications:
+    - target: {fileID: 1143009695327058480, guid: 284e1105c93f249259c42cfa3b116ea2, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3020099948326267586, guid: 284e1105c93f249259c42cfa3b116ea2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3601,7 +3617,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118323998562913702}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

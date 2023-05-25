@@ -88,7 +88,7 @@ public class MultiplayerController : NetworkBehaviour
     private void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Application.targetFrameRate = 60;       
+        Application.targetFrameRate = 60;
         playerNetworkList.OnListChanged += PlayerNetworkList_OnListUpdate;
     }
 
@@ -147,11 +147,11 @@ public class MultiplayerController : NetworkBehaviour
                 serverIndex = playerNetworkList.Count,
                 playerName = "Player " + (playerNetworkList.Count + 1),
                 colorId = 1,
+                aIMode = playerNetworkList.Count,
             });
             SetPlayerServerRpc(AuthenticationService.Instance.PlayerId, NetworkManager.Singleton.IsHost);
             OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = clientId, isClientJoined = true, isQuickMatch = IsQuickMatch });
             isMutiplayer.Value = true;
-
         }
         else
         {
@@ -266,7 +266,6 @@ public class MultiplayerController : NetworkBehaviour
         SyncingClientRpc(flag);
     }
 
-
     public void ShutDown()
     {
         Constants.GAME_TYPE = (int)Enums.GameType.None;
@@ -309,7 +308,7 @@ public class MultiplayerController : NetworkBehaviour
     }
     private IEnumerator WaitForNetworkSpawn()
     {
-        yield return new WaitUntil(() => isNetworkSpawnDone && !NetworkManager.Singleton.ShutdownInProgress);        
+        yield return new WaitUntil(() => isNetworkSpawnDone && !NetworkManager.Singleton.ShutdownInProgress);
         timeRemainingForQuickMatch.Value = Constants.QuickGameCountDown;
         enableQuickGameCountdown = true;
     }
@@ -355,6 +354,7 @@ public class MultiplayerController : NetworkBehaviour
                     serverIndex = playerNetworkList.Count,
                     playerName = "Player " + (playerNetworkList.Count + 1),
                     colorId = 1,
+                    aIMode = i
                 });
                 SetPlayerServerRpc(AuthenticationService.Instance.PlayerId + i, false);
                 OnPlayerConnected?.Invoke(this, new OnPlayerConnectedEventArgs() { clientId = (ulong)i, isClientJoined = true, isQuickMatch = IsQuickMatch });
@@ -389,7 +389,7 @@ public class MultiplayerController : NetworkBehaviour
         isGameStarted = new NetworkVariable<bool>();
         // PlayerCount = new NetworkVariable<int>(2);
         isMaxPlayerSet = false;
-        isNetworkSpawnDone = false;      
+        isNetworkSpawnDone = false;
         NetworkManager.Singleton.Shutdown(true);
     }
 
