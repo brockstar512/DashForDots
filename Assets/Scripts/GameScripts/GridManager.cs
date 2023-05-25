@@ -256,6 +256,7 @@ public class GridManager : MonoBehaviour
         if (!MultiplayerController.Instance.IsMultiplayer)
         {
             isConfirmClicked = true;
+            timerManager.timerIsRunning.Value = false;
             await OnConfirm(false);
         }
         else
@@ -411,11 +412,11 @@ public class GridManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        dotSubscriber = null; 
+        dotSubscriber = null;
     }
 
     internal void Reset()
     {
         OnSelectedReset?.Invoke();
-    }  
+    }
 }
