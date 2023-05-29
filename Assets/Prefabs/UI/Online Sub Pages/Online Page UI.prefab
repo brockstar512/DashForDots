@@ -1634,6 +1634,7 @@ MonoBehaviour:
     quickPlay: {fileID: 6123417319356140073}
   targetScene: 1
   temp: 
+  copiedTextInfo: {fileID: 5450733679461196841, guid: ce4bced69f7d64d82b37348c93aed167, type: 3}
 --- !u!114 &506322028
 MonoBehaviour:
   m_ObjectHideFlags: 0

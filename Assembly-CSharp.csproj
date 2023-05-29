@@ -117,6 +117,7 @@
     <Compile Include="Assets/Scripts/GameScripts/State/HostQuitState.cs" />
     <Compile Include="Assets/SwipeController/Scripts/DirectionPresets.cs" />
     <Compile Include="Assets/Scripts/Package Scripts/Scroller.cs" />
+    <Compile Include="Assets/Scripts/UIScripts/CopiedTextInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

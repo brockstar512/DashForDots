@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using static OnlineSubMenu;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class OnlineSubMenu : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class OnlineSubMenu : MonoBehaviour
     [SerializeField] Scenes targetScene;
     private int playerCount;
     public List<int> temp;
+    [SerializeField] CanvasGroup copiedTextInfo;
     private void Awake()
     {
         subStack = new Stack<CanvasGroup>();
@@ -316,12 +318,16 @@ public class OnlineSubMenu : MonoBehaviour
     }
     void ShareCode()
     {
-        string email = "";
-        string subject = MyEscapeURL("Game Code");
-        string body = MyEscapeURL($"Please find game code here : {GameLobby.Instance.GetGameCode()} \nPlease Download the game \n http://google.com ");
-        Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
+        //string email = "";
+        //string subject = MyEscapeURL("Game Code");
+        //string body = MyEscapeURL($"Please find game code here : {GameLobby.Instance.GetGameCode()} \nPlease Download the game \n http://google.com ");
+        //Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
+
+        GUIUtility.systemCopyBuffer = GameLobby.Instance.GetGameCode();
+
+        CopiedTextInfo.Instance.Show();
     }
-    string MyEscapeURL(string url)
+string MyEscapeURL(string url)
     {
         return UnityWebRequest.EscapeURL(url).Replace("+", "%20");
     }
