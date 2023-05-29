@@ -47,6 +47,8 @@ public class PlayerHandler : NetworkBehaviour
     [SerializeField] GameObject boardIntrection;
 
     const int maxPlayerCount = 4;
+    private const string localPlayerName = "You";
+
     public int maxPlayerScore { get; private set; }
 
     private void Awake()
@@ -151,9 +153,14 @@ public class PlayerHandler : NetworkBehaviour
         MultiplayerData multiplayerData = MultiplayerController.Instance.GetPlayerDataFromPlayerIndex(index);
         multiplayerData.colorId = index + 1;
         multiplayerData.currentIndex = index;
+        bool itsMe = multiplayerData.clientId == NetworkManager.LocalClientId;
+        if (itsMe)
+        {
+            multiplayerData.playerName = localPlayerName;
+        }      
         PlayerData playerData = new PlayerData(multiplayerData);
         //playerData.playerType = i == 0 ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
-        playerData.playerType = multiplayerData.clientId == NetworkManager.LocalClientId ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
+        playerData.playerType = itsMe ? Enums.PlayerType.LocalPlayer : Enums.PlayerType.OpponentPlayer;
         playerScoreDots[i].name = playerData.playerName;
         Player playerObject = mainBoardDotParent.GetChild(i).gameObject.GetComponent<Player>();
         playerObject.GetComponent<SVGImage>().color = playerData.playerColor;
@@ -295,7 +302,7 @@ public class PlayerHandler : NetworkBehaviour
     public IEnumerator TakeRandomTurnAI()
     {
         BoardIntraction(false);
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));       
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.1f, 2.5f));
         aiHandler.GetRandomMove();
     }
     async void ChangePlayerIndicator()
