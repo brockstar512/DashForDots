@@ -45,7 +45,7 @@ namespace DashForDots
                     Graphic graphic = loadingView[i].GetComponent<Graphic>();
                     if (graphic != null)
                     {
-                        graphic.color = darkColor;
+                        //graphic.color = darkColor;
                     }
                 }
                 loadingView[i].transform.localScale = Vector3.one;
@@ -66,7 +66,7 @@ namespace DashForDots
                         {
                             if (changeDotColor)
                             {
-                                graphic.color = darkColor;
+                                //graphic.color = darkColor;
                             }
                             loadingView[i].transform.localScale = Vector3.one * scaleLenth;
                             loadingView[i].transform.DOScale(Vector3.one, time).SetEase(ease);
@@ -74,7 +74,7 @@ namespace DashForDots
                         }
                         else
                         {
-                            graphic.color = Color.white;
+                            //graphic.color = Color.white;
                             loadingView[i].transform.localScale = Vector3.one;
                         }
                     }
